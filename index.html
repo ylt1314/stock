@@ -448,14 +448,27 @@
           <h2 class="text-base font-bold text-slate-800">模块二：渠道 × 履约承诺/超时时效日期透视矩阵</h2>
           <span class="text-xs text-slate-500 bg-slate-200 px-2 py-0.5 rounded">渠道行已自动按【总计】降序排布</span>
         </div>
-        <div class="flex items-center gap-3 text-xs">
-          <span class="text-slate-500">列时效规则：预售订单取【预售发货时间】，非预售订单取【支付时间 + 2天】</span>
-          <div class="flex items-center gap-1.5 bg-white border border-slate-300 rounded px-2.5 py-1">
-            <span class="text-slate-600">状态范围：</span>
-            <select id="datePivotStatusSelect" class="bg-transparent font-medium text-slate-800 focus:outline-none cursor-pointer">
+        <!-- 筛选控件组：尾款状态筛选 + 缺货超时/未超时筛选联动 -->
+        <div class="flex flex-wrap items-center gap-2.5 text-xs">
+          <span class="text-slate-500 hidden xl:inline">时效规则：预售取【发货时间】，现货取【支付+2天】</span>
+          
+          <!-- 尾款状态筛选 -->
+          <div class="flex items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm">
+            <span class="text-slate-600 font-medium"><i class="fa-solid fa-money-check-dollar text-slate-400 mr-1"></i>尾款状态筛选：</span>
+            <select id="mod2TailFilterSelect" class="bg-transparent font-medium text-slate-800 focus:outline-none cursor-pointer">
               <option value="all" selected>全部尾款状态 (已付 + 未付)</option>
               <option value="paid">仅已付尾款</option>
+              <option value="unpaid">仅未付尾款</option>
+            </select>
+          </div>
+
+          <!-- 缺货超时 / 缺货未超时 筛选 -->
+          <div class="flex items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm">
+            <span class="text-slate-600 font-medium"><i class="fa-solid fa-clock-rotate-left text-slate-400 mr-1"></i>时效状态筛选：</span>
+            <select id="mod2OverdueFilterSelect" class="bg-transparent font-medium text-slate-800 focus:outline-none cursor-pointer">
+              <option value="all" selected>全部 (超时 + 未超时)</option>
               <option value="overdue">仅缺货超时</option>
+              <option value="normal">仅缺货未超时</option>
             </select>
           </div>
         </div>
@@ -481,12 +494,12 @@
           <div class="flex items-center gap-2">
             <span class="w-2.5 h-2.5 rounded-full bg-blue-600 ring-4 ring-blue-100"></span>
             <h3 class="text-xs font-bold text-slate-800">各履约/时效日期缺货与超时趋势透视 (双折线面积图)</h3>
-            <span class="text-[11px] text-slate-500 bg-slate-200/80 px-2 py-0.5 rounded">受上方尾款状态联动</span>
+            <span class="text-[11px] text-slate-500 bg-slate-200/80 px-2 py-0.5 rounded">受上方尾款状态与时效状态联动</span>
           </div>
           <div class="flex items-center gap-3 text-xs text-slate-600">
-            <span class="flex items-center gap-1.5"><span class="w-3 h-2 bg-blue-500/30 border border-blue-500 rounded-sm inline-block"></span> 缺货超时趋势: <strong class="text-blue-700 font-mono font-bold ml-1" id="mod2ChartTotalText">0 件</strong></span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-2 bg-amber-500/40 border border-amber-500 rounded-sm inline-block"></span> 缺货超时趋势: <strong class="text-amber-700 font-mono font-bold ml-1" id="mod2ChartOverdueText">0 件</strong></span>
             <span class="text-slate-300">|</span>
-            <span class="flex items-center gap-1.5"><span class="w-3 h-2 bg-indigo-500/30 border border-indigo-500 rounded-sm inline-block"></span> 预售发货缺货: <strong class="text-indigo-700 font-mono font-bold ml-1" id="mod2ChartPresaleText">0 件</strong></span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-2 bg-indigo-500/40 border border-indigo-500 rounded-sm inline-block"></span> 预售发货缺货: <strong class="text-indigo-700 font-mono font-bold ml-1" id="mod2ChartPresaleText">0 件</strong></span>
             <span class="text-slate-300">|</span>
             <span>时段峰值: <strong class="text-red-600 font-mono font-bold" id="mod2ChartPeakText">0 件</strong></span>
           </div>
@@ -1319,8 +1332,9 @@
         renderAll();
       });
 
-      // 模块二：状态联动切换
-      document.getElementById('datePivotStatusSelect').addEventListener('change', renderDatePivotTable);
+      // 模块二：尾款状态筛选与时效超时筛选联动切换
+      document.getElementById('mod2TailFilterSelect').addEventListener('change', renderDatePivotTable);
+      document.getElementById('mod2OverdueFilterSelect').addEventListener('change', renderDatePivotTable);
 
       // 模块三（货号看板）：筛选项事件监听
       document.getElementById('mod4DateFilter').addEventListener('change', () => {
@@ -1916,13 +1930,22 @@
 
     function renderDatePivotTable() {
       const computedList = rawData.map(r => computeRecordStatus(r, benchmarkTime));
-      const statusFilter = document.getElementById('datePivotStatusSelect').value;
+      const tailFilter = document.getElementById('mod2TailFilterSelect') ? document.getElementById('mod2TailFilterSelect').value : 'all';
+      const overdueFilter = document.getElementById('mod2OverdueFilterSelect') ? document.getElementById('mod2OverdueFilterSelect').value : 'all';
 
+      // 1. 尾款状态筛选
       let filtered = computedList;
-      if (statusFilter === 'paid') {
-        filtered = computedList.filter(r => r.isPaid);
-      } else if (statusFilter === 'overdue') {
-        filtered = computedList.filter(r => r.isOverdue);
+      if (tailFilter === 'paid') {
+        filtered = filtered.filter(r => r.isPaid);
+      } else if (tailFilter === 'unpaid') {
+        filtered = filtered.filter(r => !r.isPaid);
+      }
+
+      // 2. 缺货超时 / 缺货未超时 筛选联动
+      if (overdueFilter === 'overdue') {
+        filtered = filtered.filter(r => r.isOverdue);
+      } else if (overdueFilter === 'normal') {
+        filtered = filtered.filter(r => !r.isOverdue);
       }
 
       const dateSet = new Set();
@@ -1939,18 +1962,21 @@
       const tfoot = document.getElementById('datePivotFoot');
 
       if (dateList.length === 0) {
-        thead.innerHTML = `<tr><th class="py-3 px-4">渠道</th><th class="py-3 px-4 text-center">暂无匹配日期数据</th></tr>`;
-        tbody.innerHTML = `<tr><td colspan="2" class="py-6 text-center text-slate-400">当前筛选条件下暂无有效履约日期</td></tr>`;
+        thead.innerHTML = `<tr><th class="py-3 px-4 whitespace-nowrap">渠道</th><th class="py-3 px-4 text-center">暂无匹配日期数据</th></tr>`;
+        tbody.innerHTML = `<tr><td colspan="2" class="py-6 text-center text-slate-400">当前筛选条件下暂无有效履约日期数据</td></tr>`;
         tfoot.innerHTML = '';
+        renderDatePivotAreaChart(filtered, []);
         return;
       }
 
+      // 左侧渠道表头禁止换行 whitespace-nowrap
       let headHtml = `<tr>
-        <th class="py-3 px-3 text-slate-900 border border-slate-300 bg-slate-200" style="width: 170px;">渠道 / 履约日期</th>`;
+        <th class="py-3 px-3.5 text-slate-900 border border-slate-300 bg-slate-200 whitespace-nowrap" style="min-width: 170px;">渠道 / 履约日期</th>`;
       dateList.forEach(d => {
-        headHtml += `<th class="py-3 px-2 text-center border border-slate-300 min-w-[95px]">${d}</th>`;
+        const shortDate = d.replace(/^\d{4}-/, '');
+        headHtml += `<th class="py-3 px-2 text-center border border-slate-300 min-w-[75px] whitespace-nowrap" title="${d}">${shortDate}</th>`;
       });
-      headHtml += `<th class="py-3 px-3 text-center border border-slate-300 bg-yellow-100 text-slate-900 font-bold" style="width: 100px;">总计 ▼</th></tr>`;
+      headHtml += `<th class="py-3 px-3 text-center border border-slate-300 bg-yellow-100 text-slate-900 font-bold whitespace-nowrap" style="width: 100px;">总计 ▼</th></tr>`;
       thead.innerHTML = headHtml;
 
       tbody.innerHTML = '';
@@ -1980,6 +2006,7 @@
         channelRowSums[ch] = sum;
       });
 
+      // 渠道按总计降序排布
       channels.sort((a, b) => (channelRowSums[b] || 0) - (channelRowSums[a] || 0));
 
       let grandMatrixTotal = 0;
@@ -1988,8 +2015,9 @@
         const rowSum = channelRowSums[ch] || 0;
         grandMatrixTotal += rowSum;
 
+        // 左侧渠道单元格禁止换行 whitespace-nowrap
         let rowHtml = `<tr>
-          <td class="py-2.5 px-3 font-medium text-slate-800 border border-slate-200 bg-slate-50">${escapeHtml(ch)}</td>`;
+          <td class="py-2.5 px-3.5 font-medium text-slate-800 border border-slate-200 bg-slate-50 whitespace-nowrap">${escapeHtml(ch)}</td>`;
 
         dateList.forEach(d => {
           const qty = matrixMap[ch][d] || 0;
@@ -2007,7 +2035,7 @@
       });
 
       let footHtml = `<tr>
-        <td class="py-3 px-3 font-bold text-slate-900 border border-slate-300 bg-slate-200">总计</td>`;
+        <td class="py-3 px-3.5 font-bold text-slate-900 border border-slate-300 bg-slate-200 whitespace-nowrap">总计</td>`;
       dateList.forEach(d => {
         footHtml += `<td class="py-3 px-2 text-center font-bold text-slate-900 border border-slate-300 bg-slate-100">${colTotals[d]}</td>`;
       });
@@ -2017,24 +2045,24 @@
       renderDatePivotAreaChart(filtered, dateList);
     }
 
-    // 模块二：渲染各日期时间段缺货超时数量与预售发货时间缺货数量的双折线面积图
+    // 模块二：渲染各日期时间段缺货超时数量与预售发货缺货数量的双折线面积图（完全跟随联动，双色明显区分）
     function renderDatePivotAreaChart(filteredList, dateList) {
       const container = document.getElementById('mod2AreaChartContainer');
       const peakTextEl = document.getElementById('mod2ChartPeakText');
-      const totalTextEl = document.getElementById('mod2ChartTotalText');
+      const overdueTextEl = document.getElementById('mod2ChartOverdueText');
       const presaleTextEl = document.getElementById('mod2ChartPresaleText');
 
       if (!container) return;
 
       if (!dateList || dateList.length === 0) {
-        container.innerHTML = '<span class="text-xs text-slate-400">当前筛选范围内暂无有效履约时效日期</span>';
+        container.innerHTML = '<span class="text-xs text-slate-400">当前筛选范围内暂无有效履约时效日期数据</span>';
         if (peakTextEl) peakTextEl.textContent = '0 件';
-        if (totalTextEl) totalTextEl.textContent = '0 件';
+        if (overdueTextEl) overdueTextEl.textContent = '0 件';
         if (presaleTextEl) presaleTextEl.textContent = '0 件';
         return;
       }
 
-      // 聚合每个日期的【缺货超时数量】和【预售发货时间缺货数量】
+      // 聚合每个日期的【缺货超时数量】与【预售发货缺货数量】
       const dateOverdueMap = {};
       const datePresaleStockoutMap = {};
       dateList.forEach(d => {
@@ -2045,7 +2073,9 @@
       filteredList.forEach(r => {
         const dStr = r.statDateStr;
         if (dStr && dateOverdueMap[dStr] !== undefined) {
-          dateOverdueMap[dStr] += (r.stockoutOverdueQty || 0);
+          if (r.isOverdue) {
+            dateOverdueMap[dStr] += (r.stockoutQty || 0);
+          }
           if (r.isPresale) {
             datePresaleStockoutMap[dStr] += (r.stockoutQty || 0);
           }
@@ -2060,7 +2090,7 @@
       const peakVal = Math.max(...overdueValues, ...presaleValues, 0);
 
       if (peakTextEl) peakTextEl.textContent = `${peakVal.toLocaleString()} 件`;
-      if (totalTextEl) totalTextEl.textContent = `${totalOverdue.toLocaleString()} 件`;
+      if (overdueTextEl) overdueTextEl.textContent = `${totalOverdue.toLocaleString()} 件`;
       if (presaleTextEl) presaleTextEl.textContent = `${totalPresaleStockout.toLocaleString()} 件`;
 
       // 构建高精度响应式 SVG 双折线面积图
@@ -2076,35 +2106,34 @@
       const yMax = Math.max(peakVal * 1.18, 6);
       const stepX = dateList.length > 1 ? plotW / (dateList.length - 1) : plotW / 2;
 
-      // 缺货超时趋势点位
+      // 缺货超时点位（琥珀橙色/暖调）
       const overduePoints = dateList.map((d, i) => {
         const x = dateList.length > 1 ? (padLeft + i * stepX) : (padLeft + plotW / 2);
         const y = padTop + plotH - (overdueValues[i] / yMax) * plotH;
         return { x, y, date: d, val: overdueValues[i] };
       });
 
-      // 预售发货缺货趋势点位
+      // 预售发货缺货点位（靛青紫色/冷调）
       const presalePoints = dateList.map((d, i) => {
         const x = dateList.length > 1 ? (padLeft + i * stepX) : (padLeft + plotW / 2);
         const y = padTop + plotH - (presaleValues[i] / yMax) * plotH;
         return { x, y, date: d, val: presaleValues[i] };
       });
 
-      // 生成面积与折线路径：超时趋势（蓝色）
+      // 缺货超时路径（琥珀橙）
       let overdueLinePath = `M ${overduePoints[0].x} ${overduePoints[0].y}`;
       for (let i = 1; i < overduePoints.length; i++) {
         overdueLinePath += ` L ${overduePoints[i].x} ${overduePoints[i].y}`;
       }
       let overdueAreaPath = `${overdueLinePath} L ${overduePoints[overduePoints.length - 1].x} ${padTop + plotH} L ${overduePoints[0].x} ${padTop + plotH} Z`;
 
-      // 生成面积与折线路径：预售发货缺货趋势（紫色）
+      // 预售发货缺货路径（靛紫）
       let presaleLinePath = `M ${presalePoints[0].x} ${presalePoints[0].y}`;
       for (let i = 1; i < presalePoints.length; i++) {
         presaleLinePath += ` L ${presalePoints[i].x} ${presalePoints[i].y}`;
       }
       let presaleAreaPath = `${presaleLinePath} L ${presalePoints[presalePoints.length - 1].x} ${padTop + plotH} L ${presalePoints[0].x} ${padTop + plotH} Z`;
 
-      // 生成参考网格线
       let gridLines = '';
       const gridTicks = 4;
       for (let i = 0; i <= gridTicks; i++) {
@@ -2116,24 +2145,26 @@
         `;
       }
 
-      // 生成双数据节点与提示
       let nodesSvg = '';
       dateList.forEach((d, i) => {
-        const pOverdue = overduePoints[i];
-        const pPresale = presalePoints[i];
-        const isPeak = (Math.max(pOverdue.val, pPresale.val) === peakVal && peakVal > 0);
+        const pOver = overduePoints[i];
+        const pPre = presalePoints[i];
+        const isPeak = (Math.max(pOver.val, pPre.val) === peakVal && peakVal > 0);
 
         nodesSvg += `
           <g class="cursor-pointer group">
-            <line x1="${pOverdue.x}" y1="${padTop}" x2="${pOverdue.x}" y2="${padTop + plotH}" stroke="#cbd5e1" stroke-width="1" stroke-opacity="0" class="group-hover:stroke-opacity-100 transition" />
-            <!-- 预售发货缺货节点 (紫色) -->
-            <circle cx="${pPresale.x}" cy="${pPresale.y}" r="${pPresale.val > 0 ? '4' : '2.5'}" fill="#6366f1" stroke="#ffffff" stroke-width="1.8" />
-            ${pPresale.val > 0 ? `<text x="${pPresale.x}" y="${pPresale.y - 7}" text-anchor="middle" font-size="9.5" font-weight="600" fill="#4338ca" font-mono>${pPresale.val}</text>` : ''}
-            <!-- 缺货超时节点 (蓝色/红色) -->
-            <circle cx="${pOverdue.x}" cy="${pOverdue.y}" r="${isPeak ? '5.5' : (pOverdue.val > 0 ? '4.5' : '2.5')}" fill="${isPeak ? '#ef4444' : (pOverdue.val > 0 ? '#2563eb' : '#94a3b8')}" stroke="#ffffff" stroke-width="2" class="group-hover:r-7 transition" />
-            ${pOverdue.val > 0 ? `<text x="${pOverdue.x}" y="${pOverdue.y + 13}" text-anchor="middle" font-size="${isPeak ? '10.5' : '9.5'}" font-weight="${isPeak ? 'bold' : '600'}" fill="${isPeak ? '#dc2626' : '#1e40af'}" font-mono>${pOverdue.val}</text>` : ''}
-            <!-- X 轴日期 -->
-            <text x="${pOverdue.x}" y="${padTop + plotH + 20}" text-anchor="middle" font-size="10" fill="#475569" font-mono font-medium>${d.replace(/^\d{4}-/, '')}</text>
+            <line x1="${pOver.x}" y1="${padTop}" x2="${pOver.x}" y2="${padTop + plotH}" stroke="#cbd5e1" stroke-width="1" stroke-opacity="0" class="group-hover:stroke-opacity-100 transition" />
+            
+            <!-- 预售发货缺货节点 (靛青紫色) -->
+            <circle cx="${pPre.x}" cy="${pPre.y}" r="${pPre.val > 0 ? '4' : '2.5'}" fill="#6366f1" stroke="#ffffff" stroke-width="1.8" />
+            ${pPre.val > 0 ? `<text x="${pPre.x}" y="${pPre.y - 7}" text-anchor="middle" font-size="9.5" font-weight="600" fill="#4338ca" font-mono>${pPre.val}</text>` : ''}
+            
+            <!-- 缺货超时节点 (温暖琥珀橙色 / 红色峰值) -->
+            <circle cx="${pOver.x}" cy="${pOver.y}" r="${isPeak ? '5.5' : (pOver.val > 0 ? '4.5' : '2.5')}" fill="${isPeak ? '#ef4444' : (pOver.val > 0 ? '#f59e0b' : '#94a3b8')}" stroke="#ffffff" stroke-width="2" class="group-hover:r-7 transition" />
+            ${pOver.val > 0 ? `<text x="${pOver.x}" y="${pOver.y + 13}" text-anchor="middle" font-size="${isPeak ? '10.5' : '9.5'}" font-weight="${isPeak ? 'bold' : '600'}" fill="${isPeak ? '#dc2626' : '#b45309'}" font-mono>${pOver.val}</text>` : ''}
+            
+            <!-- X 轴日期 (月-日) -->
+            <text x="${pOver.x}" y="${padTop + plotH + 20}" text-anchor="middle" font-size="10" fill="#475569" font-mono font-medium>${d.replace(/^\d{4}-/, '')}</text>
           </g>
         `;
       });
@@ -2141,27 +2172,29 @@
       const svgHtml = `
         <svg viewBox="0 0 ${width} ${height}" class="w-full h-full select-none">
           <defs>
-            <linearGradient id="mod2OverdueGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.32"/>
-              <stop offset="85%" stop-color="#60a5fa" stop-opacity="0.04"/>
-              <stop offset="100%" stop-color="#ffffff" stop-opacity="0.0"/>
-            </linearGradient>
+            <!-- 预售发货缺货渐变 (冷调靛紫) -->
             <linearGradient id="mod2PresaleGrad" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stop-color="#6366f1" stop-opacity="0.25"/>
               <stop offset="85%" stop-color="#818cf8" stop-opacity="0.03"/>
               <stop offset="100%" stop-color="#ffffff" stop-opacity="0.0"/>
             </linearGradient>
-            <filter id="shadowGlow" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#2563eb" flood-opacity="0.18"/>
+            <!-- 缺货超时渐变 (暖调琥珀橙) -->
+            <linearGradient id="mod2OverdueGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.32"/>
+              <stop offset="85%" stop-color="#fbbf24" stop-opacity="0.04"/>
+              <stop offset="100%" stop-color="#ffffff" stop-opacity="0.0"/>
+            </linearGradient>
+            <filter id="shadowGlowAmber" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#f59e0b" flood-opacity="0.22"/>
             </filter>
           </defs>
           ${gridLines}
-          <!-- 预售发货缺货趋势面积与线 -->
+          <!-- 预售发货缺货趋势面积与虚线 (靛青紫色) -->
           <path d="${presaleAreaPath}" fill="url(#mod2PresaleGrad)" />
           <path d="${presaleLinePath}" fill="none" stroke="#6366f1" stroke-width="2.2" stroke-dasharray="4 2" stroke-linejoin="round" stroke-linecap="round" />
-          <!-- 缺货超时趋势面积与线 -->
+          <!-- 缺货超时趋势面积与实线 (温暖琥珀橙色) -->
           <path d="${overdueAreaPath}" fill="url(#mod2OverdueGrad)" />
-          <path d="${overdueLinePath}" fill="none" stroke="#2563eb" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" filter="url(#shadowGlow)" />
+          <path d="${overdueLinePath}" fill="none" stroke="#f59e0b" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" filter="url(#shadowGlowAmber)" />
           ${nodesSvg}
         </svg>
       `;
