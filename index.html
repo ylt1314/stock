@@ -2213,74 +2213,81 @@
       renderDetailTable();
     }
 
-    function renderDetailTable() {
-      const computedList = rawData.map(r => computeRecordStatus(r, benchmarkTime));
+    // 模块四统一数据管道：导出与界面共用相同筛选和排序结果。
+    // 导出范围为所有符合当前筛选条件的记录，保持界面排序顺序；不受分页页码限制。
+    function getFilteredSortedDetailItems(computedList = rawData.map(r => computeRecordStatus(r, benchmarkTime))) {
       const dateFilter = document.getElementById('detailDateFilter').value;
       const groupFilter = document.getElementById('detailGroupFilter').value;
       const statusFilter = document.getElementById('detailStatusFilter').value;
       const tailFilter = document.getElementById('detailTailFilter') ? document.getElementById('detailTailFilter').value : 'all';
       const searchKeyword = document.getElementById('detailSearchInput').value.trim().toLowerCase();
 
-      renderDateStatsBadges(computedList);
-
       let items = computedList.map(r => {
         const presaleDateStr = r.presaleTime ? formatDate(r.presaleTime) : '无预售(现货)';
         const payDateStr = r.payTime ? formatDate(r.payTime) : '-';
         let statusText = '履约正常';
-        if (r.isOverdue) {
-          statusText = r.isPresale ? '预售超时' : '现货超时';
-        }
+        if (r.isOverdue) statusText = r.isPresale ? '预售超时' : '现货超时';
         return {
           id: r.id,
           orderNo: r.orderNo || '-',
           presaleDate: presaleDateStr,
           payDate: payDateStr,
           statDate: r.statDateStr || '未定日期',
-          projectGroup: r.projectGroup,
-          channel: r.channel,
-          spu: r.spu,
-          sku: r.sku,
-          color: r.color,
-          size: r.size,
+          projectGroup: r.projectGroup || '',
+          channel: r.channel || '',
+          spu: r.spu || '',
+          sku: r.sku || '',
+          color: r.color || '',
+          size: r.size || '',
           isOverdue: r.isOverdue,
           isPresale: r.isPresale,
           isPaid: r.isPaid,
           tailStatus: r.tailStatus,
-          stockoutQty: r.stockoutQty,
-          stockoutOverdueQty: r.stockoutOverdueQty, // 缺货超时数量
-          statusText: statusText,
+          stockoutQty: r.stockoutQty || 0,
+          stockoutOverdueQty: r.stockoutOverdueQty || 0,
+          statusText,
           imgUrl: r.imgUrl
         };
       });
 
-      if (statusFilter === 'overdue') {
-        items = items.filter(x => x.isOverdue);
-      }
-
-      if (tailFilter === 'paid') {
-        items = items.filter(x => x.isPaid);
-      } else if (tailFilter === 'unpaid') {
-        items = items.filter(x => !x.isPaid);
-      }
-
-      if (dateFilter !== 'all') {
-        items = items.filter(x => x.statDate === dateFilter);
-      }
-
-      if (groupFilter !== 'all') {
-        items = items.filter(x => x.projectGroup === groupFilter || x.channel === groupFilter);
-      }
-
+      if (statusFilter === 'overdue') items = items.filter(x => x.isOverdue);
+      if (tailFilter === 'paid') items = items.filter(x => x.isPaid);
+      else if (tailFilter === 'unpaid') items = items.filter(x => !x.isPaid);
+      if (dateFilter !== 'all') items = items.filter(x => x.statDate === dateFilter);
+      if (groupFilter !== 'all') items = items.filter(x => x.projectGroup === groupFilter || x.channel === groupFilter);
       if (searchKeyword) {
         items = items.filter(x =>
-          x.orderNo.toLowerCase().includes(searchKeyword) ||
-          x.spu.toLowerCase().includes(searchKeyword) ||
-          x.sku.toLowerCase().includes(searchKeyword) ||
-          x.color.toLowerCase().includes(searchKeyword) ||
-          x.statDate.includes(searchKeyword) ||
-          x.presaleDate.includes(searchKeyword)
+          String(x.orderNo || '').toLowerCase().includes(searchKeyword) ||
+          String(x.spu || '').toLowerCase().includes(searchKeyword) ||
+          String(x.sku || '').toLowerCase().includes(searchKeyword) ||
+          String(x.color || '').toLowerCase().includes(searchKeyword) ||
+          String(x.statDate || '').toLowerCase().includes(searchKeyword) ||
+          String(x.presaleDate || '').toLowerCase().includes(searchKeyword)
         );
       }
+
+      items.sort((a, b) => {
+        let valA = a[detailSortField];
+        let valB = b[detailSortField];
+        if (detailSortField === 'stockoutQty' || detailSortField === 'stockoutOverdueQty') {
+          return detailSortDir === 'asc' ? (valA - valB) : (valB - valA);
+        }
+        if (detailSortField === 'presaleDate' || detailSortField === 'payDate' || detailSortField === 'statDate') {
+          valA = a[detailSortField] || '';
+          valB = b[detailSortField] || '';
+          return detailSortDir === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        }
+        valA = String(valA || '');
+        valB = String(valB || '');
+        return detailSortDir === 'asc' ? valA.localeCompare(valB, 'zh-CN') : valB.localeCompare(valA, 'zh-CN');
+      });
+      return items;
+    }
+
+    function renderDetailTable() {
+      const computedList = rawData.map(r => computeRecordStatus(r, benchmarkTime));
+      renderDateStatsBadges(computedList);
+      const items = getFilteredSortedDetailItems(computedList);
 
       const uniqueOrderSet = new Set();
       const uniqueSpuSet = new Set();
@@ -2336,25 +2343,6 @@
           iconEl.textContent = '⇅';
           iconEl.className = 'text-[10px] text-slate-400 font-mono';
         }
-      });
-
-      items.sort((a, b) => {
-        let valA = a[detailSortField];
-        let valB = b[detailSortField];
-
-        if (detailSortField === 'stockoutQty' || detailSortField === 'stockoutOverdueQty') {
-          return detailSortDir === 'asc' ? (valA - valB) : (valB - valA);
-        }
-
-        if (detailSortField === 'presaleDate' || detailSortField === 'payDate' || detailSortField === 'statDate') {
-          valA = a[detailSortField] || '';
-          valB = b[detailSortField] || '';
-          return detailSortDir === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
-        }
-
-        valA = String(valA || '');
-        valB = String(valB || '');
-        return detailSortDir === 'asc' ? valA.localeCompare(valB, 'zh-CN') : valB.localeCompare(valA, 'zh-CN');
       });
 
       const totalCount = items.length;
@@ -2443,7 +2431,9 @@
       renderMod4Table();
     }
 
-    function renderMod4Table() {
+    // 模块三统一数据管道：看板渲染与 Excel 导出复用相同筛选、聚合及排序逻辑。
+    // 返回所有匹配当前界面条件的货号，不限于当前分页中的可视行。
+    function getFilteredSortedMod4List() {
       const computedList = rawData.map(r => computeRecordStatus(r, benchmarkTime));
       const dateFilter = document.getElementById('mod4DateFilter').value;
       const groupFilter = document.getElementById('mod4GroupFilter').value;
@@ -2451,68 +2441,45 @@
       const tailFilter = document.getElementById('mod4TailFilter') ? document.getElementById('mod4TailFilter').value : 'all';
       const searchKeyword = document.getElementById('mod4SearchInput').value.trim().toLowerCase();
 
-      // 先过滤明细项
       let items = computedList;
-      if (dateFilter !== 'all') {
-        items = items.filter(x => x.statDateStr === dateFilter);
-      }
-      if (groupFilter !== 'all') {
-        items = items.filter(x => x.projectGroup === groupFilter || x.channel === groupFilter);
-      }
-      if (tailFilter === 'paid') {
-        items = items.filter(x => x.isPaid);
-      } else if (tailFilter === 'unpaid') {
-        items = items.filter(x => !x.isPaid);
-      }
+      if (dateFilter !== 'all') items = items.filter(x => x.statDateStr === dateFilter);
+      if (groupFilter !== 'all') items = items.filter(x => x.projectGroup === groupFilter || x.channel === groupFilter);
+      if (tailFilter === 'paid') items = items.filter(x => x.isPaid);
+      else if (tailFilter === 'unpaid') items = items.filter(x => !x.isPaid);
 
-      // 按货号 (SPU) 分组聚合
       const spuMap = new Map();
-
       items.forEach(r => {
         const spuKey = r.spu || '未知货号';
         if (!spuMap.has(spuKey)) {
           spuMap.set(spuKey, {
             spu: spuKey,
             imgUrl: r.imgUrl || '',
-            projectGroup: r.projectGroup,
-            channel: r.channel,
+            projectGroup: r.projectGroup || '',
+            channel: r.channel || '',
             totalStockoutQty: 0,
             totalOverdueQty: 0,
             skus: new Set(),
-            variantsMap: new Map(), // 用于点击弹窗时穿透汇总颜色尺码
-            dateStats: {}          });
+            variantsMap: new Map(),
+            dateStats: {}
+          });
         }
-
         const spuItem = spuMap.get(spuKey);
-        if (!spuItem.imgUrl && r.imgUrl) {
-          spuItem.imgUrl = r.imgUrl;
-        }
+        if (!spuItem.imgUrl && r.imgUrl) spuItem.imgUrl = r.imgUrl;
         spuItem.totalStockoutQty += (r.stockoutQty || 0);
         spuItem.totalOverdueQty += (r.stockoutOverdueQty || 0);
         if (r.sku) spuItem.skus.add(r.sku);
 
-        // 收集各履约日期的缺货与超时量，同时收集预售发货时间缺货数量，供悬停折线图精准绘制
         const dStr = r.statDateStr || '未定日期';
-        if (!spuItem.dateStats[dStr]) {
-          spuItem.dateStats[dStr] = { stockoutQty: 0, overdueQty: 0, presaleQty: 0 };
-        }
+        if (!spuItem.dateStats[dStr]) spuItem.dateStats[dStr] = { stockoutQty: 0, overdueQty: 0, presaleQty: 0 };
         spuItem.dateStats[dStr].stockoutQty += (r.stockoutQty || 0);
         spuItem.dateStats[dStr].overdueQty += (r.stockoutOverdueQty || 0);
-        if (r.isPresale) {
-          spuItem.dateStats[dStr].presaleQty += (r.stockoutQty || 0);
-        }
+        if (r.isPresale) spuItem.dateStats[dStr].presaleQty += (r.stockoutQty || 0);
 
-        // 收集颜色尺码规格子集
         const colorName = String(r.color || '-').trim() || '-';
         const sizeName = String(r.size || '-').trim() || '-';
         const varKey = `${colorName}____${sizeName}`;
         if (!spuItem.variantsMap.has(varKey)) {
-          spuItem.variantsMap.set(varKey, {
-            color: colorName,
-            size: sizeName,
-            stockoutQty: 0,
-            overdueQty: 0
-          });
+          spuItem.variantsMap.set(varKey, { color: colorName, size: sizeName, stockoutQty: 0, overdueQty: 0 });
         }
         const v = spuItem.variantsMap.get(varKey);
         v.stockoutQty += (r.stockoutQty || 0);
@@ -2527,29 +2494,38 @@
           ...x,
           skuCount,
           overdueRate,
-          variants
+          variants,
+          variantDesc: variants.map(v => `${v.color}/${v.size}(缺:${v.stockoutQty},超:${v.overdueQty})`).join('; ')
         };
       });
 
-      // 仅看缺货超时状态过滤
-      if (statusFilter === 'overdue') {
-        spuList = spuList.filter(x => x.totalOverdueQty > 0);
-      }
-
-      // 关键字搜索 (货号 / 项目组 / 渠道)
+      if (statusFilter === 'overdue') spuList = spuList.filter(x => x.totalOverdueQty > 0);
       if (searchKeyword) {
         spuList = spuList.filter(x =>
-          x.spu.toLowerCase().includes(searchKeyword) ||
-          x.projectGroup.toLowerCase().includes(searchKeyword) ||
-          x.channel.toLowerCase().includes(searchKeyword)
+          String(x.spu || '').toLowerCase().includes(searchKeyword) ||
+          String(x.projectGroup || '').toLowerCase().includes(searchKeyword) ||
+          String(x.channel || '').toLowerCase().includes(searchKeyword)
         );
       }
 
-      // 同步刷新全局货号缓存
       window.mod4SpuCache.clear();
-      spuList.forEach(item => {
-        window.mod4SpuCache.set(item.spu, item);
+      spuList.forEach(item => window.mod4SpuCache.set(item.spu, item));
+
+      spuList.sort((a, b) => {
+        let valA = a[mod4SortField];
+        let valB = b[mod4SortField];
+        if (mod4SortField === 'totalStockoutQty' || mod4SortField === 'totalOverdueQty' || mod4SortField === 'skuCount' || mod4SortField === 'overdueRate') {
+          return mod4SortDir === 'asc' ? (valA - valB) : (valB - valA);
+        }
+        valA = String(valA || '');
+        valB = String(valB || '');
+        return mod4SortDir === 'asc' ? valA.localeCompare(valB, 'zh-CN') : valB.localeCompare(valA, 'zh-CN');
       });
+      return spuList;
+    }
+
+    function renderMod4Table() {
+      const spuList = getFilteredSortedMod4List();
 
       // 汇总当前范围总指标
       const totalSpuCount = spuList.length;
@@ -2600,20 +2576,6 @@
           iconEl.textContent = '⇅';
           iconEl.className = 'text-[10px] text-slate-400 font-mono';
         }
-      });
-
-      // 排序货号列表
-      spuList.sort((a, b) => {
-        let valA = a[mod4SortField];
-        let valB = b[mod4SortField];
-
-        if (mod4SortField === 'totalStockoutQty' || mod4SortField === 'totalOverdueQty' || mod4SortField === 'skuCount' || mod4SortField === 'overdueRate') {
-          return mod4SortDir === 'asc' ? (valA - valB) : (valB - valA);
-        }
-
-        valA = String(valA || '');
-        valB = String(valB || '');
-        return mod4SortDir === 'asc' ? valA.localeCompare(valB, 'zh-CN') : valB.localeCompare(valA, 'zh-CN');
       });
 
       // 分页
@@ -3198,46 +3160,29 @@
     }
 
     async function exportDetailExcel() {
-      const computedList = rawData.map(r => computeRecordStatus(r, benchmarkTime));
-
-      let exportList = computedList.map((r, i) => {
-        const presaleDateStr = r.presaleTime ? formatDate(r.presaleTime) : '无预售(现货)';
-        const payDateStr = r.payTime ? formatDate(r.payTime) : '-';
-        let statusText = '履约正常';
-        if (r.isOverdue) {
-          statusText = r.isPresale ? '预售超时' : '现货超时';
-        }
-        return {
-          idx: i + 1,
-          orderNo: r.orderNo || '-',
-          presaleDate: presaleDateStr,
-          payDate: payDateStr,
-          statDate: r.statDateStr || '未定日期',
-          projectGroup: r.projectGroup,
-          channel: r.channel,
-          spu: r.spu,
-          sku: r.sku,
-          color: r.color,
-          size: r.size,
-          stockoutOverdueQty: r.stockoutOverdueQty,
-          stockoutQty: r.stockoutQty,
-          isOverdue: r.isOverdue,
-          statusText: statusText,
-          imgUrl: r.imgUrl
-        };
-      });
-
-      const overdueOnly = exportList.filter(x => x.isOverdue);
-      if (overdueOnly.length > 0) {
-        exportList = overdueOnly;
-      }
+      const exportList = getFilteredSortedDetailItems().map((item, idx) => ({
+        idx: idx + 1,
+        orderNo: item.orderNo,
+        presaleDate: item.presaleDate,
+        payDate: item.payDate,
+        statDate: item.statDate,
+        projectGroup: item.projectGroup,
+        channel: item.channel,
+        spu: item.spu,
+        sku: item.sku,
+        color: item.color,
+        size: item.size,
+        stockoutOverdueQty: item.stockoutOverdueQty,
+        stockoutQty: item.stockoutQty,
+        isOverdue: item.isOverdue,
+        statusText: item.statusText,
+        imgUrl: item.imgUrl
+      }));
 
       if (exportList.length === 0) {
-        showToast('当前没有可导出的商品数据！', 'info');
+        showToast('当前筛选条件下没有可导出的商品数据！', 'info');
         return;
       }
-
-      exportList.sort((a, b) => b.stockoutQty - a.stockoutQty);
 
       if (typeof ExcelJS === 'undefined') {
         showToast('检测到未加载 ExcelJS 引擎，降级导出常规表格...', 'warning');
@@ -3377,61 +3322,20 @@
     }
 
     async function exportMod4Excel() {
-      const computedList = rawData.map(r => computeRecordStatus(r, benchmarkTime));
-      const spuMap = new Map();
-
-      computedList.forEach(r => {
-        const spuKey = r.spu || '未知货号';
-        if (!spuMap.has(spuKey)) {
-          spuMap.set(spuKey, {
-            spu: spuKey,
-            imgUrl: r.imgUrl || '',
-            projectGroup: r.projectGroup,
-            channel: r.channel,
-            totalStockoutQty: 0,
-            totalOverdueQty: 0,
-            skus: new Set(),
-            variantsMap: new Map()
-          });
-        }
-        const spuItem = spuMap.get(spuKey);
-        if (!spuItem.imgUrl && r.imgUrl) spuItem.imgUrl = r.imgUrl;
-        spuItem.totalStockoutQty += (r.stockoutQty || 0);
-        spuItem.totalOverdueQty += (r.stockoutOverdueQty || 0);
-        if (r.sku) spuItem.skus.add(r.sku);
-
-        const colorName = String(r.color || '-').trim() || '-';
-        const sizeName = String(r.size || '-').trim() || '-';
-        const varKey = `${colorName}____${sizeName}`;
-        if (!spuItem.variantsMap.has(varKey)) {
-          spuItem.variantsMap.set(varKey, {
-            color: colorName,
-            size: sizeName,
-            stockoutQty: 0,
-            overdueQty: 0
-          });
-        }
-        const v = spuItem.variantsMap.get(varKey);
-        v.stockoutQty += (r.stockoutQty || 0);
-        v.overdueQty += (r.stockoutOverdueQty || 0);
-      });
-
-      let list = Array.from(spuMap.values()).map(x => ({
+      const list = getFilteredSortedMod4List().map(x => ({
         spu: x.spu,
         imgUrl: x.imgUrl,
         projectGroup: x.projectGroup,
         channel: x.channel,
-        skuCount: x.skus.size || 1,
+        skuCount: x.skuCount,
         totalStockoutQty: x.totalStockoutQty,
         totalOverdueQty: x.totalOverdueQty,
         overdueRate: x.totalStockoutQty > 0 ? ((x.totalOverdueQty / x.totalStockoutQty) * 100).toFixed(1) + '%' : '0%',
-        variantDesc: Array.from(x.variantsMap.values()).map(v => `${v.color}/${v.size}(缺:${v.stockoutQty},超:${v.overdueQty})`).join('; ')
+        variantDesc: x.variantDesc
       }));
 
-      list.sort((a, b) => b.totalStockoutQty - a.totalStockoutQty);
-
       if (list.length === 0) {
-        showToast('暂无货号数据可供导出！', 'info');
+        showToast('当前筛选条件下暂无货号数据可供导出！', 'info');
         return;
       }
 
