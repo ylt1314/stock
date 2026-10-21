@@ -145,6 +145,24 @@
     .login-card-elevated {
       box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(226, 232, 240, 0.9);
     }
+    /* 模块五树形展开折叠过渡与层级样式 */
+    .tree-row-channel {
+      background-color: #f8fafc;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.15s ease;
+    }
+    .tree-row-channel:hover {
+      background-color: #f1f5f9;
+    }
+    .tree-row-spu {
+      background-color: #ffffff;
+      transition: background-color 0.15s ease;
+    }
+    .tree-row-spu:hover {
+      background-color: #fdfdfd;
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -157,33 +175,25 @@
     <!-- 供应链拓扑链路装饰背景矢量图 -->
     <div class="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center opacity-45">
       <svg class="w-full h-full max-w-7xl" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- 履约链路主干流转虚线 -->
         <path d="M120 400 C 300 220, 480 580, 680 400 C 860 220, 960 480, 1100 360" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="6 6"/>
         <path d="M150 520 C 350 380, 520 620, 720 480 C 880 360, 1020 520, 1120 420" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4 4"/>
-        
-        <!-- 履约节点光圈与图标标注点 -->
         <g opacity="0.85">
-          <!-- 节点1：入库质检/中心仓 -->
           <circle cx="210" cy="330" r="28" fill="#ffffff" stroke="#93c5fd" stroke-width="2"/>
           <circle cx="210" cy="330" r="8" fill="#3b82f6"/>
           <text x="210" y="375" text-anchor="middle" font-size="11" fill="#64748b" font-weight="600">中心仓入库 · 质检</text>
 
-          <!-- 节点2：订单聚单分流 -->
           <circle cx="430" cy="480" r="24" fill="#ffffff" stroke="#a5b4fc" stroke-width="2"/>
           <circle cx="430" cy="480" r="7" fill="#6366f1"/>
           <text x="430" y="520" text-anchor="middle" font-size="11" fill="#64748b" font-weight="600">全渠道订单分流中心</text>
 
-          <!-- 节点3：履约时效中枢 -->
           <circle cx="680" cy="400" r="34" fill="#ffffff" stroke="#38bdf8" stroke-width="2.5"/>
           <circle cx="680" cy="400" r="10" fill="#0284c7"/>
           <text x="680" y="450" text-anchor="middle" font-size="12" fill="#0369a1" font-weight="700">时效预警中枢 · SLA监控</text>
 
-          <!-- 节点4：干线分拨 -->
           <circle cx="890" cy="310" r="26" fill="#ffffff" stroke="#fcd34d" stroke-width="2"/>
           <circle cx="890" cy="310" r="8" fill="#f59e0b"/>
           <text x="890" y="352" text-anchor="middle" font-size="11" fill="#78350f" font-weight="600">干线分拨中心</text>
 
-          <!-- 节点5：末端履约交付 -->
           <circle cx="1060" cy="400" r="28" fill="#ffffff" stroke="#86efac" stroke-width="2"/>
           <circle cx="1060" cy="400" r="8" fill="#22c55e"/>
           <text x="1060" y="445" text-anchor="middle" font-size="11" fill="#15803d" font-weight="600">终端精准履约交付</text>
@@ -191,7 +201,7 @@
       </svg>
     </div>
 
-    <!-- 登录主卡片：商务现代微质感卡片 -->
+    <!-- 登录主卡片 -->
     <div class="bg-white/95 backdrop-blur-xl rounded-2xl max-w-md w-full p-8 login-card-elevated border border-slate-200/90 relative z-10">
       <div class="text-center mb-6">
         <div class="inline-flex items-center justify-center gap-2 px-3 py-1 bg-slate-100 rounded-full border border-slate-200 text-[11px] text-slate-600 font-semibold mb-3">
@@ -206,7 +216,6 @@
       </div>
 
       <form id="loginForm" class="space-y-4" onsubmit="event.preventDefault(); handleLogin();">
-        <!-- 账号工号由输入框升级为规范企业下拉菜单 -->
         <div>
           <label class="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center justify-between">
             <span>授权登录工号</span>
@@ -255,7 +264,7 @@
 
       <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
         <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-emerald-500"></i> 数据传输脱敏加密</span>
-        <span class="font-mono">SLA v3.9 Enterprise</span>
+        <span class="font-mono">SLA v4.0 Enterprise</span>
       </div>
     </div>
   </div>
@@ -277,9 +286,9 @@
         <div>
           <h1 class="text-lg font-bold tracking-tight text-white flex items-center gap-2">
             电商全渠道缺货与履约时效分析系统
-            <span class="text-xs bg-yellow-400 text-slate-900 font-semibold px-2 py-0.5 rounded">v3.9 Pro</span>
+            <span class="text-xs bg-yellow-400 text-slate-900 font-semibold px-2 py-0.5 rounded">v4.0 Multi-Matrix</span>
           </h1>
-          <p class="text-xs text-slate-400">缺货数量直接读取 · 尾款总数聚合 · 单品超时透视 · 货号大图规格透视矩阵</p>
+          <p class="text-xs text-slate-400">缺货数量直接读取 · 尾款总数聚合 · 货号规格透视 · 渠道×货号树形展开矩阵</p>
         </div>
       </div>
 
@@ -338,7 +347,7 @@
       </div>
     </div>
 
-    <!-- 1. 顶端 KPI 关键指标看板：首卡缺货数量严格来源于表格【缺货数量】列总和 -->
+    <!-- 1. 顶端 KPI 关键指标看板 -->
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
       <div class="bg-white p-3.5 rounded-xl border-2 border-red-300 card-shadow bg-red-50/30">
         <p class="text-xs text-red-600 font-bold flex items-center gap-1">
@@ -380,7 +389,7 @@
       </div>
     </div>
 
-    <!-- 模块一：缺货与超时汇总表（【缺货总数】= 已付尾款 + 未付尾款，各渠道按缺货总数降序排列） -->
+    <!-- 模块一：缺货与超时汇总表 -->
     <div class="bg-white rounded-xl border border-slate-200 card-shadow overflow-hidden">
       <div class="px-5 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3 bg-slate-50/50">
         <div class="flex items-center gap-2.5">
@@ -389,7 +398,6 @@
           <span class="text-xs text-slate-500 bg-slate-200 px-2 py-0.5 rounded">缺货总数 = 已付尾款 + 未付尾款（渠道按缺货总数降序）</span>
         </div>
 
-        <!-- 尾款状态筛选下拉框 -->
         <div class="flex items-center gap-2 bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs shadow-sm">
           <span class="text-slate-600 font-medium"><i class="fa-solid fa-filter text-yellow-500 mr-1"></i>尾款状态筛选：</span>
           <select id="tailStatusFilterSelect" class="bg-transparent font-semibold text-slate-800 focus:outline-none cursor-pointer">
@@ -403,7 +411,6 @@
       <div class="p-5 overflow-x-auto custom-scrollbar">
         <table class="table-target-spec min-w-[1020px]">
           <thead>
-            <!-- 第一行表头 -->
             <tr>
               <th rowspan="2" class="align-middle" style="width: 140px;">渠道</th>
               <th colspan="3">尾款状态分布与缺货总量</th>
@@ -412,7 +419,6 @@
               <th colspan="2">有预售情况</th>
               <th rowspan="2" class="align-middle highlight-head-overdue" style="width: 110px;">缺货超时总数</th>
             </tr>
-            <!-- 第二行表头：仅对【缺货总数】与【缺货超时总数】做特别底纹强调 -->
             <tr>
               <th style="width: 80px;">已付尾款</th>
               <th style="width: 80px;">未付尾款</th>
@@ -425,12 +431,8 @@
               <th style="width: 80px;">已超时</th>
             </tr>
           </thead>
-          <tbody id="summaryTableBody">
-            <!-- 动态注入数据行 -->
-          </tbody>
-          <tfoot id="summaryTableFoot">
-            <!-- 动态注入汇总合计 -->
-          </tfoot>
+          <tbody id="summaryTableBody"></tbody>
+          <tfoot id="summaryTableFoot"></tfoot>
         </table>
       </div>
 
@@ -448,11 +450,9 @@
           <h2 class="text-base font-bold text-slate-800">模块二：渠道 × 履约承诺/超时时效日期透视矩阵</h2>
           <span class="text-xs text-slate-500 bg-slate-200 px-2 py-0.5 rounded">渠道行已自动按【总计】降序排布</span>
         </div>
-        <!-- 筛选控件组：尾款状态筛选 + 缺货超时/未超时筛选联动 -->
         <div class="flex flex-wrap items-center gap-2.5 text-xs">
           <span class="text-slate-500 hidden xl:inline">时效规则：预售取【发货时间】，现货取【支付+2天】</span>
           
-          <!-- 尾款状态筛选 -->
           <div class="flex items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm">
             <span class="text-slate-600 font-medium"><i class="fa-solid fa-money-check-dollar text-slate-400 mr-1"></i>尾款状态筛选：</span>
             <select id="mod2TailFilterSelect" class="bg-transparent font-medium text-slate-800 focus:outline-none cursor-pointer">
@@ -462,7 +462,6 @@
             </select>
           </div>
 
-          <!-- 缺货超时 / 缺货未超时 筛选 -->
           <div class="flex items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm">
             <span class="text-slate-600 font-medium"><i class="fa-solid fa-clock-rotate-left text-slate-400 mr-1"></i>时效状态筛选：</span>
             <select id="mod2OverdueFilterSelect" class="bg-transparent font-medium text-slate-800 focus:outline-none cursor-pointer">
@@ -476,19 +475,12 @@
 
       <div class="p-5 overflow-x-auto custom-scrollbar">
         <table id="datePivotTable" class="w-full text-sm text-left border-collapse border border-slate-200">
-          <thead id="datePivotHead" class="bg-slate-100 text-slate-700 font-semibold text-xs border-b border-slate-300">
-            <!-- 动态生成日期列 -->
-          </thead>
-          <tbody id="datePivotBody" class="divide-y divide-slate-200">
-            <!-- 动态生成渠道行（按总计降序） -->
-          </tbody>
-          <tfoot id="datePivotFoot" class="bg-slate-50 font-bold border-t-2 border-slate-300">
-            <!-- 动态合计 -->
-          </tfoot>
+          <thead id="datePivotHead" class="bg-slate-100 text-slate-700 font-semibold text-xs border-b border-slate-300"></thead>
+          <tbody id="datePivotBody" class="divide-y divide-slate-200"></tbody>
+          <tfoot id="datePivotFoot" class="bg-slate-50 font-bold border-t-2 border-slate-300"></tfoot>
         </table>
       </div>
 
-      <!-- 模块二新增：不同日期时段缺货超时数量折线面积图 -->
       <div class="px-5 py-4 border-t border-slate-200 bg-slate-50/50">
         <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
           <div class="flex items-center gap-2">
@@ -505,14 +497,13 @@
           </div>
         </div>
 
-        <!-- 响应式 SVG 折线面积图容器 -->
         <div id="mod2AreaChartContainer" class="w-full min-h-[220px] bg-white rounded-xl border border-slate-200 p-4 shadow-sm flex items-center justify-center relative overflow-hidden">
           <span class="text-xs text-slate-400">正在生成时效日期折线面积图...</span>
         </div>
       </div>
     </div>
 
-    <!-- 模块三：货号维度缺货与超时汇总看板（由原模块四上移升级为模块三，大图再放大并紧凑后续列宽） -->
+    <!-- 模块三：货号维度缺货与超时汇总看板 -->
     <div class="bg-white rounded-xl border border-slate-200 card-shadow overflow-hidden">
       <div class="px-5 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3 bg-slate-50/50">
         <div class="flex items-center gap-2.5">
@@ -521,9 +512,7 @@
           <span class="text-xs bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded font-medium" id="mod4SpuCountBadge">共 0 个货号款</span>
         </div>
 
-        <!-- 筛选与搜索工具条 -->
         <div class="flex flex-wrap items-center gap-2.5">
-          <!-- 筛选日期 -->
           <div class="flex items-center gap-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs">
             <i class="fa-regular fa-calendar text-slate-400"></i>
             <select id="mod4DateFilter" class="bg-transparent text-slate-700 focus:outline-none">
@@ -531,7 +520,6 @@
             </select>
           </div>
 
-          <!-- 筛选项目组/渠道 -->
           <div class="flex items-center gap-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs">
             <i class="fa-solid fa-filter text-slate-400"></i>
             <select id="mod4GroupFilter" class="bg-transparent text-slate-700 focus:outline-none">
@@ -539,7 +527,6 @@
             </select>
           </div>
 
-          <!-- 范围切换 -->
           <div class="flex items-center gap-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs">
             <select id="mod4StatusFilter" class="bg-transparent text-slate-700 focus:outline-none font-medium">
               <option value="all" selected>查看全部货号款 (默认)</option>
@@ -547,7 +534,6 @@
             </select>
           </div>
 
-          <!-- 模块三专属：尾款状态筛选 -->
           <div class="flex items-center gap-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs">
             <i class="fa-solid fa-money-check-dollar text-slate-400"></i>
             <select id="mod4TailFilter" class="bg-transparent text-slate-700 focus:outline-none font-medium cursor-pointer">
@@ -557,13 +543,11 @@
             </select>
           </div>
 
-          <!-- 搜索框 -->
           <div class="relative">
             <input type="text" id="mod4SearchInput" placeholder="搜索货号 / 渠道 / 项目组..." class="w-48 text-xs bg-white border border-slate-300 rounded-lg pl-8 pr-3 py-1.5 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
             <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-xs"></i>
           </div>
 
-          <!-- 导出按钮 -->
           <button id="btnExportMod4Table" class="text-xs bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow-sm">
             <i class="fa-solid fa-file-excel"></i> 导出货号汇总(含大图)
           </button>
@@ -578,7 +562,6 @@
         <span class="text-slate-500 font-medium">按单款货号汇总 · 强化大图检视并优化列宽紧凑度</span>
       </div>
 
-      <!-- 表格内容（带再放大商品大图与置顶汇总行） -->
       <div class="overflow-x-auto custom-scrollbar max-h-[580px] relative" id="mod4TableScrollContainer">
         <table class="w-full text-xs text-left border-collapse min-w-[1040px]">
           <thead class="bg-slate-100 text-slate-700 font-semibold sticky top-0 z-20 border-b border-slate-200">
@@ -623,15 +606,9 @@
               </th>
               <th class="py-2.5 px-2.5 text-center" style="width: 100px;">状态标记</th>
             </tr>
-
-            <!-- 模块三专属置顶汇总行 -->
-            <tr id="mod4PinnedSummaryRow" class="summary-pinned-row font-bold text-slate-900 border-b-2 border-indigo-400">
-              <!-- 动态注入置顶汇总数据 -->
-            </tr>
+            <tr id="mod4PinnedSummaryRow" class="summary-pinned-row font-bold text-slate-900 border-b-2 border-indigo-400"></tr>
           </thead>
-          <tbody id="mod4TableBody" class="divide-y divide-slate-200 bg-white">
-            <!-- 动态生成货号数据行 -->
-          </tbody>
+          <tbody id="mod4TableBody" class="divide-y divide-slate-200 bg-white"></tbody>
         </table>
       </div>
 
@@ -648,7 +625,7 @@
       </div>
     </div>
 
-    <!-- 模块四：商品单品缺货明细清单（由原模块三下移为模块四，将缺货超时数量、缺货数量、状态标记前移，颜色、尺码后移） -->
+    <!-- 模块四：商品单品缺货明细清单 -->
     <div class="bg-white rounded-xl border border-slate-200 card-shadow overflow-hidden">
       <div class="px-5 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3 bg-slate-50/50">
         <div class="flex items-center gap-2.5">
@@ -657,9 +634,7 @@
           <span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded font-medium" id="skuDetailCountBadge">共 0 条明细</span>
         </div>
 
-        <!-- 筛选与搜索工具条 -->
         <div class="flex flex-wrap items-center gap-2.5">
-          <!-- 筛选日期 -->
           <div class="flex items-center gap-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs">
             <i class="fa-regular fa-calendar text-slate-400"></i>
             <select id="detailDateFilter" class="bg-transparent text-slate-700 focus:outline-none">
@@ -667,7 +642,6 @@
             </select>
           </div>
 
-          <!-- 筛选项目组/渠道 -->
           <div class="flex items-center gap-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs">
             <i class="fa-solid fa-filter text-slate-400"></i>
             <select id="detailGroupFilter" class="bg-transparent text-slate-700 focus:outline-none">
@@ -675,7 +649,6 @@
             </select>
           </div>
 
-          <!-- 范围切换 -->
           <div class="flex items-center gap-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs">
             <select id="detailStatusFilter" class="bg-transparent text-slate-700 focus:outline-none font-medium">
               <option value="all" selected>查看全部订单商品 (默认)</option>
@@ -683,7 +656,6 @@
             </select>
           </div>
 
-          <!-- 模块四专属：尾款状态筛选 -->
           <div class="flex items-center gap-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs">
             <i class="fa-solid fa-money-check-dollar text-slate-400"></i>
             <select id="detailTailFilter" class="bg-transparent text-slate-700 focus:outline-none font-medium cursor-pointer">
@@ -693,30 +665,24 @@
             </select>
           </div>
 
-          <!-- 搜索框 -->
           <div class="relative">
             <input type="text" id="detailSearchInput" placeholder="搜索订单号 / 货号 / SKU..." class="w-48 text-xs bg-white border border-slate-300 rounded-lg pl-8 pr-3 py-1.5 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
             <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-xs"></i>
           </div>
 
-          <!-- 导出按钮 -->
           <button id="btnExportDetailTable" class="text-xs bg-slate-800 hover:bg-slate-700 text-white px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow-sm">
             <i class="fa-solid fa-download"></i> 导出当前明细(带图)
           </button>
         </div>
       </div>
 
-      <!-- 日期缺货超时分布标签卡条 -->
       <div class="px-5 py-2.5 bg-slate-100/70 border-b border-slate-200 flex flex-wrap items-center gap-2 text-xs" id="dateStatsBadgeContainer">
         <span class="text-slate-500 font-medium mr-1"><i class="fa-solid fa-chart-simple mr-1 text-slate-400"></i>各日期缺货数量汇总：</span>
-        <!-- 动态生成日期徽章 -->
       </div>
 
-      <!-- 表格内容（已重构列顺序：缺货超时数量、缺货数量、状态标记前移；颜色、尺码后移） -->
       <div class="overflow-x-auto custom-scrollbar max-h-[580px] relative" id="detailTableScrollContainer">
         <table class="w-full text-xs text-left border-collapse min-w-[1360px]">
           <thead class="bg-slate-100 text-slate-700 font-semibold sticky top-0 z-20 border-b border-slate-200">
-            <!-- 第一行：交互排序表头 -->
             <tr class="bg-slate-100 border-b border-slate-300">
               <th class="py-2.5 px-3 text-center" style="width: 45px;">序号</th>
               <th class="py-2.5 px-3 text-center" style="width: 65px;">商品主图</th>
@@ -762,35 +728,30 @@
                   <span id="sortIcon_sku" class="text-[10px] text-slate-400 font-mono">⇅</span>
                 </div>
               </th>
-              <!-- 前移核心关键指标：缺货超时数量 -->
               <th class="py-2.5 px-3 cursor-pointer select-none hover:bg-amber-100 transition text-center" onclick="handleDetailSort('stockoutOverdueQty')" style="width: 105px;">
                 <div class="flex items-center justify-center gap-1 text-amber-700 font-bold">
                   <span>缺货超时数量</span>
                   <span id="sortIcon_stockoutOverdueQty" class="text-[10px] font-mono">⇅</span>
                 </div>
               </th>
-              <!-- 前移核心关键指标：缺货数量 -->
               <th class="py-2.5 px-3 cursor-pointer select-none hover:bg-red-100 transition text-center" onclick="handleDetailSort('stockoutQty')" style="width: 95px;">
                 <div class="flex items-center justify-center gap-1 text-red-600 font-bold">
                   <span>缺货数量</span>
                   <span id="sortIcon_stockoutQty" class="text-[10px] font-mono">▼</span>
                 </div>
               </th>
-              <!-- 前移：状态标记 -->
               <th class="py-2.5 px-3 cursor-pointer select-none hover:bg-slate-200 transition text-center" onclick="handleDetailSort('statusText')" style="width: 95px;">
                 <div class="flex items-center justify-center gap-1">
                   <span>状态标记</span>
                   <span id="sortIcon_statusText" class="text-[10px] text-slate-400 font-mono">⇅</span>
                 </div>
               </th>
-              <!-- 后移规格属性：颜色 -->
               <th class="py-2.5 px-3 cursor-pointer select-none hover:bg-slate-200 transition" onclick="handleDetailSort('color')" style="width: 75px;">
                 <div class="flex items-center justify-between">
                   <span>颜色</span>
                   <span id="sortIcon_color" class="text-[10px] text-slate-400 font-mono">⇅</span>
                 </div>
               </th>
-              <!-- 后移规格属性：尺码 -->
               <th class="py-2.5 px-3 cursor-pointer select-none hover:bg-slate-200 transition" onclick="handleDetailSort('size')" style="width: 65px;">
                 <div class="flex items-center justify-between">
                   <span>尺码</span>
@@ -798,15 +759,9 @@
                 </div>
               </th>
             </tr>
-
-            <!-- 第二行：专属高亮固定置顶汇总行（列顺序同步更新对齐） -->
-            <tr id="detailPinnedSummaryRow" class="summary-pinned-row font-bold text-slate-900 border-b-2 border-yellow-400">
-              <!-- 动态注入置顶汇总数据 -->
-            </tr>
+            <tr id="detailPinnedSummaryRow" class="summary-pinned-row font-bold text-slate-900 border-b-2 border-yellow-400"></tr>
           </thead>
-          <tbody id="detailTableBody" class="divide-y divide-slate-200 bg-white">
-            <!-- 动态生成明细数据行 -->
-          </tbody>
+          <tbody id="detailTableBody" class="divide-y divide-slate-200 bg-white"></tbody>
         </table>
       </div>
 
@@ -823,9 +778,92 @@
       </div>
     </div>
 
+    <!-- 模块五：【新增】渠道 × 货号 × 图片 履约承诺/超时时效日期透视矩阵 (行区域支持展开/折叠) -->
+    <div class="bg-white rounded-xl border border-slate-200 card-shadow overflow-hidden" id="mod5Section">
+      <div class="px-5 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3 bg-slate-50/50">
+        <div class="flex items-center gap-2.5">
+          <span class="w-2.5 h-2.5 rounded-full bg-violet-600 ring-4 ring-violet-100"></span>
+          <h2 class="text-base font-bold text-slate-800">模块五：渠道 × 货号 × 图片 履约时效透视矩阵</h2>
+          <span class="text-xs text-violet-700 bg-violet-100 px-2 py-0.5 rounded font-medium">行区域：渠道/货号/图片（可折叠展开）· 列区域：履约时效日期</span>
+        </div>
+
+        <!-- 筛选控件组：与模块二筛选维度完全一致 -->
+        <div class="flex flex-wrap items-center gap-2.5 text-xs">
+          <!-- 快捷展开/折叠按钮组 -->
+          <div class="flex items-center rounded-lg border border-slate-300 overflow-hidden bg-white shadow-sm">
+            <button id="btnMod5ExpandAll" class="px-2.5 py-1.5 bg-slate-50 hover:bg-slate-100 text-slate-700 font-medium border-r border-slate-200 flex items-center gap-1 transition">
+              <i class="fa-solid fa-angles-down text-[11px] text-violet-600"></i> 全部展开
+            </button>
+            <button id="btnMod5CollapseAll" class="px-2.5 py-1.5 bg-slate-50 hover:bg-slate-100 text-slate-700 font-medium flex items-center gap-1 transition">
+              <i class="fa-solid fa-angles-up text-[11px] text-slate-500"></i> 全部折叠
+            </button>
+          </div>
+
+          <!-- 尾款状态筛选 (与模块二一致) -->
+          <div class="flex items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm">
+            <span class="text-slate-600 font-medium"><i class="fa-solid fa-money-check-dollar text-slate-400 mr-1"></i>尾款状态：</span>
+            <select id="mod5TailFilterSelect" class="bg-transparent font-medium text-slate-800 focus:outline-none cursor-pointer">
+              <option value="all" selected>全部尾款状态 (已付 + 未付)</option>
+              <option value="paid">仅已付尾款</option>
+              <option value="unpaid">仅未付尾款</option>
+            </select>
+          </div>
+
+          <!-- 缺货超时 / 缺货未超时 筛选 (与模块二一致) -->
+          <div class="flex items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm">
+            <span class="text-slate-600 font-medium"><i class="fa-solid fa-clock-rotate-left text-slate-400 mr-1"></i>时效状态：</span>
+            <select id="mod5OverdueFilterSelect" class="bg-transparent font-medium text-slate-800 focus:outline-none cursor-pointer">
+              <option value="all" selected>全部 (超时 + 未超时)</option>
+              <option value="overdue">仅缺货超时</option>
+              <option value="normal">仅缺货未超时</option>
+            </select>
+          </div>
+
+          <!-- 搜索货号/渠道 -->
+          <div class="relative">
+            <input type="text" id="mod5SearchInput" placeholder="过滤货号 / 渠道..." class="w-36 text-xs bg-white border border-slate-300 rounded-lg pl-7 pr-2.5 py-1.5 focus:ring-2 focus:ring-violet-400 focus:outline-none">
+            <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-xs"></i>
+          </div>
+
+          <!-- 导出模块五矩阵 -->
+          <button id="btnExportMod5Table" class="text-xs bg-violet-700 hover:bg-violet-800 text-white px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow-sm">
+            <i class="fa-solid fa-file-excel"></i> 导出层级矩阵(含图)
+          </button>
+        </div>
+      </div>
+
+      <div class="px-5 py-2.5 bg-violet-50/40 border-b border-violet-100 text-xs text-violet-900 flex flex-wrap items-center justify-between gap-2">
+        <span class="flex items-center gap-1.5">
+          <i class="fa-solid fa-sitemap text-violet-600"></i>
+          <span>💡 点击渠道主行或左侧 <strong class="text-violet-700">▶ / ▼</strong> 图标即可自由展开或折叠该渠道下的全部货号与商品主图；货号行鼠标悬停图片可大图预览。</span>
+        </span>
+        <span class="text-slate-500 font-medium" id="mod5SummaryStatsText">已加载 0 个渠道 / 0 款货号</span>
+      </div>
+
+      <!-- 模块五透视表内容区 -->
+      <div class="p-5 overflow-x-auto custom-scrollbar max-h-[640px] relative">
+        <table id="mod5PivotTable" class="w-full text-sm text-left border-collapse border border-slate-200 min-w-[1100px]">
+          <thead id="mod5PivotHead" class="bg-slate-100 text-slate-700 font-semibold text-xs border-b border-slate-300 sticky top-0 z-20">
+            <!-- 动态生成表头 -->
+          </thead>
+          <tbody id="mod5PivotBody" class="divide-y divide-slate-200">
+            <!-- 动态生成渠道父行和货号子行 -->
+          </tbody>
+          <tfoot id="mod5PivotFoot" class="bg-slate-50 font-bold border-t-2 border-slate-300 sticky bottom-0 z-10 shadow-sm">
+            <!-- 动态合计 -->
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="px-5 py-3 bg-slate-50 border-t border-slate-200 text-xs text-slate-500 flex flex-wrap justify-between items-center gap-2">
+        <span>行区域按渠道与单品逐级聚拢 · 列区域与模块二日期完全对齐 · 单元格数值严格对应缺货件数</span>
+        <span class="text-slate-400">支持单独渠道展开折叠与全部展开折叠 · 导出的 Excel 自动保留层级缩进与真实主图</span>
+      </div>
+    </div>
+
   </main>
 
-  <!-- 模块三：单品浮动悬停图片预览 Tooltip 卡片（结构完整严格闭合） -->
+  <!-- 模块三/四/五：单品浮动悬停图片预览 Tooltip 卡片 -->
   <div id="hoverImageTooltip" class="fixed z-50 pointer-events-none hidden bg-white p-2.5 rounded-2xl shadow-2xl border border-slate-200/90 transition-opacity duration-150 flex flex-col items-center w-64 max-w-xs">
     <div class="w-full h-56 bg-slate-100 rounded-xl overflow-hidden flex items-center justify-center border border-slate-200/60 mb-2">
       <img id="hoverTooltipImg" src="" alt="大图预览" class="max-w-full max-h-full object-contain">
@@ -839,7 +877,7 @@
     </div>
   </div>
 
-  <!-- 模块四专属：货号悬停提示该款不同时间段履约超时数量的折线图 Tooltip 浮窗 -->
+  <!-- 货号悬停提示该款不同时间段履约超时数量的折线图 Tooltip 浮窗 -->
   <div id="spuVariantHoverTooltip" class="fixed z-50 pointer-events-none hidden bg-white p-4 rounded-2xl shadow-2xl border border-indigo-200 transition-opacity duration-150 flex flex-col w-[510px] max-w-[94vw]">
     <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-200">
       <div class="flex items-center gap-2.5 overflow-hidden">
@@ -857,7 +895,6 @@
       </div>
     </div>
 
-    <!-- 趋势图标题与关键统计 -->
     <div class="text-[11px] font-semibold text-slate-700 mb-1.5 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <span class="flex items-center gap-1"><span class="w-2.5 h-1.5 bg-amber-500 rounded-sm"></span> 缺货超时趋势</span>
@@ -866,12 +903,8 @@
       <span class="text-[10px] text-slate-400 font-normal">时段最高峰: <strong class="text-red-600 font-bold" id="spuChartPeakText">0 件</strong></span>
     </div>
 
-    <!-- 货号时序折线图 SVG 容器 -->
-    <div id="spuLineChartContainer" class="w-full h-[180px] bg-slate-50/70 border border-slate-200 rounded-lg p-2.5 flex items-center justify-center overflow-hidden">
-      <!-- 动态注入单款时序折线图 -->
-    </div>
+    <div id="spuLineChartContainer" class="w-full h-[180px] bg-slate-50/70 border border-slate-200 rounded-lg p-2.5 flex items-center justify-center overflow-hidden"></div>
 
-    <!-- 底部状态说明（提示点击大图可常驻检视规格透视矩阵） -->
     <div class="mt-2.5 pt-2 border-t border-slate-100 text-[11px] flex justify-between items-center text-slate-500">
       <span class="flex items-center gap-1">
         <i class="fa-solid fa-circle-info text-indigo-500"></i>
@@ -881,7 +914,7 @@
     </div>
   </div>
 
-  <!-- 图片点击深度放大模态窗口 Modal (兼顾模块三单品与模块四货号透视) -->
+  <!-- 图片点击深度放大模态窗口 Modal -->
   <div id="imageModal" class="fixed inset-0 bg-black/75 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity">
     <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[92vh] overflow-hidden shadow-2xl flex flex-col relative">
       <div class="flex items-center justify-between px-5 py-3.5 border-b border-slate-100 bg-slate-50">
@@ -895,12 +928,10 @@
       </div>
 
       <div class="p-5 overflow-y-auto custom-scrollbar flex-1 space-y-4">
-        <!-- 上方大图预览 -->
         <div class="w-full h-72 bg-slate-100 rounded-xl overflow-hidden flex items-center justify-center border border-slate-200">
           <img id="modalImg" src="" alt="大图" class="max-w-full max-h-full object-contain">
         </div>
 
-        <!-- 模式A：模块三单品明细数据展示容器 -->
         <div id="modalDetailContent" class="w-full text-xs space-y-1.5 text-slate-600 bg-slate-50 p-3.5 rounded-lg border border-slate-200">
           <div class="flex justify-between"><span class="text-slate-400">订单号：</span><span id="modalOrder" class="font-mono font-semibold text-slate-800"></span></div>
           <div class="flex justify-between"><span class="text-slate-400">履约日期：</span><span id="modalDate" class="font-semibold text-slate-800"></span></div>
@@ -913,7 +944,6 @@
           <div class="flex justify-between"><span class="text-slate-400">缺货总数量：</span><span id="modalStockout" class="font-bold text-red-600"></span></div>
         </div>
 
-        <!-- 模式B：模块四货号透视矩阵展示容器 -->
         <div id="modalSpuMatrixContent" class="w-full text-xs space-y-2.5 hidden">
           <div class="bg-indigo-50/70 p-3 rounded-lg border border-indigo-100 flex flex-wrap justify-between items-center gap-2 text-xs">
             <div>
@@ -950,7 +980,7 @@
     </div>
   </div>
 
-  <!-- 统一消息 Toast 提示框，杜绝原生 alert() -->
+  <!-- 统一消息 Toast 提示框 -->
   <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
   <!-- 导出带图 Excel 进度提示模态窗 -->
@@ -1058,21 +1088,24 @@
     // 模块三单品明细状态
     let currentDetailPage = 1;
     const detailPageSize = 100;
-    let detailSortField = 'stockoutQty'; // 默认按缺货数量降序排
+    let detailSortField = 'stockoutQty';
     let detailSortDir = 'desc';
 
     // 模块四货号汇总状态
     let currentMod4Page = 1;
     const mod4PageSize = 50;
-    let mod4SortField = 'totalStockoutQty'; // 默认按货号缺货总数降序
+    let mod4SortField = 'totalStockoutQty';
     let mod4SortDir = 'desc';
 
-    // 模块四全局货号内存高速缓存器（彻底杜绝内联 HTML 字符串转义隐患）
+    // 模块五树形展开集合（存储当前被展开的渠道名称）
+    let mod5ExpandedChannels = new Set();
+
+    // 模块四与模块五货号全局高速缓存
     window.mod4SpuCache = new Map();
 
     const defaultSvg = "data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2280%22%20height%3D%2280%22%20viewBox%3D%220%200%2080%2080%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%2280%22%20height%3D%2280%22%20fill%3D%22%23f1f5f9%22%2F%3E%3Cpath%20d%3D%22M25%2028h30v24H25z%22%20fill%3D%22%23cbd5e1%22%2F%3E%3Ccircle%20cx%3D%2233%22%20cy%3D%2235%22%20r%3D%224%22%20fill%3D%22%2394a3b8%22%2F%3E%3Cpath%20d%3D%22M25%2048l9-10%208%209%205-5%208%206z%22%20fill%3D%22%2394a3b8%22%2F%3E%3C%2Fsvg%3E";
 
-    // 内置初始测试样例数据 (涵盖已付尾款/未付尾款/预售/现货各种时效组合，带订单号、主图以及规范的【缺货数量】列)
+    // 内置初始测试样例数据
     const initialSampleData = [
       {
         交易号: "'3316522190005009697",
@@ -1327,16 +1360,16 @@
         showToast('测试演示数据重载成功', 'success');
       });
 
-      // 模块一：尾款状态联动切换
+      // 模块一筛选
       document.getElementById('tailStatusFilterSelect').addEventListener('change', () => {
         renderAll();
       });
 
-      // 模块二：尾款状态筛选与时效超时筛选联动切换
+      // 模块二筛选联动
       document.getElementById('mod2TailFilterSelect').addEventListener('change', renderDatePivotTable);
       document.getElementById('mod2OverdueFilterSelect').addEventListener('change', renderDatePivotTable);
 
-      // 模块三（货号看板）：筛选项事件监听
+      // 模块三筛选
       document.getElementById('mod4DateFilter').addEventListener('change', () => {
         currentMod4Page = 1;
         renderMod4Table();
@@ -1358,7 +1391,7 @@
         renderMod4Table();
       });
 
-      // 模块四（单品明细）：日期、项目组、状态、尾款状态与关键字联动
+      // 模块四筛选
       document.getElementById('detailDateFilter').addEventListener('change', () => {
         currentDetailPage = 1;
         renderDetailTable();
@@ -1380,12 +1413,32 @@
         renderDetailTable();
       });
 
+      // 模块五筛选与交互监听
+      document.getElementById('mod5TailFilterSelect').addEventListener('change', renderMod5PivotMatrix);
+      document.getElementById('mod5OverdueFilterSelect').addEventListener('change', renderMod5PivotMatrix);
+      document.getElementById('mod5SearchInput').addEventListener('input', renderMod5PivotMatrix);
+
+      document.getElementById('btnMod5ExpandAll').addEventListener('click', () => {
+        const channels = Array.from(new Set(rawData.map(r => r.channel))).filter(Boolean);
+        channels.forEach(ch => mod5ExpandedChannels.add(ch));
+        renderMod5PivotMatrix();
+        showToast('已全部展开各渠道货号明细', 'info');
+      });
+
+      document.getElementById('btnMod5CollapseAll').addEventListener('click', () => {
+        mod5ExpandedChannels.clear();
+        renderMod5PivotMatrix();
+        showToast('已全部折叠至渠道汇总层级', 'info');
+      });
+
+      document.getElementById('btnExportMod5Table').addEventListener('click', exportMod5Excel);
+
       // 导出按钮
       document.getElementById('btnExportDetail').addEventListener('click', exportDetailExcel);
       document.getElementById('btnExportDetailTable').addEventListener('click', exportDetailExcel);
       document.getElementById('btnExportMod4Table').addEventListener('click', exportMod4Excel);
 
-      // 模块三分页切换按钮
+      // 分页切换按钮
       document.getElementById('btnPrevPage').addEventListener('click', () => {
         if (currentDetailPage > 1) {
           currentDetailPage--;
@@ -1397,7 +1450,6 @@
         renderDetailTable();
       });
 
-      // 模块四分页切换按钮
       document.getElementById('btnMod4PrevPage').addEventListener('click', () => {
         if (currentMod4Page > 1) {
           currentMod4Page--;
@@ -1415,7 +1467,6 @@
         if (e.target.id === 'imageModal') closeImageModal();
       });
 
-      // 滚动表格容器时自动隐藏悬停 Tooltip，防止悬浮脱离
       document.getElementById('detailTableScrollContainer').addEventListener('scroll', hideImageHover);
       document.getElementById('mod4TableScrollContainer').addEventListener('scroll', hideSpuHover);
       window.addEventListener('scroll', () => {
@@ -1615,7 +1666,6 @@
           return def;
         };
 
-        // 规范提取订单号并彻底剔除 ERP 导出的前置单引号与特殊符号
         const orderNoRaw = String(getVal(['订单号', '订单编号', '平台订单号', '单号', '原始单号', '交易号', 'orderId', 'orderNo'], '-')).trim();
         const orderNo = orderNoRaw.replace(/^['"\s]+|['"\s]+$/g, '');
 
@@ -1629,7 +1679,6 @@
         const presaleTimeRaw = getVal(['预售发货时间', '预售时间', '最晚发货时间', '发货时间', '承诺发货时间']);
         const payTimeRaw = getVal(['支付时间', '付款时间', '下单时间', '订单付款时间']);
         
-        // 核心读取：缺货数量优先严格从【缺货数量】列读取
         const rawStockoutVal = getVal(['缺货数量', '缺货数', '缺货件数', '数量', '件数', '购买数量'], '');
         const stockoutQty = (rawStockoutVal !== '' && !isNaN(parseFloat(rawStockoutVal))) ? parseFloat(rawStockoutVal) : 1;
 
@@ -1661,13 +1710,19 @@
           presaleTime,
           payTime,
           qty: stockoutQty,
-          stockoutQty: stockoutQty, // 严格直接来源于表格中的【缺货数量】列
+          stockoutQty: stockoutQty,
           spu,
           sku,
           color,
           size,
           imgUrl
         };
+      });
+
+      // 默认将所有渠道设为展开状态，方便用户查阅
+      mod5ExpandedChannels.clear();
+      rawData.forEach(r => {
+        if (r.channel) mod5ExpandedChannels.add(r.channel);
       });
 
       const syncBtn = document.getElementById('btnSyncDataDate');
@@ -1748,6 +1803,7 @@
       renderDatePivotTable();
       renderDetailTable();
       renderMod4Table();
+      renderMod5PivotMatrix();
     }
 
     function renderKPIs(list) {
@@ -1768,15 +1824,12 @@
       const spotOverdueQty = activeScope.filter(r => !r.isPresale && r.isOverdue).reduce((s, r) => s + (r.stockoutQty || 0), 0);
       const totalOverdueQty = activeScope.filter(r => r.isOverdue).reduce((s, r) => s + (r.stockoutQty || 0), 0);
 
-      // 缺货款号：对 Excel 表内的货号 (spu) 进行全局去重计数
       const spuSet = new Set();
-      // SKU款数：对 Excel 表内的 sku 进行全局去重计数
       const skuSet = new Set();
       list.forEach(r => {
         if (r.spu && r.spu !== '-' && r.spu !== '未知货号') spuSet.add(r.spu);
         if (r.sku && r.sku !== '-' && r.sku !== '未知货号') skuSet.add(r.sku);
       });
-      // 容错兜底
       if (spuSet.size === 0) list.forEach(r => { if (r.spu) spuSet.add(r.spu); });
       if (skuSet.size === 0) list.forEach(r => { if (r.sku) skuSet.add(r.sku); });
 
@@ -1797,7 +1850,6 @@
       document.getElementById('kpiOverdueScopeText').textContent = `当前筛选: ${tailFilter === 'paid' ? '已付尾款' : (tailFilter === 'unpaid' ? '未付尾款' : '全部状态')}`;
     }
 
-    // 模块一：【缺货总数】= 已付尾款 + 未付尾款，各渠道按缺货总数降序排列
     function renderSummaryTable(computedList) {
       const tbody = document.getElementById('summaryTableBody');
       const tfoot = document.getElementById('summaryTableFoot');
@@ -1854,13 +1906,11 @@
         }
       });
 
-      // 核心公式：缺货总数 = 已付尾款 + 未付尾款
       channels.forEach(ch => {
         const c = channelMap[ch];
         c.stockoutSumQty = c.paidQty + c.unpaidQty;
       });
 
-      // 渠道行自动按【缺货总数】从高到低降序排序
       channels.sort((a, b) => {
         const qtyA = channelMap[a] ? channelMap[a].stockoutSumQty : 0;
         const qtyB = channelMap[b] ? channelMap[b].stockoutSumQty : 0;
@@ -1933,7 +1983,6 @@
       const tailFilter = document.getElementById('mod2TailFilterSelect') ? document.getElementById('mod2TailFilterSelect').value : 'all';
       const overdueFilter = document.getElementById('mod2OverdueFilterSelect') ? document.getElementById('mod2OverdueFilterSelect').value : 'all';
 
-      // 1. 尾款状态筛选
       let filtered = computedList;
       if (tailFilter === 'paid') {
         filtered = filtered.filter(r => r.isPaid);
@@ -1941,7 +1990,6 @@
         filtered = filtered.filter(r => !r.isPaid);
       }
 
-      // 2. 缺货超时 / 缺货未超时 筛选联动
       if (overdueFilter === 'overdue') {
         filtered = filtered.filter(r => r.isOverdue);
       } else if (overdueFilter === 'normal') {
@@ -1969,7 +2017,6 @@
         return;
       }
 
-      // 左侧渠道表头禁止换行 whitespace-nowrap
       let headHtml = `<tr>
         <th class="py-3 px-3.5 text-slate-900 border border-slate-300 bg-slate-200 whitespace-nowrap" style="min-width: 170px;">渠道 / 履约日期</th>`;
       dateList.forEach(d => {
@@ -2006,7 +2053,6 @@
         channelRowSums[ch] = sum;
       });
 
-      // 渠道按总计降序排布
       channels.sort((a, b) => (channelRowSums[b] || 0) - (channelRowSums[a] || 0));
 
       let grandMatrixTotal = 0;
@@ -2015,7 +2061,6 @@
         const rowSum = channelRowSums[ch] || 0;
         grandMatrixTotal += rowSum;
 
-        // 左侧渠道单元格禁止换行 whitespace-nowrap
         let rowHtml = `<tr>
           <td class="py-2.5 px-3.5 font-medium text-slate-800 border border-slate-200 bg-slate-50 whitespace-nowrap">${escapeHtml(ch)}</td>`;
 
@@ -2045,7 +2090,6 @@
       renderDatePivotAreaChart(filtered, dateList);
     }
 
-    // 模块二：渲染各日期时间段缺货超时数量与预售发货缺货数量的双折线面积图（完全跟随联动，双色明显区分）
     function renderDatePivotAreaChart(filteredList, dateList) {
       const container = document.getElementById('mod2AreaChartContainer');
       const peakTextEl = document.getElementById('mod2ChartPeakText');
@@ -2062,7 +2106,6 @@
         return;
       }
 
-      // 聚合每个日期的【缺货超时数量】与【预售发货缺货数量】
       const dateOverdueMap = {};
       const datePresaleStockoutMap = {};
       dateList.forEach(d => {
@@ -2093,7 +2136,6 @@
       if (overdueTextEl) overdueTextEl.textContent = `${totalOverdue.toLocaleString()} 件`;
       if (presaleTextEl) presaleTextEl.textContent = `${totalPresaleStockout.toLocaleString()} 件`;
 
-      // 构建高精度响应式 SVG 双折线面积图
       const width = 880;
       const height = 210;
       const padLeft = 55;
@@ -2106,28 +2148,24 @@
       const yMax = Math.max(peakVal * 1.18, 6);
       const stepX = dateList.length > 1 ? plotW / (dateList.length - 1) : plotW / 2;
 
-      // 缺货超时点位（琥珀橙色/暖调）
       const overduePoints = dateList.map((d, i) => {
         const x = dateList.length > 1 ? (padLeft + i * stepX) : (padLeft + plotW / 2);
         const y = padTop + plotH - (overdueValues[i] / yMax) * plotH;
         return { x, y, date: d, val: overdueValues[i] };
       });
 
-      // 预售发货缺货点位（靛青紫色/冷调）
       const presalePoints = dateList.map((d, i) => {
         const x = dateList.length > 1 ? (padLeft + i * stepX) : (padLeft + plotW / 2);
         const y = padTop + plotH - (presaleValues[i] / yMax) * plotH;
         return { x, y, date: d, val: presaleValues[i] };
       });
 
-      // 缺货超时路径（琥珀橙）
       let overdueLinePath = `M ${overduePoints[0].x} ${overduePoints[0].y}`;
       for (let i = 1; i < overduePoints.length; i++) {
         overdueLinePath += ` L ${overduePoints[i].x} ${overduePoints[i].y}`;
       }
       let overdueAreaPath = `${overdueLinePath} L ${overduePoints[overduePoints.length - 1].x} ${padTop + plotH} L ${overduePoints[0].x} ${padTop + plotH} Z`;
 
-      // 预售发货缺货路径（靛紫）
       let presaleLinePath = `M ${presalePoints[0].x} ${presalePoints[0].y}`;
       for (let i = 1; i < presalePoints.length; i++) {
         presaleLinePath += ` L ${presalePoints[i].x} ${presalePoints[i].y}`;
@@ -2154,16 +2192,10 @@
         nodesSvg += `
           <g class="cursor-pointer group">
             <line x1="${pOver.x}" y1="${padTop}" x2="${pOver.x}" y2="${padTop + plotH}" stroke="#cbd5e1" stroke-width="1" stroke-opacity="0" class="group-hover:stroke-opacity-100 transition" />
-            
-            <!-- 预售发货缺货节点 (靛青紫色) -->
             <circle cx="${pPre.x}" cy="${pPre.y}" r="${pPre.val > 0 ? '4' : '2.5'}" fill="#6366f1" stroke="#ffffff" stroke-width="1.8" />
             ${pPre.val > 0 ? `<text x="${pPre.x}" y="${pPre.y - 7}" text-anchor="middle" font-size="9.5" font-weight="600" fill="#4338ca" font-mono>${pPre.val}</text>` : ''}
-            
-            <!-- 缺货超时节点 (温暖琥珀橙色 / 红色峰值) -->
             <circle cx="${pOver.x}" cy="${pOver.y}" r="${isPeak ? '5.5' : (pOver.val > 0 ? '4.5' : '2.5')}" fill="${isPeak ? '#ef4444' : (pOver.val > 0 ? '#f59e0b' : '#94a3b8')}" stroke="#ffffff" stroke-width="2" class="group-hover:r-7 transition" />
             ${pOver.val > 0 ? `<text x="${pOver.x}" y="${pOver.y + 13}" text-anchor="middle" font-size="${isPeak ? '10.5' : '9.5'}" font-weight="${isPeak ? 'bold' : '600'}" fill="${isPeak ? '#dc2626' : '#b45309'}" font-mono>${pOver.val}</text>` : ''}
-            
-            <!-- X 轴日期 (月-日) -->
             <text x="${pOver.x}" y="${padTop + plotH + 20}" text-anchor="middle" font-size="10" fill="#475569" font-mono font-medium>${d.replace(/^\d{4}-/, '')}</text>
           </g>
         `;
@@ -2172,13 +2204,11 @@
       const svgHtml = `
         <svg viewBox="0 0 ${width} ${height}" class="w-full h-full select-none">
           <defs>
-            <!-- 预售发货缺货渐变 (冷调靛紫) -->
             <linearGradient id="mod2PresaleGrad" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stop-color="#6366f1" stop-opacity="0.25"/>
               <stop offset="85%" stop-color="#818cf8" stop-opacity="0.03"/>
               <stop offset="100%" stop-color="#ffffff" stop-opacity="0.0"/>
             </linearGradient>
-            <!-- 缺货超时渐变 (暖调琥珀橙) -->
             <linearGradient id="mod2OverdueGrad" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.32"/>
               <stop offset="85%" stop-color="#fbbf24" stop-opacity="0.04"/>
@@ -2189,10 +2219,8 @@
             </filter>
           </defs>
           ${gridLines}
-          <!-- 预售发货缺货趋势面积与虚线 (靛青紫色) -->
           <path d="${presaleAreaPath}" fill="url(#mod2PresaleGrad)" />
           <path d="${presaleLinePath}" fill="none" stroke="#6366f1" stroke-width="2.2" stroke-dasharray="4 2" stroke-linejoin="round" stroke-linecap="round" />
-          <!-- 缺货超时趋势面积与实线 (温暖琥珀橙色) -->
           <path d="${overdueAreaPath}" fill="url(#mod2OverdueGrad)" />
           <path d="${overdueLinePath}" fill="none" stroke="#f59e0b" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" filter="url(#shadowGlowAmber)" />
           ${nodesSvg}
@@ -2213,8 +2241,6 @@
       renderDetailTable();
     }
 
-    // 模块四统一数据管道：导出与界面共用相同筛选和排序结果。
-    // 导出范围为所有符合当前筛选条件的记录，保持界面排序顺序；不受分页页码限制。
     function getFilteredSortedDetailItems(computedList = rawData.map(r => computeRecordStatus(r, benchmarkTime))) {
       const dateFilter = document.getElementById('detailDateFilter').value;
       const groupFilter = document.getElementById('detailGroupFilter').value;
@@ -2303,7 +2329,6 @@
         totalScopeOverdue += (x.stockoutOverdueQty || 0);
       });
 
-      // 渲染专属置顶高亮汇总行（严格与重构后的新列顺序对齐）
       const pinnedSummaryRow = document.getElementById('detailPinnedSummaryRow');
       pinnedSummaryRow.innerHTML = `
         <td class="py-2.5 px-3 text-center text-slate-400 font-normal">-</td>
@@ -2383,7 +2408,6 @@
 
         const validImg = item.imgUrl || defaultSvg;
 
-        // 重排表格单元格顺序：缺货超时数量、缺货数量、状态标记前移；颜色、尺码后移
         tr.innerHTML = `
           <td class="py-2 px-3 text-center text-slate-400 font-mono">${startIdx + idx + 1}</td>
           <td class="py-2 px-3 text-center">
@@ -2431,8 +2455,6 @@
       renderMod4Table();
     }
 
-    // 模块三统一数据管道：看板渲染与 Excel 导出复用相同筛选、聚合及排序逻辑。
-    // 返回所有匹配当前界面条件的货号，不限于当前分页中的可视行。
     function getFilteredSortedMod4List() {
       const computedList = rawData.map(r => computeRecordStatus(r, benchmarkTime));
       const dateFilter = document.getElementById('mod4DateFilter').value;
@@ -2527,7 +2549,6 @@
     function renderMod4Table() {
       const spuList = getFilteredSortedMod4List();
 
-      // 汇总当前范围总指标
       const totalSpuCount = spuList.length;
       let sumScopeSkus = 0;
       let sumScopeStockout = 0;
@@ -2540,7 +2561,6 @@
       });
       const avgOverdueRate = sumScopeStockout > 0 ? ((sumScopeOverdue / sumScopeStockout) * 100).toFixed(1) : '0.0';
 
-      // 模块四专属置顶汇总行（去掉“汇总”两字及图标，保留序号列占位）
       const mod4PinnedRow = document.getElementById('mod4PinnedSummaryRow');
       mod4PinnedRow.innerHTML = `
         <td class="py-2.5 px-3 text-center text-slate-400 font-normal">-</td>
@@ -2564,7 +2584,6 @@
         <td class="py-2.5 px-3 text-center text-slate-500 font-medium text-[11px]">当前范围合计</td>
       `;
 
-      // 更新模块四排序图标
       const sortFields = ['spu', 'projectGroup', 'skuCount', 'totalStockoutQty', 'totalOverdueQty', 'overdueRate'];
       sortFields.forEach(f => {
         const iconEl = document.getElementById(`sortMod4_${f}`);
@@ -2578,7 +2597,6 @@
         }
       });
 
-      // 分页
       const totalPages = Math.max(1, Math.ceil(totalSpuCount / mod4PageSize));
       if (currentMod4Page > totalPages) currentMod4Page = totalPages;
 
@@ -2615,7 +2633,6 @@
           }
         }
 
-        // 放大主图为 80×80px (w-20 h-20)，紧凑排布后续列
         tr.innerHTML = `
           <td class="py-2.5 px-3 text-center text-slate-400 font-mono">${startIdx + idx + 1}</td>
           <td class="py-2.5 px-3 text-center">
@@ -2661,7 +2678,456 @@
       });
     }
 
-    // 通用二维透视矩阵构建渲染器 (用于悬停 Tooltip 及点击后的 Modal 弹窗)
+    // ==========================================
+    // 模块五：渠道 × 货号 × 图片 履约承诺/超时时效日期透视矩阵核心实现
+    // ==========================================
+    function getMod5FilteredData() {
+      const computedList = rawData.map(r => computeRecordStatus(r, benchmarkTime));
+      const tailFilter = document.getElementById('mod5TailFilterSelect') ? document.getElementById('mod5TailFilterSelect').value : 'all';
+      const overdueFilter = document.getElementById('mod5OverdueFilterSelect') ? document.getElementById('mod5OverdueFilterSelect').value : 'all';
+      const searchKeyword = document.getElementById('mod5SearchInput') ? document.getElementById('mod5SearchInput').value.trim().toLowerCase() : '';
+
+      let filtered = computedList;
+
+      // 尾款状态筛选 (与模块二一致)
+      if (tailFilter === 'paid') {
+        filtered = filtered.filter(r => r.isPaid);
+      } else if (tailFilter === 'unpaid') {
+        filtered = filtered.filter(r => !r.isPaid);
+      }
+
+      // 时效状态筛选 (与模块二一致)
+      if (overdueFilter === 'overdue') {
+        filtered = filtered.filter(r => r.isOverdue);
+      } else if (overdueFilter === 'normal') {
+        filtered = filtered.filter(r => !r.isOverdue);
+      }
+
+      // 搜索关键词过滤 (渠道或货号)
+      if (searchKeyword) {
+        filtered = filtered.filter(r => 
+          String(r.channel || '').toLowerCase().includes(searchKeyword) ||
+          String(r.spu || '').toLowerCase().includes(searchKeyword)
+        );
+      }
+
+      return filtered;
+    }
+
+    function toggleMod5Channel(channel) {
+      if (mod5ExpandedChannels.has(channel)) {
+        mod5ExpandedChannels.delete(channel);
+      } else {
+        mod5ExpandedChannels.add(channel);
+      }
+      renderMod5PivotMatrix();
+    }
+
+    function renderMod5PivotMatrix() {
+      const filtered = getMod5FilteredData();
+      const thead = document.getElementById('mod5PivotHead');
+      const tbody = document.getElementById('mod5PivotBody');
+      const tfoot = document.getElementById('mod5PivotFoot');
+
+      // 提取符合当前筛选条件的日期列表
+      const dateSet = new Set();
+      filtered.forEach(r => {
+        if (r.statDateStr && r.statDateStr !== '-' && r.statDateStr !== '未有支付时间') {
+          dateSet.add(r.statDateStr);
+        }
+      });
+      const dateList = Array.from(dateSet).sort();
+
+      if (dateList.length === 0) {
+        thead.innerHTML = `<tr>
+          <th class="py-3 px-3.5 whitespace-nowrap">渠道 / 货号</th>
+          <th class="py-3 px-2 text-center" style="width: 75px;">图片</th>
+          <th class="py-3 px-4 text-center">暂无匹配日期数据</th>
+          <th class="py-3 px-3 text-center" style="width: 90px;">总计</th>
+        </tr>`;
+        tbody.innerHTML = `<tr><td colspan="4" class="py-8 text-center text-slate-400">当前筛选条件下暂无有效数据</td></tr>`;
+        tfoot.innerHTML = '';
+        document.getElementById('mod5SummaryStatsText').textContent = '暂无匹配数据';
+        return;
+      }
+
+      // 构建表头 (行区域：渠道/货号/图片，列区域：时效日期，值区域：总计)
+      let headHtml = `<tr>
+        <th class="py-3 px-3.5 text-slate-900 border border-slate-300 bg-slate-200 whitespace-nowrap" style="min-width: 220px;">
+          <span>渠道 / 货号</span>
+          <span class="text-[10px] text-slate-500 font-normal ml-1">(点击箭头折叠/展开)</span>
+        </th>
+        <th class="py-3 px-2 text-center text-slate-900 border border-slate-300 bg-slate-200 whitespace-nowrap" style="width: 75px;">商品图片</th>`;
+
+      dateList.forEach(d => {
+        const shortDate = d.replace(/^\d{4}-/, '');
+        headHtml += `<th class="py-3 px-2 text-center border border-slate-300 min-w-[70px] whitespace-nowrap" title="${d}">${shortDate}</th>`;
+      });
+      headHtml += `<th class="py-3 px-3 text-center border border-slate-300 bg-yellow-100 text-slate-900 font-bold whitespace-nowrap" style="width: 95px;">总计 ▼</th></tr>`;
+      thead.innerHTML = headHtml;
+
+      // 聚合树形结构：渠道 -> 货号 -> 各日期缺货数量
+      const channelTree = {};
+      const colTotals = {};
+      dateList.forEach(d => colTotals[d] = 0);
+      let grandTotalStockout = 0;
+      let totalSpuCount = 0;
+
+      filtered.forEach(r => {
+        const ch = r.channel || '未知渠道';
+        const spu = r.spu || '未知货号';
+        const dStr = r.statDateStr;
+        const qty = r.stockoutQty || 0;
+
+        if (!channelTree[ch]) {
+          channelTree[ch] = {
+            channel: ch,
+            totalQty: 0,
+            dateTotals: {},
+            spuMap: {}
+          };
+          dateList.forEach(d => channelTree[ch].dateTotals[d] = 0);
+        }
+
+        const chNode = channelTree[ch];
+        chNode.totalQty += qty;
+
+        if (dStr && chNode.dateTotals[dStr] !== undefined) {
+          chNode.dateTotals[dStr] += qty;
+          colTotals[dStr] += qty;
+        }
+
+        if (!chNode.spuMap[spu]) {
+          chNode.spuMap[spu] = {
+            spu: spu,
+            imgUrl: r.imgUrl || '',
+            totalQty: 0,
+            dateTotals: {}
+          };
+          dateList.forEach(d => chNode.spuMap[spu].dateTotals[d] = 0);
+        }
+
+        const spuNode = chNode.spuMap[spu];
+        if (!spuNode.imgUrl && r.imgUrl) spuNode.imgUrl = r.imgUrl;
+        spuNode.totalQty += qty;
+
+        if (dStr && spuNode.dateTotals[dStr] !== undefined) {
+          spuNode.dateTotals[dStr] += qty;
+        }
+
+        grandTotalStockout += qty;
+      });
+
+      // 渠道按缺货总数降序排列
+      const sortedChannels = Object.values(channelTree).sort((a, b) => b.totalQty - a.totalQty);
+
+      tbody.innerHTML = '';
+
+      sortedChannels.forEach(chItem => {
+        const isExpanded = mod5ExpandedChannels.has(chItem.channel);
+        const spus = Object.values(chItem.spuMap).sort((a, b) => b.totalQty - a.totalQty);
+        totalSpuCount += spus.length;
+
+        // 1. 渠道主行 (父级行)
+        let chRowHtml = `<tr class="tree-row-channel border-y-2 border-slate-300 group" onclick="toggleMod5Channel('${escapeJs(chItem.channel)}')">
+          <td class="py-2.5 px-3 border border-slate-200">
+            <div class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded flex items-center justify-center text-slate-500 group-hover:text-violet-700 bg-white border border-slate-200 shadow-xs text-xs">
+                <i class="fa-solid ${isExpanded ? 'fa-chevron-down text-violet-600' : 'fa-chevron-right'}"></i>
+              </span>
+              <span class="font-bold text-slate-900">${escapeHtml(chItem.channel)}</span>
+              <span class="text-[11px] font-normal text-slate-500 bg-slate-200/80 px-2 py-0.2 rounded-full font-mono">${spus.length} 款货号</span>
+            </div>
+          </td>
+          <td class="py-2 px-2 text-center border border-slate-200 text-slate-400 text-xs">-</td>`;
+
+        dateList.forEach(d => {
+          const qty = chItem.dateTotals[d] || 0;
+          let cellCls = 'text-center border border-slate-200 py-2.5 px-2 font-bold';
+          if (qty > 0) {
+            cellCls += ' text-violet-900 bg-violet-50/70';
+          } else {
+            cellCls += ' text-slate-300 font-normal';
+          }
+          chRowHtml += `<td class="${cellCls}">${qty > 0 ? qty : 0}</td>`;
+        });
+
+        chRowHtml += `<td class="py-2.5 px-3 text-center border border-slate-200 font-black text-slate-900 bg-violet-100/80">${chItem.totalQty}</td></tr>`;
+        tbody.insertAdjacentHTML('beforeend', chRowHtml);
+
+        // 2. 货号子行 (子级展开行)
+        if (isExpanded) {
+          spus.forEach(spuItem => {
+            const validImg = spuItem.imgUrl || defaultSvg;
+
+            let spuRowHtml = `<tr class="tree-row-spu border-b border-slate-200 transition">
+              <td class="py-2 px-3 border border-slate-200 pl-9">
+                <div class="flex items-center gap-2">
+                  <span class="text-slate-300 font-mono text-xs">└─</span>
+                  <div>
+                    <span class="font-bold text-slate-800 text-xs hover:text-violet-600 transition cursor-pointer" onclick="handleMod4ImgClick('${escapeJs(spuItem.spu)}')">${escapeHtml(spuItem.spu)}</span>
+                  </div>
+                </div>
+              </td>
+              <td class="py-1 px-2 text-center border border-slate-200">
+                <div class="w-10 h-10 mx-auto rounded-md overflow-hidden border border-slate-200 bg-white flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-violet-400 transition"
+                  onmouseenter="handleMod4ImgEnter(event, '${escapeJs(spuItem.spu)}')"
+                  onmousemove="handleMod4ImgMove(event)"
+                  onmouseleave="handleMod4ImgLeave()"
+                  onclick="handleMod4ImgClick('${escapeJs(spuItem.spu)}')">
+                  <img src="${validImg}" onerror="this.onerror=null;this.src='${defaultSvg}'" alt="款图" class="w-full h-full object-cover pointer-events-none">
+                </div>
+              </td>`;
+
+            dateList.forEach(d => {
+              const qty = spuItem.dateTotals[d] || 0;
+              let cellCls = 'text-center border border-slate-200 py-1.5 px-2';
+              if (qty > 0) {
+                cellCls += ' font-semibold text-slate-800 bg-slate-50';
+              } else {
+                cellCls += ' text-slate-300';
+              }
+              spuRowHtml += `<td class="${cellCls}">${qty > 0 ? qty : 0}</td>`;
+            });
+
+            spuRowHtml += `<td class="py-1.5 px-3 text-center border border-slate-200 font-bold text-slate-800 bg-slate-50">${spuItem.totalQty}</td></tr>`;
+            tbody.insertAdjacentHTML('beforeend', spuRowHtml);
+          });
+        }
+      });
+
+      // 3. 底部总计行 (TFoot)
+      let footHtml = `<tr>
+        <td class="py-3 px-3.5 font-bold text-slate-900 border border-slate-300 bg-slate-200 whitespace-nowrap">全渠道合计</td>
+        <td class="py-3 px-2 text-center border border-slate-300 bg-slate-200 text-slate-400">-</td>`;
+      dateList.forEach(d => {
+        footHtml += `<td class="py-3 px-2 text-center font-bold text-slate-900 border border-slate-300 bg-slate-100">${colTotals[d]}</td>`;
+      });
+      footHtml += `<td class="py-3 px-3 text-center font-black text-red-600 border border-slate-300 bg-yellow-200">${grandTotalStockout}</td></tr>`;
+      tfoot.innerHTML = footHtml;
+
+      document.getElementById('mod5SummaryStatsText').textContent = `共 ${sortedChannels.length} 个渠道 · 包含 ${totalSpuCount} 款货号 · 缺货总量: ${grandTotalStockout.toLocaleString()} 件`;
+    }
+
+    // 模块五：导出层级矩阵报表 (包含渠道与货号明细、真实主图与各日期缺货数量)
+    async function exportMod5Excel() {
+      const filtered = getMod5FilteredData();
+
+      const dateSet = new Set();
+      filtered.forEach(r => {
+        if (r.statDateStr && r.statDateStr !== '-' && r.statDateStr !== '未有支付时间') {
+          dateSet.add(r.statDateStr);
+        }
+      });
+      const dateList = Array.from(dateSet).sort();
+
+      if (dateList.length === 0 || filtered.length === 0) {
+        showToast('当前筛选条件下暂无有效数据可供导出！', 'info');
+        return;
+      }
+
+      // 构建树状聚合结构
+      const channelTree = {};
+      dateList.forEach(d => {});
+
+      filtered.forEach(r => {
+        const ch = r.channel || '未知渠道';
+        const spu = r.spu || '未知货号';
+        const dStr = r.statDateStr;
+        const qty = r.stockoutQty || 0;
+
+        if (!channelTree[ch]) {
+          channelTree[ch] = {
+            channel: ch,
+            totalQty: 0,
+            dateTotals: {},
+            spuMap: {}
+          };
+          dateList.forEach(d => channelTree[ch].dateTotals[d] = 0);
+        }
+
+        const chNode = channelTree[ch];
+        chNode.totalQty += qty;
+        if (dStr && chNode.dateTotals[dStr] !== undefined) {
+          chNode.dateTotals[dStr] += qty;
+        }
+
+        if (!chNode.spuMap[spu]) {
+          chNode.spuMap[spu] = {
+            spu: spu,
+            imgUrl: r.imgUrl || '',
+            totalQty: 0,
+            dateTotals: {}
+          };
+          dateList.forEach(d => chNode.spuMap[spu].dateTotals[d] = 0);
+        }
+
+        const spuNode = chNode.spuMap[spu];
+        if (!spuNode.imgUrl && r.imgUrl) spuNode.imgUrl = r.imgUrl;
+        spuNode.totalQty += qty;
+        if (dStr && spuNode.dateTotals[dStr] !== undefined) {
+          spuNode.dateTotals[dStr] += qty;
+        }
+      });
+
+      const sortedChannels = Object.values(channelTree).sort((a, b) => b.totalQty - a.totalQty);
+
+      if (typeof ExcelJS === 'undefined') {
+        showToast('降级导出基础平铺表格...', 'warning');
+        const rows = [];
+        sortedChannels.forEach(chItem => {
+          Object.values(chItem.spuMap).forEach(spuItem => {
+            const item = {
+              '渠道': chItem.channel,
+              '货号': spuItem.spu,
+              '图片链接': spuItem.imgUrl
+            };
+            dateList.forEach(d => item[d] = spuItem.dateTotals[d] || 0);
+            item['缺货总数'] = spuItem.totalQty;
+            rows.push(item);
+          });
+        });
+        const ws = XLSX.utils.json_to_sheet(rows);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "渠道货号时效透视");
+        XLSX.writeFile(wb, `渠道货号时效透视矩阵_${formatDate(benchmarkTime).replace(/-/g, '')}.xlsx`);
+        return;
+      }
+
+      const modal = document.getElementById('exportProgressModal');
+      const bar = document.getElementById('exportProgressBar');
+      const counter = document.getElementById('exportProgressCounter');
+      document.getElementById('exportProgressTitle').textContent = '正在生成模块五层级矩阵(含图) Excel 报表';
+      modal.classList.remove('hidden');
+      bar.style.width = '0%';
+
+      try {
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('渠道×货号×时效透视矩阵');
+
+        // 构建动态列配置
+        const cols = [
+          { header: '渠道 / 货号层级', key: 'treeLabel', width: 28 },
+          { header: '商品主图', key: 'img', width: 14 }
+        ];
+
+        dateList.forEach(d => {
+          cols.push({ header: d, key: `date_${d}`, width: 14 });
+        });
+
+        cols.push({ header: '总计', key: 'rowTotal', width: 14 });
+        worksheet.columns = cols;
+
+        // 表头样式
+        const headerRow = worksheet.getRow(1);
+        headerRow.height = 30;
+        headerRow.font = { bold: true, color: { argb: 'FF000000' } };
+        headerRow.fill = {
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: { argb: 'FFDDD6FE' } // 柔和浅紫色
+        };
+        headerRow.alignment = { vertical: 'middle', horizontal: 'center' };
+
+        // 扁平化数据行列表，包含渠道父行和货号子行
+        const flatRows = [];
+        sortedChannels.forEach(chItem => {
+          flatRows.push({
+            isChannel: true,
+            channel: chItem.channel,
+            spu: '',
+            imgUrl: '',
+            dateTotals: chItem.dateTotals,
+            totalQty: chItem.totalQty
+          });
+
+          const spus = Object.values(chItem.spuMap).sort((a, b) => b.totalQty - a.totalQty);
+          spus.forEach(spuItem => {
+            flatRows.push({
+              isChannel: false,
+              channel: chItem.channel,
+              spu: spuItem.spu,
+              imgUrl: spuItem.imgUrl,
+              dateTotals: spuItem.dateTotals,
+              totalQty: spuItem.totalQty
+            });
+          });
+        });
+
+        const totalRowLen = flatRows.length;
+
+        for (let i = 0; i < totalRowLen; i++) {
+          const item = flatRows[i];
+          const rowNumber = i + 2;
+
+          const rowData = {
+            treeLabel: item.isChannel ? `▼ 渠道: ${item.channel}` : `    └─ ${item.spu}`,
+            img: '',
+            rowTotal: item.totalQty
+          };
+
+          dateList.forEach(d => {
+            rowData[`date_${d}`] = item.dateTotals[d] || 0;
+          });
+
+          const row = worksheet.addRow(rowData);
+          row.alignment = { vertical: 'middle', horizontal: 'center' };
+          row.getCell(1).alignment = { vertical: 'middle', horizontal: 'left' };
+
+          if (item.isChannel) {
+            row.height = 28;
+            row.font = { bold: true, color: { argb: 'FF312E81' } };
+            row.fill = {
+              type: 'pattern',
+              pattern: 'solid',
+              fgColor: { argb: 'FFF3F4F6' }
+            };
+          } else {
+            row.height = 55;
+            if (item.imgUrl) {
+              const b64 = await fetchImageAsBase64(item.imgUrl);
+              if (b64 && b64.includes(',')) {
+                const base64Data = b64.split(',')[1];
+                const imageId = workbook.addImage({
+                  base64: base64Data,
+                  extension: 'jpeg'
+                });
+                worksheet.addImage(imageId, {
+                  tl: { col: 1.1, row: rowNumber - 1 + 0.08 },
+                  ext: { width: 50, height: 50 },
+                  editAs: 'oneCell'
+                });
+              } else {
+                row.getCell(2).value = item.imgUrl;
+              }
+            }
+          }
+
+          const percent = Math.round(((i + 1) / totalRowLen) * 100);
+          bar.style.width = percent + '%';
+          counter.textContent = `${i + 1} / ${totalRowLen}`;
+        }
+
+        const buffer = await workbook.xlsx.writeBuffer();
+        const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const downloadUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = `渠道货号时效透视矩阵_含图_${formatDate(benchmarkTime).replace(/-/g, '')}.xlsx`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(downloadUrl);
+
+        modal.classList.add('hidden');
+        showToast('模块五层级透视报表已成功导出！', 'success');
+      } catch (err) {
+        modal.classList.add('hidden');
+        console.error(err);
+        showToast('模块五导出失败：' + err.message, 'error');
+      }
+    }
+
     function renderMatrixToTable(variants, theadEl, tbodyEl, tfootEl) {
       const colorSet = new Set();
       const sizeSet = new Set();
@@ -2688,7 +3154,6 @@
         return { colors, sizes, grandStockout: 0, grandOverdue: 0 };
       }
 
-      // 1. thead: 第一列“颜色 \ 尺码”，中间各尺码列，最后一列“行汇总”
       let thHtml = `<tr>
         <th class="py-1.5 px-2 text-left bg-slate-200/90 border border-slate-300 text-slate-700 min-w-[75px] font-semibold">颜色 \\ 尺码</th>`;
       sizes.forEach(s => {
@@ -2697,7 +3162,6 @@
       thHtml += `<th class="py-1.5 px-2 bg-indigo-100/80 border border-slate-300 text-indigo-900 font-bold min-w-[65px]">行汇总</th></tr>`;
       theadEl.innerHTML = thHtml;
 
-      // 2. tbody: 各颜色行，各尺码单元格，行汇总
       tbodyEl.innerHTML = '';
       const colTotals = {};
       sizes.forEach(s => {
@@ -2737,7 +3201,6 @@
         grandStockout += rowStockout;
         grandOverdue += rowOverdue;
 
-        // 行汇总单元格
         trHtml += `<td class="py-1.5 px-1.5 border border-slate-200 bg-indigo-50/50 font-mono font-bold">
           <div class="text-[11px] leading-tight flex items-center justify-center">
             <span class="text-red-600 font-bold">${rowStockout}</span>
@@ -2749,7 +3212,6 @@
         tbodyEl.insertAdjacentHTML('beforeend', trHtml);
       });
 
-      // 3. tfoot: 尺码列汇总行
       let tfHtml = `<tr>
         <td class="py-1.5 px-2 text-left font-bold text-slate-900 bg-slate-200/90 border border-slate-300">列汇总</td>`;
 
@@ -2777,7 +3239,6 @@
       return { colors, sizes, grandStockout, grandOverdue };
     }
 
-    // 模块四：悬停大图时渲染该货号不同时间段【缺货超时数量】与【预售发货时间缺货数量】的折线图
     function renderSpuOverdueLineChart(item) {
       const container = document.getElementById('spuLineChartContainer');
       const peakEl = document.getElementById('spuChartPeakText');
@@ -2812,34 +3273,29 @@
       const yMax = Math.max(peakVal * 1.25, 4);
       const stepX = dateKeys.length > 1 ? plotW / (dateKeys.length - 1) : plotW / 2;
 
-      // 超时趋势点位
       const overduePoints = dateKeys.map((d, i) => {
         const x = dateKeys.length > 1 ? (padLeft + i * stepX) : (padLeft + plotW / 2);
         const y = padTop + plotH - (overdueValues[i] / yMax) * plotH;
         return { x, y, date: d, overdue: overdueValues[i] };
       });
 
-      // 预售发货缺货趋势点位
       const presalePoints = dateKeys.map((d, i) => {
         const x = dateKeys.length > 1 ? (padLeft + i * stepX) : (padLeft + plotW / 2);
         const y = padTop + plotH - (presaleValues[i] / yMax) * plotH;
         return { x, y, date: d, presale: presaleValues[i] };
       });
 
-      // 超时折线与面积路径
       let overdueLinePath = `M ${overduePoints[0].x} ${overduePoints[0].y}`;
       for (let i = 1; i < overduePoints.length; i++) {
         overdueLinePath += ` L ${overduePoints[i].x} ${overduePoints[i].y}`;
       }
       let overdueAreaPath = `${overdueLinePath} L ${overduePoints[overduePoints.length - 1].x} ${padTop + plotH} L ${overduePoints[0].x} ${padTop + plotH} Z`;
 
-      // 预售发货缺货折线
       let presaleLinePath = `M ${presalePoints[0].x} ${presalePoints[0].y}`;
       for (let i = 1; i < presalePoints.length; i++) {
         presaleLinePath += ` L ${presalePoints[i].x} ${presalePoints[i].y}`;
       }
 
-      // 背景网格线
       let gridLines = '';
       const ticks = 3;
       for (let i = 0; i <= ticks; i++) {
@@ -2851,7 +3307,6 @@
         `;
       }
 
-      // 数据圆点与数值
       let dotsSvg = '';
       dateKeys.forEach((d, i) => {
         const pOver = overduePoints[i];
@@ -2860,15 +3315,12 @@
 
         dotsSvg += `
           <g>
-            <!-- 预售发货缺货圆点 (紫色) -->
             ${pPre.presale > 0 ? `
               <circle cx="${pPre.x}" cy="${pPre.y}" r="3.2" fill="#6366f1" stroke="#ffffff" stroke-width="1.5" />
               <text x="${pPre.x}" y="${pPre.y - 5}" text-anchor="middle" font-size="8.5" font-weight="600" fill="#4338ca" font-mono>${pPre.presale}</text>
             ` : ''}
-            <!-- 缺货超时圆点 (橙色/红色) -->
             <circle cx="${pOver.x}" cy="${pOver.y}" r="${isPeak ? '4.5' : (pOver.overdue > 0 ? '3.5' : '2.2')}" fill="${isPeak ? '#dc2626' : (pOver.overdue > 0 ? '#d97706' : '#94a3b8')}" stroke="#ffffff" stroke-width="1.8" />
             ${pOver.overdue > 0 ? `<text x="${pOver.x}" y="${pOver.y + 11}" text-anchor="middle" font-size="8.5" font-weight="${isPeak ? 'bold' : '600'}" fill="${isPeak ? '#dc2626' : '#b45309'}" font-mono>${pOver.overdue}</text>` : ''}
-            <!-- X 轴日期 -->
             <text x="${pOver.x}" y="${padTop + plotH + 16}" text-anchor="middle" font-size="9" fill="#64748b" font-mono>${d.replace(/^\d{4}-/, '')}</text>
           </g>
         `;
@@ -2884,10 +3336,8 @@
             </linearGradient>
           </defs>
           ${gridLines}
-          <!-- 缺货超时面积与折线 -->
           <path d="${overdueAreaPath}" fill="url(#spuLineAreaGrad)" />
           <path d="${overdueLinePath}" fill="none" stroke="#d97706" stroke-width="2.3" stroke-linejoin="round" stroke-linecap="round" />
-          <!-- 预售发货缺货折线 (紫色虚线) -->
           <path d="${presaleLinePath}" fill="none" stroke="#6366f1" stroke-width="2" stroke-dasharray="3 2" stroke-linejoin="round" stroke-linecap="round" />
           ${dotsSvg}
         </svg>
@@ -2896,16 +3346,28 @@
       container.innerHTML = chartSvg;
     }
 
-    // 模块四：悬停图片事件入口（展示时序折线图）
     function handleMod4ImgEnter(e, spu) {
-      const item = window.mod4SpuCache.get(spu);
+      let item = window.mod4SpuCache.get(spu);
+      if (!item) {
+        // 兜底从 rawData 构造
+        const matches = rawData.filter(r => r.spu === spu);
+        if (matches.length) {
+          item = {
+            spu,
+            imgUrl: matches[0].imgUrl || defaultSvg,
+            projectGroup: matches[0].projectGroup || matches[0].channel,
+            totalStockoutQty: matches.reduce((s, r) => s + (r.stockoutQty || 0), 0),
+            totalOverdueQty: 0,
+            dateStats: {}
+          };
+        }
+      }
       if (!item) return;
 
       const validImg = item.imgUrl || defaultSvg;
       const tooltip = document.getElementById('spuVariantHoverTooltip');
       if (!tooltip) return;
 
-      // 统计预售缺货总量
       let presaleStockoutSum = 0;
       if (item.dateStats) {
         Object.values(item.dateStats).forEach(s => presaleStockoutSum += (s.presaleQty || 0));
@@ -2915,13 +3377,12 @@
       document.getElementById('spuHoverSpuCode').textContent = `货号: ${item.spu}`;
       document.getElementById('spuHoverGroupName').textContent = `所属: ${item.projectGroup}`;
       document.getElementById('spuHoverTotalStockout').textContent = `缺货总量: ${item.totalStockoutQty} 件`;
-      document.getElementById('spuHoverTotalOverdue').textContent = `超时: ${item.totalOverdueQty} 件`;
+      document.getElementById('spuHoverTotalOverdue').textContent = `超时: ${item.totalOverdueQty || 0} 件`;
       const presaleBadge = document.getElementById('spuHoverPresaleStockout');
       if (presaleBadge) {
         presaleBadge.textContent = `预售缺货: ${presaleStockoutSum} 件`;
       }
 
-      // 渲染该款不同时间段【缺货超时】与【预售发货缺货】的双折线图
       renderSpuOverdueLineChart(item);
 
       tooltip.classList.remove('hidden');
@@ -2936,11 +3397,30 @@
       hideSpuHover();
     }
 
-    // 模块四：点击图片触发弹窗深度检视（保持不变，展示规格透视矩阵）
     function handleMod4ImgClick(spu) {
       hideImageHover();
       hideSpuHover();
-      const item = window.mod4SpuCache.get(spu);
+      let item = window.mod4SpuCache.get(spu);
+      if (!item) {
+        const matches = rawData.filter(r => r.spu === spu);
+        if (matches.length) {
+          const varMap = new Map();
+          matches.forEach(r => {
+            const key = `${r.color}____${r.size}`;
+            if (!varMap.has(key)) varMap.set(key, { color: r.color, size: r.size, stockoutQty: 0, overdueQty: 0 });
+            varMap.get(key).stockoutQty += (r.stockoutQty || 0);
+          });
+          item = {
+            spu,
+            imgUrl: matches[0].imgUrl || defaultSvg,
+            projectGroup: matches[0].projectGroup || matches[0].channel,
+            totalStockoutQty: matches.reduce((s, r) => s + (r.stockoutQty || 0), 0),
+            totalOverdueQty: 0,
+            skuCount: new Set(matches.map(r => r.sku)).size,
+            variants: Array.from(varMap.values())
+          };
+        }
+      }
       if (!item) return;
 
       const validImg = item.imgUrl || defaultSvg;
@@ -2948,7 +3428,6 @@
       document.getElementById('modalImg').src = validImg;
       document.getElementById('modalTitle').innerHTML = `<i class="fa-solid fa-boxes-stacked text-indigo-600 mr-1.5"></i>货号 ${escapeHtml(item.spu)} 缺货透视详情`;
 
-      // 切换为货号透视矩阵模式
       document.getElementById('modalDetailContent').classList.add('hidden');
       const spuMatrixBox = document.getElementById('modalSpuMatrixContent');
       spuMatrixBox.classList.remove('hidden');
@@ -2956,8 +3435,8 @@
       document.getElementById('modalSpuCode').textContent = `货号: ${item.spu}`;
       document.getElementById('modalSpuGroup').textContent = `所属: ${item.projectGroup}`;
       document.getElementById('modalSpuStockout').textContent = `${item.totalStockoutQty} 件`;
-      document.getElementById('modalSpuOverdue').textContent = `${item.totalOverdueQty} 件`;
-      document.getElementById('modalSpuSkuCount').textContent = `包含 ${item.skuCount} 个SKU款`;
+      document.getElementById('modalSpuOverdue').textContent = `${item.totalOverdueQty || 0} 件`;
+      document.getElementById('modalSpuSkuCount').textContent = `包含 ${item.skuCount || 1} 个SKU款`;
 
       renderMatrixToTable(
         item.variants,
@@ -2969,7 +3448,6 @@
       modal.classList.remove('hidden');
     }
 
-    // 模块三：单品悬停预览
     function showImageHover(e, imgUrl, spu, spec, stockout, overdue, orderNo) {
       const tooltip = document.getElementById('hoverImageTooltip');
       if (!tooltip) return;
@@ -3022,13 +3500,11 @@
       let left = e.clientX + offset;
       let top = e.clientY + offset;
 
-      // 如果向右溢出视口，则放置在鼠标左侧
       if (left + tooltipW > window.innerWidth - 15) {
         left = e.clientX - tooltipW - offset;
       }
       if (left < 10) left = 10;
 
-      // 如果向下溢出视口，则向上偏移
       if (top + tooltipH > window.innerHeight - 15) {
         top = e.clientY - tooltipH - offset;
       }
@@ -3220,7 +3696,6 @@
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('商品单品缺货明细清单');
 
-        // 同步重排导出 Excel 表头序列
         worksheet.columns = [
           { header: '序号', key: 'idx', width: 8 },
           { header: '商品主图', key: 'img', width: 14 },
@@ -3444,7 +3919,6 @@
       document.getElementById('modalImg').src = decodeURIComponent(imgUrl);
       document.getElementById('modalTitle').innerHTML = `<i class="fa-solid fa-shirt text-yellow-500 mr-1.5"></i>货号 ${escapeHtml(spu)} 缺货详情`;
 
-      // 切换为模块三单品明细模式
       document.getElementById('modalDetailContent').classList.remove('hidden');
       document.getElementById('modalSpuMatrixContent').classList.add('hidden');
 
