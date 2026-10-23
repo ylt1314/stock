@@ -348,36 +348,7 @@
         </button>
       </div>
     </div>
-
-    <!-- 全局尾款 / 非定金缺货三态多选切片器：统一驱动模块一至模块五与 KPI -->
-    <section id="globalTailStateFilterCard" class="bg-white rounded-xl p-4 border border-slate-200 card-shadow flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-      <div class="flex items-start gap-3">
-        <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center shrink-0">
-          <i class="fa-solid fa-sliders"></i>
-        </div>
-        <div>
-          <h2 class="text-sm font-bold text-slate-800">全局尾款状态多选切片器</h2>
-          <p class="text-[11px] text-slate-500 mt-0.5">统一联动模块一至模块五、顶端 KPI、透视矩阵及趋势图；可任意单选、多选或反选。</p>
-        </div>
-      </div>
-      <div class="flex flex-wrap items-center gap-2.5">
-        <button type="button" class="global-tail-state-btn inline-flex items-center gap-2 px-3.5 py-2 rounded-full border text-xs font-semibold transition" data-tail-state="paid" aria-pressed="true">
-          <span class="tail-state-check">✓</span><span>已付尾款</span>
-        </button>
-        <button type="button" class="global-tail-state-btn inline-flex items-center gap-2 px-3.5 py-2 rounded-full border text-xs font-semibold transition" data-tail-state="unpaid" aria-pressed="true">
-          <span class="tail-state-check">✓</span><span>未付尾款</span>
-        </button>
-        <button type="button" class="global-tail-state-btn inline-flex items-center gap-2 px-3.5 py-2 rounded-full border text-xs font-semibold transition" data-tail-state="nonDeposit" aria-pressed="true">
-          <span class="tail-state-check">✓</span><span>非定金缺货</span>
-        </button>
-        <span class="hidden sm:block h-7 border-l border-slate-200 mx-0.5"></span>
-        <button type="button" id="btnGlobalTailSelectAll" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold transition">全选</button>
-        <button type="button" id="btnGlobalTailInvert" class="px-3 py-2 rounded-lg bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 text-xs font-semibold transition">反选</button>
-        <span id="globalTailStateSummary" class="text-[11px] text-slate-500 min-w-[150px]">已选择 3/3 类</span>
-      </div>
-    </section>
-
-    <!-- 1. 顶端 KPI 关键指标看板 -->
+<!-- 1. 顶端 KPI 关键指标看板 -->
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
       <div class="bg-white p-3.5 rounded-xl border-2 border-red-300 card-shadow bg-red-50/30">
         <p class="text-xs text-red-600 font-bold flex items-center gap-1">
@@ -432,14 +403,14 @@
           <span class="text-xs text-slate-500 bg-slate-200 px-2 py-0.5 rounded">缺货总数 = 已付尾款 + 未付尾款 + 非定金缺货（按当前筛选总数降序）</span>
         </div>
 
-        <div class="flex items-center gap-2 bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs shadow-sm" style="display:none" aria-hidden="true">
-          <span class="text-slate-600 font-medium"><i class="fa-solid fa-filter text-yellow-500 mr-1"></i>尾款状态筛选：</span>
-          <select id="tailStatusFilterSelect" class="bg-transparent font-semibold text-slate-800 focus:outline-none cursor-pointer">
-            <option value="all">全部状态 (已付尾款 + 未付尾款)</option>
-            <option value="paid">仅筛选：已付尾款</option>
-            <option value="unpaid">仅筛选：未付尾款</option>
-          </select>
-        </div>
+        <div class="tail-slicer-control">
+            <button type="button" data-tail-slicer-trigger="mod1" aria-haspopup="true" aria-expanded="false" title="选择已付尾款、未付尾款、非定金缺货；各模块联动" class="inline-flex items-center gap-1.5 bg-white hover:bg-indigo-50 border border-slate-300 hover:border-indigo-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs text-slate-700 whitespace-nowrap transition">
+              <i class="fa-solid fa-filter text-indigo-500"></i>
+              <span class="font-medium">尾款状态</span>
+              <span data-tail-slicer-summary class="font-semibold text-indigo-700">全部 (3/3)</span>
+              <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+            </button>
+          </div>
       </div>
 
       <div class="p-5 overflow-x-auto custom-scrollbar">
@@ -472,7 +443,7 @@
       </div>
 
       <div class="px-5 py-2.5 bg-slate-50 text-xs text-slate-500 border-t border-slate-200 flex flex-wrap justify-between items-center gap-2">
-        <span>💡 明确口径：<strong>【缺货总数】= 已付尾款 + 未付尾款 + 非定金缺货</strong>；渠道行严格按当前全局切片范围内的缺货总数从高到低排序</span>
+        <span>💡 明确口径：<strong>【缺货总数】= 已付尾款 + 未付尾款 + 非定金缺货</strong>；渠道行严格按当前模块尾款状态筛选范围内的缺货总数从高到低排序</span>
         <span class="font-medium text-slate-600">特别强调：仅高亮【缺货总数】与【缺货超时总数】</span>
       </div>
     </div>
@@ -488,13 +459,13 @@
         <div class="flex flex-wrap items-center gap-2.5 text-xs">
           <span class="text-slate-500 hidden xl:inline">时效规则：预售取【发货时间】，现货取【支付+2天】</span>
           
-          <div class="flex items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm" style="display:none" aria-hidden="true">
-            <span class="text-slate-600 font-medium"><i class="fa-solid fa-money-check-dollar text-slate-400 mr-1"></i>尾款状态筛选：</span>
-            <select id="mod2TailFilterSelect" class="bg-transparent font-medium text-slate-800 focus:outline-none cursor-pointer">
-              <option value="all" selected>全部尾款状态 (已付 + 未付)</option>
-              <option value="paid">仅已付尾款</option>
-              <option value="unpaid">仅未付尾款</option>
-            </select>
+          <div class="tail-slicer-control">
+            <button type="button" data-tail-slicer-trigger="mod2" aria-haspopup="true" aria-expanded="false" title="选择已付尾款、未付尾款、非定金缺货；各模块联动" class="inline-flex items-center gap-1.5 bg-white hover:bg-blue-50 border border-slate-300 hover:border-blue-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs text-slate-700 whitespace-nowrap transition">
+              <i class="fa-solid fa-filter text-blue-500"></i>
+              <span class="font-medium">尾款状态</span>
+              <span data-tail-slicer-summary class="font-semibold text-blue-700">全部 (3/3)</span>
+              <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+            </button>
           </div>
 
           <div class="flex items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm">
@@ -521,7 +492,7 @@
           <div class="flex items-center gap-2">
             <span class="w-2.5 h-2.5 rounded-full bg-blue-600 ring-4 ring-blue-100"></span>
             <h3 class="text-xs font-bold text-slate-800">各履约/时效日期缺货与超时趋势透视 (双折线面积图)</h3>
-            <span class="text-[11px] text-slate-500 bg-slate-200/80 px-2 py-0.5 rounded">受上方尾款状态与时效状态联动</span>
+            <span class="text-[11px] text-slate-500 bg-slate-200/80 px-2 py-0.5 rounded">受模块内尾款状态多选与时效状态联动</span>
           </div>
           <div class="flex items-center gap-3 text-xs text-slate-600">
             <span class="flex items-center gap-1.5"><span class="w-3 h-2 bg-amber-500/40 border border-amber-500 rounded-sm inline-block"></span> 缺货超时趋势: <strong class="text-amber-700 font-mono font-bold ml-1" id="mod2ChartOverdueText">0 件</strong></span>
@@ -569,13 +540,13 @@
             </select>
           </div>
 
-          <div class="flex items-center gap-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs" style="display:none" aria-hidden="true">
-            <i class="fa-solid fa-money-check-dollar text-slate-400"></i>
-            <select id="mod4TailFilter" class="bg-transparent text-slate-700 focus:outline-none font-medium cursor-pointer">
-              <option value="all" selected>全部尾款状态</option>
-              <option value="paid">仅已付尾款</option>
-              <option value="unpaid">仅未付尾款</option>
-            </select>
+          <div class="tail-slicer-control">
+            <button type="button" data-tail-slicer-trigger="mod3" aria-haspopup="true" aria-expanded="false" title="选择已付尾款、未付尾款、非定金缺货；各模块联动" class="inline-flex items-center gap-1.5 bg-white hover:bg-indigo-50 border border-slate-300 hover:border-indigo-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs text-slate-700 whitespace-nowrap transition">
+              <i class="fa-solid fa-filter text-indigo-500"></i>
+              <span class="font-medium">尾款状态</span>
+              <span data-tail-slicer-summary class="font-semibold text-indigo-700">全部 (3/3)</span>
+              <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+            </button>
           </div>
 
           <div class="relative">
@@ -691,13 +662,13 @@
             </select>
           </div>
 
-          <div class="flex items-center gap-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs" style="display:none" aria-hidden="true">
-            <i class="fa-solid fa-money-check-dollar text-slate-400"></i>
-            <select id="detailTailFilter" class="bg-transparent text-slate-700 focus:outline-none font-medium cursor-pointer">
-              <option value="all" selected>全部尾款状态</option>
-              <option value="paid">仅已付尾款</option>
-              <option value="unpaid">仅未付尾款</option>
-            </select>
+          <div class="tail-slicer-control">
+            <button type="button" data-tail-slicer-trigger="mod4" aria-haspopup="true" aria-expanded="false" title="选择已付尾款、未付尾款、非定金缺货；各模块联动" class="inline-flex items-center gap-1.5 bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs text-slate-700 whitespace-nowrap transition">
+              <i class="fa-solid fa-filter text-emerald-500"></i>
+              <span class="font-medium">尾款状态</span>
+              <span data-tail-slicer-summary class="font-semibold text-emerald-700">全部 (3/3)</span>
+              <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+            </button>
           </div>
 
           <div class="relative">
@@ -835,13 +806,13 @@
           </div>
 
           <!-- 尾款状态筛选 (与模块二一致) -->
-          <div class="flex items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm" style="display:none" aria-hidden="true">
-            <span class="text-slate-600 font-medium"><i class="fa-solid fa-money-check-dollar text-slate-400 mr-1"></i>尾款状态：</span>
-            <select id="mod5TailFilterSelect" class="bg-transparent font-medium text-slate-800 focus:outline-none cursor-pointer">
-              <option value="all" selected>全部尾款状态 (已付 + 未付)</option>
-              <option value="paid">仅已付尾款</option>
-              <option value="unpaid">仅未付尾款</option>
-            </select>
+          <div class="tail-slicer-control">
+            <button type="button" data-tail-slicer-trigger="mod5" aria-haspopup="true" aria-expanded="false" title="选择已付尾款、未付尾款、非定金缺货；各模块联动" class="inline-flex items-center gap-1.5 bg-white hover:bg-violet-50 border border-slate-300 hover:border-violet-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs text-slate-700 whitespace-nowrap transition">
+              <i class="fa-solid fa-filter text-violet-500"></i>
+              <span class="font-medium">尾款状态</span>
+              <span data-tail-slicer-summary class="font-semibold text-violet-700">全部 (3/3)</span>
+              <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+            </button>
           </div>
 
           <!-- 缺货超时 / 缺货未超时 筛选 (与模块二一致) -->
@@ -1140,6 +1111,7 @@
     };
     const ALL_TAIL_STATE_KEYS = ['paid', 'unpaid', 'nonDeposit'];
     let selectedTailStates = new Set(ALL_TAIL_STATE_KEYS);
+    let activeTailSlicerTrigger = null;
 
     function getTailStateKey(record) {
       if (record && record.tailCategory && TAIL_STATE_META[record.tailCategory]) return record.tailCategory;
@@ -1160,55 +1132,131 @@
     }
 
     function syncGlobalTailSlicerUI() {
-      document.querySelectorAll('[data-tail-state]').forEach(btn => {
-        const key = btn.getAttribute('data-tail-state');
-        const active = selectedTailStates.has(key);
-        const palette = {
-          paid: active ? 'border-blue-500 bg-blue-50 text-blue-700 shadow-sm' : 'border-slate-200 bg-slate-50 text-slate-400',
-          unpaid: active ? 'border-amber-500 bg-amber-50 text-amber-700 shadow-sm' : 'border-slate-200 bg-slate-50 text-slate-400',
-          nonDeposit: active ? 'border-violet-500 bg-violet-50 text-violet-700 shadow-sm' : 'border-slate-200 bg-slate-50 text-slate-400'
-        };
-        btn.className = `global-tail-state-btn inline-flex items-center gap-2 px-3.5 py-2 rounded-full border text-xs font-semibold transition ${palette[key] || ''}`;
-        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
-        const check = btn.querySelector('.tail-state-check');
-        if (check) {
-          check.textContent = active ? '✓' : '○';
-          check.className = active ? 'tail-state-check inline-flex items-center justify-center w-4 h-4 rounded-full bg-white/80 font-black' : 'tail-state-check inline-flex items-center justify-center w-4 h-4 rounded-full bg-white border border-slate-300';
-        }
+      const labels = ALL_TAIL_STATE_KEYS
+        .filter(key => selectedTailStates.has(key))
+        .map(key => TAIL_STATE_META[key].label);
+      const summaryText = selectedTailStates.size === ALL_TAIL_STATE_KEYS.length
+        ? '全部 (3/3)'
+        : selectedTailStates.size === 0
+          ? '未选择 (0/3)'
+          : selectedTailStates.size === 1
+            ? labels[0]
+            : `已选 ${selectedTailStates.size}/3 类`;
+
+      document.querySelectorAll('[data-tail-slicer-trigger]').forEach(btn => {
+        const summary = btn.querySelector('[data-tail-slicer-summary]');
+        if (summary) summary.textContent = summaryText;
+        btn.title = labels.length ? `当前：${labels.join('、')}；点击修改，所有模块联动` : '当前未选择任何状态；点击修改，所有模块联动';
+        btn.setAttribute('aria-expanded', activeTailSlicerTrigger === btn && !document.getElementById('tailStateDropdownMenu')?.classList.contains('hidden') ? 'true' : 'false');
       });
-      const summary = document.getElementById('globalTailStateSummary');
-      if (summary) summary.textContent = `已选择 ${selectedTailStates.size}/3 类 · ${getSelectedTailStateLabel()}`;
+
+      const menu = document.getElementById('tailStateDropdownMenu');
+      if (menu) {
+        menu.querySelectorAll('[data-tail-state-option]').forEach(input => {
+          input.checked = selectedTailStates.has(input.getAttribute('data-tail-state-option'));
+        });
+        const menuSummary = menu.querySelector('[data-tail-selected-summary]');
+        if (menuSummary) menuSummary.textContent = `已选择 ${selectedTailStates.size}/3 类`;
+      }
+    }
+
+    function closeTailStateDropdown() {
+      const menu = document.getElementById('tailStateDropdownMenu');
+      if (menu) menu.classList.add('hidden');
+      if (activeTailSlicerTrigger) activeTailSlicerTrigger.setAttribute('aria-expanded', 'false');
+      activeTailSlicerTrigger = null;
+    }
+
+    function positionTailStateDropdown(trigger) {
+      const menu = document.getElementById('tailStateDropdownMenu');
+      if (!menu || !trigger) return;
+      const rect = trigger.getBoundingClientRect();
+      const menuWidth = Math.min(288, window.innerWidth - 16);
+      const menuHeight = menu.offsetHeight || 280;
+      const left = Math.max(8, Math.min(rect.left, window.innerWidth - menuWidth - 8));
+      const belowSpace = window.innerHeight - rect.bottom;
+      const top = (belowSpace >= menuHeight + 12 || rect.top < menuHeight + 8)
+        ? Math.min(window.innerHeight - menuHeight - 8, rect.bottom + 6)
+        : Math.max(8, rect.top - menuHeight - 6);
+      menu.style.left = `${left}px`;
+      menu.style.top = `${Math.max(8, top)}px`;
+    }
+
+    function refreshTailStateFilteredViews() {
+      currentDetailPage = 1;
+      currentMod4Page = 1;
+      renderAll();
     }
 
     function setupGlobalTailSlicer() {
-      document.querySelectorAll('[data-tail-state]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const key = btn.getAttribute('data-tail-state');
-          if (!TAIL_STATE_META[key]) return;
-          if (selectedTailStates.has(key)) selectedTailStates.delete(key);
-          else selectedTailStates.add(key);
+      const menu = document.getElementById('tailStateDropdownMenu');
+      document.querySelectorAll('[data-tail-slicer-trigger]').forEach(btn => {
+        btn.addEventListener('click', (event) => {
+          event.stopPropagation();
+          const isSameOpen = activeTailSlicerTrigger === btn && menu && !menu.classList.contains('hidden');
+          if (isSameOpen) {
+            closeTailStateDropdown();
+            return;
+          }
+          activeTailSlicerTrigger = btn;
+          menu.classList.remove('hidden');
           syncGlobalTailSlicerUI();
-          currentDetailPage = 1;
-          currentMod4Page = 1;
-          renderAll();
+          positionTailStateDropdown(btn);
         });
       });
-      const selectAllBtn = document.getElementById('btnGlobalTailSelectAll');
-      if (selectAllBtn) selectAllBtn.addEventListener('click', () => {
-        selectedTailStates = new Set(ALL_TAIL_STATE_KEYS);
-        syncGlobalTailSlicerUI();
-        currentDetailPage = 1;
-        currentMod4Page = 1;
-        renderAll();
+
+      if (menu) {
+        menu.addEventListener('change', (event) => {
+          const input = event.target.closest('[data-tail-state-option]');
+          if (!input) return;
+          const key = input.getAttribute('data-tail-state-option');
+          if (!TAIL_STATE_META[key]) return;
+          if (input.checked) selectedTailStates.add(key);
+          else selectedTailStates.delete(key);
+          syncGlobalTailSlicerUI();
+          refreshTailStateFilteredViews();
+          // 刷新表格后保持下拉菜单打开，方便继续多选
+          menu.classList.remove('hidden');
+          if (activeTailSlicerTrigger) positionTailStateDropdown(activeTailSlicerTrigger);
+        });
+
+        menu.addEventListener('click', (event) => {
+          const actionButton = event.target.closest('[data-tail-action]');
+          if (!actionButton) return;
+          event.stopPropagation();
+          const action = actionButton.getAttribute('data-tail-action');
+          if (action === 'close') {
+            closeTailStateDropdown();
+            return;
+          }
+          if (action === 'all') {
+            selectedTailStates = new Set(ALL_TAIL_STATE_KEYS);
+          } else if (action === 'invert') {
+            selectedTailStates = new Set(ALL_TAIL_STATE_KEYS.filter(key => !selectedTailStates.has(key)));
+          } else {
+            return;
+          }
+          syncGlobalTailSlicerUI();
+          refreshTailStateFilteredViews();
+          menu.classList.remove('hidden');
+          if (activeTailSlicerTrigger) positionTailStateDropdown(activeTailSlicerTrigger);
+        });
+      }
+
+      document.addEventListener('click', (event) => {
+        if (event.target.closest('[data-tail-slicer-trigger]')) return;
+        if (menu && menu.contains(event.target)) return;
+        closeTailStateDropdown();
       });
-      const invertBtn = document.getElementById('btnGlobalTailInvert');
-      if (invertBtn) invertBtn.addEventListener('click', () => {
-        selectedTailStates = new Set(ALL_TAIL_STATE_KEYS.filter(key => !selectedTailStates.has(key)));
-        syncGlobalTailSlicerUI();
-        currentDetailPage = 1;
-        currentMod4Page = 1;
-        renderAll();
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeTailStateDropdown();
       });
+      window.addEventListener('resize', () => {
+        if (menu && !menu.classList.contains('hidden') && activeTailSlicerTrigger) positionTailStateDropdown(activeTailSlicerTrigger);
+      });
+      window.addEventListener('scroll', () => {
+        if (menu && !menu.classList.contains('hidden') && activeTailSlicerTrigger) closeTailStateDropdown();
+      }, true);
       syncGlobalTailSlicerUI();
     }
 
@@ -1475,15 +1523,8 @@
         document.getElementById('fileInfoText').textContent = '已重载全场景演示数据 (已配置缺货数量/订单号/已付/未付/预售/现货)';
         showToast('测试演示数据重载成功', 'success');
       });
-
-      // 模块一筛选
-      document.getElementById('tailStatusFilterSelect').addEventListener('change', () => {
-        renderAll();
-      });
-
-      // 模块二筛选联动
-      document.getElementById('mod2TailFilterSelect').addEventListener('change', renderDatePivotTable);
-      document.getElementById('mod2OverdueFilterSelect').addEventListener('change', renderDatePivotTable);
+      // 模块二时效筛选联动
+document.getElementById('mod2OverdueFilterSelect').addEventListener('change', renderDatePivotTable);
 
       // 模块三筛选
       document.getElementById('mod4DateFilter').addEventListener('change', () => {
@@ -1498,11 +1539,7 @@
         currentMod4Page = 1;
         renderMod4Table();
       });
-      document.getElementById('mod4TailFilter').addEventListener('change', () => {
-        currentMod4Page = 1;
-        renderMod4Table();
-      });
-      document.getElementById('mod4SearchInput').addEventListener('input', () => {
+document.getElementById('mod4SearchInput').addEventListener('input', () => {
         currentMod4Page = 1;
         renderMod4Table();
       });
@@ -1520,18 +1557,13 @@
         currentDetailPage = 1;
         renderDetailTable();
       });
-      document.getElementById('detailTailFilter').addEventListener('change', () => {
-        currentDetailPage = 1;
-        renderDetailTable();
-      });
-      document.getElementById('detailSearchInput').addEventListener('input', () => {
+document.getElementById('detailSearchInput').addEventListener('input', () => {
         currentDetailPage = 1;
         renderDetailTable();
       });
 
       // 模块五筛选与交互监听
-      document.getElementById('mod5TailFilterSelect').addEventListener('change', renderMod5PivotMatrix);
-      document.getElementById('mod5OverdueFilterSelect').addEventListener('change', renderMod5PivotMatrix);
+document.getElementById('mod5OverdueFilterSelect').addEventListener('change', renderMod5PivotMatrix);
       document.getElementById('mod5SearchInput').addEventListener('input', renderMod5PivotMatrix);
 
       document.getElementById('btnMod5ExpandAll').addEventListener('click', () => {
@@ -4066,5 +4098,38 @@
       return String(str).replace(/'/g, "\\'").replace(/"/g, '\\"');
     }
   </script>
+
+  <!-- 尾款状态多选下拉面板：由模块一至模块五各自的触发器打开，选项在所有模块间同步 -->
+  <div id="tailStateDropdownMenu" class="hidden bg-white rounded-xl border border-slate-200 shadow-2xl p-3 text-xs" role="dialog" aria-label="尾款状态多选筛选" style="position:fixed; z-index:10000; width:288px; max-width:calc(100vw - 16px);">
+    <div class="flex items-start justify-between gap-3 pb-2.5 border-b border-slate-100">
+      <div>
+        <div class="font-bold text-slate-800 text-sm">尾款状态多选</div>
+        <div class="text-[11px] text-slate-500 mt-0.5">当前选择将同步应用到模块一至模块五及相关指标</div>
+      </div>
+      <button type="button" data-tail-action="close" aria-label="关闭筛选菜单" class="w-6 h-6 flex items-center justify-center rounded-md hover:bg-slate-100 text-slate-400"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="py-2 space-y-1.5">
+      <label class="flex items-center gap-2.5 p-2 rounded-lg hover:bg-blue-50 cursor-pointer">
+        <input type="checkbox" data-tail-state-option="paid" checked class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500">
+        <span class="flex-1 text-slate-700">已付尾款</span><span class="w-2 h-2 rounded-full bg-blue-500"></span>
+      </label>
+      <label class="flex items-center gap-2.5 p-2 rounded-lg hover:bg-amber-50 cursor-pointer">
+        <input type="checkbox" data-tail-state-option="unpaid" checked class="w-4 h-4 rounded border-slate-300 text-amber-600 focus:ring-amber-500">
+        <span class="flex-1 text-slate-700">未付尾款</span><span class="w-2 h-2 rounded-full bg-amber-500"></span>
+      </label>
+      <label class="flex items-center gap-2.5 p-2 rounded-lg hover:bg-violet-50 cursor-pointer">
+        <input type="checkbox" data-tail-state-option="nonDeposit" checked class="w-4 h-4 rounded border-slate-300 text-violet-600 focus:ring-violet-500">
+        <span class="flex-1 text-slate-700">非定金缺货</span><span class="w-2 h-2 rounded-full bg-violet-500"></span>
+      </label>
+    </div>
+    <div class="flex items-center justify-between gap-2 border-t border-slate-100 pt-2.5">
+      <div class="flex gap-1.5">
+        <button type="button" data-tail-action="all" class="px-2.5 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-white font-semibold">全选</button>
+        <button type="button" data-tail-action="invert" class="px-2.5 py-1.5 rounded-md border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold">反选</button>
+      </div>
+      <span data-tail-selected-summary class="text-[11px] text-slate-500">已选择 3/3 类</span>
+    </div>
+  </div>
+
 </body>
 </html>
