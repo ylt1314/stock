@@ -163,6 +163,8 @@
     .tree-row-spu:hover {
       background-color: #fdfdfd;
     }
+    .global-tail-state-btn { min-height: 36px; user-select: none; }
+    .global-tail-state-btn:focus-visible { outline: 3px solid rgba(59,130,246,.28); outline-offset: 2px; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -347,6 +349,34 @@
       </div>
     </div>
 
+    <!-- 全局尾款 / 非定金缺货三态多选切片器：统一驱动模块一至模块五与 KPI -->
+    <section id="globalTailStateFilterCard" class="bg-white rounded-xl p-4 border border-slate-200 card-shadow flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+      <div class="flex items-start gap-3">
+        <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-sliders"></i>
+        </div>
+        <div>
+          <h2 class="text-sm font-bold text-slate-800">全局尾款状态多选切片器</h2>
+          <p class="text-[11px] text-slate-500 mt-0.5">统一联动模块一至模块五、顶端 KPI、透视矩阵及趋势图；可任意单选、多选或反选。</p>
+        </div>
+      </div>
+      <div class="flex flex-wrap items-center gap-2.5">
+        <button type="button" class="global-tail-state-btn inline-flex items-center gap-2 px-3.5 py-2 rounded-full border text-xs font-semibold transition" data-tail-state="paid" aria-pressed="true">
+          <span class="tail-state-check">✓</span><span>已付尾款</span>
+        </button>
+        <button type="button" class="global-tail-state-btn inline-flex items-center gap-2 px-3.5 py-2 rounded-full border text-xs font-semibold transition" data-tail-state="unpaid" aria-pressed="true">
+          <span class="tail-state-check">✓</span><span>未付尾款</span>
+        </button>
+        <button type="button" class="global-tail-state-btn inline-flex items-center gap-2 px-3.5 py-2 rounded-full border text-xs font-semibold transition" data-tail-state="nonDeposit" aria-pressed="true">
+          <span class="tail-state-check">✓</span><span>非定金缺货</span>
+        </button>
+        <span class="hidden sm:block h-7 border-l border-slate-200 mx-0.5"></span>
+        <button type="button" id="btnGlobalTailSelectAll" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold transition">全选</button>
+        <button type="button" id="btnGlobalTailInvert" class="px-3 py-2 rounded-lg bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 text-xs font-semibold transition">反选</button>
+        <span id="globalTailStateSummary" class="text-[11px] text-slate-500 min-w-[150px]">已选择 3/3 类</span>
+      </div>
+    </section>
+
     <!-- 1. 顶端 KPI 关键指标看板 -->
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
       <div class="bg-white p-3.5 rounded-xl border-2 border-red-300 card-shadow bg-red-50/30">
@@ -357,9 +387,13 @@
         <span class="text-[11px] text-slate-500 font-medium">表格总缺货件数: <span id="kpiTotalQty" class="font-bold text-slate-700">0</span></span>
       </div>
       <div class="bg-white p-3.5 rounded-xl border border-slate-200 card-shadow">
-        <p class="text-xs text-slate-500 font-medium">已付尾款缺货数</p>
-        <p class="text-xl font-bold text-blue-600 mt-1" id="kpiPaidQty">0</p>
-        <span class="text-[11px] text-slate-400">未付尾款缺货: <span id="kpiUnpaidQty" class="text-slate-600 font-medium">0</span></span>
+        <p class="text-xs text-slate-500 font-bold">尾款与非定金分布</p>
+        <div class="grid grid-cols-3 gap-2 mt-2">
+          <div class="min-w-0"><span class="block text-[10px] text-blue-600 font-semibold">已付尾款</span><span class="block text-lg font-black text-blue-600 leading-tight" id="kpiPaidQty">0</span></div>
+          <div class="min-w-0 border-l border-slate-100 pl-2"><span class="block text-[10px] text-amber-600 font-semibold">未付尾款</span><span class="block text-lg font-black text-amber-600 leading-tight" id="kpiUnpaidQty">0</span></div>
+          <div class="min-w-0 border-l border-slate-100 pl-2"><span class="block text-[10px] text-violet-600 font-semibold">非定金缺货</span><span class="block text-lg font-black text-violet-600 leading-tight" id="kpiNonDepositQty">0</span></div>
+        </div>
+        <span class="block text-[10px] text-slate-400 mt-1">按当前全局切片范围统计</span>
       </div>
       <div class="bg-white p-3.5 rounded-xl border border-slate-200 card-shadow">
         <p class="text-xs text-slate-500 font-medium">预售缺货超时数</p>
@@ -395,10 +429,10 @@
         <div class="flex items-center gap-2.5">
           <span class="w-2.5 h-2.5 rounded-full bg-yellow-400 ring-4 ring-yellow-100"></span>
           <h2 class="text-base font-bold text-slate-800">模块一：缺货与超时汇总表</h2>
-          <span class="text-xs text-slate-500 bg-slate-200 px-2 py-0.5 rounded">缺货总数 = 已付尾款 + 未付尾款（渠道按缺货总数降序）</span>
+          <span class="text-xs text-slate-500 bg-slate-200 px-2 py-0.5 rounded">缺货总数 = 已付尾款 + 未付尾款 + 非定金缺货（按当前筛选总数降序）</span>
         </div>
 
-        <div class="flex items-center gap-2 bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs shadow-sm">
+        <div class="flex items-center gap-2 bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs shadow-sm" style="display:none" aria-hidden="true">
           <span class="text-slate-600 font-medium"><i class="fa-solid fa-filter text-yellow-500 mr-1"></i>尾款状态筛选：</span>
           <select id="tailStatusFilterSelect" class="bg-transparent font-semibold text-slate-800 focus:outline-none cursor-pointer">
             <option value="all">全部状态 (已付尾款 + 未付尾款)</option>
@@ -409,11 +443,11 @@
       </div>
 
       <div class="p-5 overflow-x-auto custom-scrollbar">
-        <table class="table-target-spec min-w-[1020px]">
+        <table class="table-target-spec min-w-[1120px]">
           <thead>
             <tr>
               <th rowspan="2" class="align-middle" style="width: 140px;">渠道</th>
-              <th colspan="3">尾款状态分布与缺货总量</th>
+              <th colspan="4">尾款与非定金三态分布 / 缺货总量</th>
               <th colspan="2">预售情况 (当前筛选)</th>
               <th colspan="2">无预售(现货)情况</th>
               <th colspan="2">有预售情况</th>
@@ -422,7 +456,8 @@
             <tr>
               <th style="width: 80px;">已付尾款</th>
               <th style="width: 80px;">未付尾款</th>
-              <th class="highlight-head-stockout" style="width: 90px;">缺货总数 ▼</th>
+              <th style="width: 95px;">非定金缺货</th>
+              <th class="highlight-head-stockout" style="width: 100px;">缺货总数 ▼</th>
               <th style="width: 80px;">不预售</th>
               <th style="width: 80px;">预售</th>
               <th style="width: 80px;">已超时</th>
@@ -437,7 +472,7 @@
       </div>
 
       <div class="px-5 py-2.5 bg-slate-50 text-xs text-slate-500 border-t border-slate-200 flex flex-wrap justify-between items-center gap-2">
-        <span>💡 明确口径：<strong>【缺货总数】= 已付尾款 + 未付尾款</strong>；渠道行已严格按【缺货总数】从高到低自动排序</span>
+        <span>💡 明确口径：<strong>【缺货总数】= 已付尾款 + 未付尾款 + 非定金缺货</strong>；渠道行严格按当前全局切片范围内的缺货总数从高到低排序</span>
         <span class="font-medium text-slate-600">特别强调：仅高亮【缺货总数】与【缺货超时总数】</span>
       </div>
     </div>
@@ -453,7 +488,7 @@
         <div class="flex flex-wrap items-center gap-2.5 text-xs">
           <span class="text-slate-500 hidden xl:inline">时效规则：预售取【发货时间】，现货取【支付+2天】</span>
           
-          <div class="flex items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm">
+          <div class="flex items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm" style="display:none" aria-hidden="true">
             <span class="text-slate-600 font-medium"><i class="fa-solid fa-money-check-dollar text-slate-400 mr-1"></i>尾款状态筛选：</span>
             <select id="mod2TailFilterSelect" class="bg-transparent font-medium text-slate-800 focus:outline-none cursor-pointer">
               <option value="all" selected>全部尾款状态 (已付 + 未付)</option>
@@ -534,7 +569,7 @@
             </select>
           </div>
 
-          <div class="flex items-center gap-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs">
+          <div class="flex items-center gap-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs" style="display:none" aria-hidden="true">
             <i class="fa-solid fa-money-check-dollar text-slate-400"></i>
             <select id="mod4TailFilter" class="bg-transparent text-slate-700 focus:outline-none font-medium cursor-pointer">
               <option value="all" selected>全部尾款状态</option>
@@ -656,7 +691,7 @@
             </select>
           </div>
 
-          <div class="flex items-center gap-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs">
+          <div class="flex items-center gap-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs" style="display:none" aria-hidden="true">
             <i class="fa-solid fa-money-check-dollar text-slate-400"></i>
             <select id="detailTailFilter" class="bg-transparent text-slate-700 focus:outline-none font-medium cursor-pointer">
               <option value="all" selected>全部尾款状态</option>
@@ -800,7 +835,7 @@
           </div>
 
           <!-- 尾款状态筛选 (与模块二一致) -->
-          <div class="flex items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm">
+          <div class="flex items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm" style="display:none" aria-hidden="true">
             <span class="text-slate-600 font-medium"><i class="fa-solid fa-money-check-dollar text-slate-400 mr-1"></i>尾款状态：</span>
             <select id="mod5TailFilterSelect" class="bg-transparent font-medium text-slate-800 focus:outline-none cursor-pointer">
               <option value="all" selected>全部尾款状态 (已付 + 未付)</option>
@@ -1097,6 +1132,86 @@
     let mod4SortField = 'totalStockoutQty';
     let mod4SortDir = 'desc';
 
+    // 全局尾款/非定金缺货三态切片器；默认三态全选
+    const TAIL_STATE_META = {
+      paid: { label: '已付尾款', color: 'blue' },
+      unpaid: { label: '未付尾款', color: 'amber' },
+      nonDeposit: { label: '非定金缺货', color: 'violet' }
+    };
+    const ALL_TAIL_STATE_KEYS = ['paid', 'unpaid', 'nonDeposit'];
+    let selectedTailStates = new Set(ALL_TAIL_STATE_KEYS);
+
+    function getTailStateKey(record) {
+      if (record && record.tailCategory && TAIL_STATE_META[record.tailCategory]) return record.tailCategory;
+      if (record && record.isNonDeposit) return 'nonDeposit';
+      return record && record.isPaid ? 'paid' : 'unpaid';
+    }
+
+    function filterByGlobalTailStates(records) {
+      if (!Array.isArray(records)) return [];
+      if (selectedTailStates.size === ALL_TAIL_STATE_KEYS.length) return records.slice();
+      if (selectedTailStates.size === 0) return [];
+      return records.filter(r => selectedTailStates.has(getTailStateKey(r)));
+    }
+
+    function getSelectedTailStateLabel() {
+      const labels = ALL_TAIL_STATE_KEYS.filter(key => selectedTailStates.has(key)).map(key => TAIL_STATE_META[key].label);
+      return labels.length ? labels.join(' + ') : '未选择状态';
+    }
+
+    function syncGlobalTailSlicerUI() {
+      document.querySelectorAll('[data-tail-state]').forEach(btn => {
+        const key = btn.getAttribute('data-tail-state');
+        const active = selectedTailStates.has(key);
+        const palette = {
+          paid: active ? 'border-blue-500 bg-blue-50 text-blue-700 shadow-sm' : 'border-slate-200 bg-slate-50 text-slate-400',
+          unpaid: active ? 'border-amber-500 bg-amber-50 text-amber-700 shadow-sm' : 'border-slate-200 bg-slate-50 text-slate-400',
+          nonDeposit: active ? 'border-violet-500 bg-violet-50 text-violet-700 shadow-sm' : 'border-slate-200 bg-slate-50 text-slate-400'
+        };
+        btn.className = `global-tail-state-btn inline-flex items-center gap-2 px-3.5 py-2 rounded-full border text-xs font-semibold transition ${palette[key] || ''}`;
+        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+        const check = btn.querySelector('.tail-state-check');
+        if (check) {
+          check.textContent = active ? '✓' : '○';
+          check.className = active ? 'tail-state-check inline-flex items-center justify-center w-4 h-4 rounded-full bg-white/80 font-black' : 'tail-state-check inline-flex items-center justify-center w-4 h-4 rounded-full bg-white border border-slate-300';
+        }
+      });
+      const summary = document.getElementById('globalTailStateSummary');
+      if (summary) summary.textContent = `已选择 ${selectedTailStates.size}/3 类 · ${getSelectedTailStateLabel()}`;
+    }
+
+    function setupGlobalTailSlicer() {
+      document.querySelectorAll('[data-tail-state]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const key = btn.getAttribute('data-tail-state');
+          if (!TAIL_STATE_META[key]) return;
+          if (selectedTailStates.has(key)) selectedTailStates.delete(key);
+          else selectedTailStates.add(key);
+          syncGlobalTailSlicerUI();
+          currentDetailPage = 1;
+          currentMod4Page = 1;
+          renderAll();
+        });
+      });
+      const selectAllBtn = document.getElementById('btnGlobalTailSelectAll');
+      if (selectAllBtn) selectAllBtn.addEventListener('click', () => {
+        selectedTailStates = new Set(ALL_TAIL_STATE_KEYS);
+        syncGlobalTailSlicerUI();
+        currentDetailPage = 1;
+        currentMod4Page = 1;
+        renderAll();
+      });
+      const invertBtn = document.getElementById('btnGlobalTailInvert');
+      if (invertBtn) invertBtn.addEventListener('click', () => {
+        selectedTailStates = new Set(ALL_TAIL_STATE_KEYS.filter(key => !selectedTailStates.has(key)));
+        syncGlobalTailSlicerUI();
+        currentDetailPage = 1;
+        currentMod4Page = 1;
+        renderAll();
+      });
+      syncGlobalTailSlicerUI();
+    }
+
     // 模块五树形展开集合（存储当前被展开的渠道名称）
     let mod5ExpandedChannels = new Set();
 
@@ -1330,6 +1445,7 @@
     }
 
     function setupEventListeners() {
+      setupGlobalTailSlicer();
       const dropZone = document.getElementById('dropZone');
       const fileInput = document.getElementById('fileInput');
 
@@ -1665,16 +1781,45 @@
           }
           return def;
         };
+        const getEntry = (keys) => {
+          for (let k of keys) {
+            if (row[k] !== undefined && row[k] !== null && String(row[k]).trim() !== '') return { key: k, value: row[k] };
+          }
+          for (let rk in row) {
+            for (let k of keys) {
+              if (rk.includes(k) && row[rk] !== undefined && row[rk] !== null && String(row[rk]).trim() !== '') {
+                return { key: rk, value: row[rk] };
+              }
+            }
+          }
+          return { key: '', value: '' };
+        };
 
         const orderNoRaw = String(getVal(['订单号', '订单编号', '平台订单号', '单号', '原始单号', '交易号', 'orderId', 'orderNo'], '-')).trim();
         const orderNo = orderNoRaw.replace(/^['"\s]+|['"\s]+$/g, '');
 
         const channel = String(getVal(['渠道', 'channel', '渠道名称', '店铺', '网店'], '未知渠道')).trim();
         const projectGroup = String(getVal(['项目组', '项目', '事业部', '渠道', '店铺'], channel)).trim();
-        const tailStatusRaw = String(getVal(['尾款状态', '尾款', '定金状态', '订单状态', '状态', '尾款付款状态'], '已付尾款')).trim();
-        
-        const isPaid = (tailStatusRaw.indexOf('未付') === -1 && tailStatusRaw.indexOf('未') === -1) || tailStatusRaw === '已付尾款';
-        const tailStatus = isPaid ? '已付尾款' : '未付尾款';
+        const tailStatusRaw = String(getVal(['尾款状态', '尾款付款状态', '尾款', '定金状态', '订单状态', '状态'], '已付尾款')).trim();
+        const nonDepositEntry = getEntry(['非定金缺货类型', '非定金状态']);
+        const nonDepositQtyEntry = getEntry(['非定金缺货数量', '非定金缺货']);
+        const shortageTypeEntry = getEntry(['缺货类型', '缺货分类']);
+        const depositFlagEntry = getEntry(['是否为定金订单', '是否定金订单', '是否定金', '是否需要定金', '是否有定金', '是否含定金']);
+        const depositTypeEntry = getEntry(['定金类型', '定金状态', '尾款类型']);
+        const nonDepositTexts = [tailStatusRaw, String(nonDepositEntry.value || ''), String(nonDepositQtyEntry.value || ''), String(shortageTypeEntry.value || ''), String(depositFlagEntry.value || ''), String(depositTypeEntry.value || '')].join(' ');
+        const nonDepositTextMatch = /(非定金|无定金|免定金|不涉及定金|无需定金|不需要定金|不含定金)/i.test(nonDepositTexts);
+        const depositFlagKey = String(depositFlagEntry.key || '');
+        const depositFlagValue = String(depositFlagEntry.value || '').trim().toLowerCase();
+        const explicitNoDepositFlag = (/是否.*定金/.test(depositFlagKey) && /^(否|不是|无|非|no|false|0)$/i.test(depositFlagValue)) || (/定金状态|定金类型/.test(String(depositTypeEntry.key || '')) && /^(否|无|没有|非定金|no|false|0)$/i.test(String(depositTypeEntry.value || '').trim()));
+        const nonDepositCellValue = String(nonDepositQtyEntry.value == null ? '' : nonDepositQtyEntry.value).trim();
+        const nonDepositCellTrue = /^(是|有|yes|true|非定金|非定金缺货)$/i.test(nonDepositCellValue);
+        const nonDepositCellQty = /^-?\d+(?:\.\d+)?$/.test(nonDepositCellValue) ? Number(nonDepositCellValue) : 0;
+        const isNonDeposit = nonDepositTextMatch || explicitNoDepositFlag || nonDepositCellTrue || nonDepositCellQty > 0;
+        const isUnpaidStatus = /(未付|未支付|待付|待付款|未结清|未缴|待缴|unpaid)/i.test(tailStatusRaw);
+        const tailCategory = isNonDeposit ? 'nonDeposit' : (isUnpaidStatus ? 'unpaid' : 'paid');
+        const isPaid = tailCategory === 'paid';
+        const isUnpaid = tailCategory === 'unpaid';
+        const tailStatus = tailCategory === 'nonDeposit' ? '非定金缺货' : (isPaid ? '已付尾款' : '未付尾款');
 
         const presaleTimeRaw = getVal(['预售发货时间', '预售时间', '最晚发货时间', '发货时间', '承诺发货时间']);
         const payTimeRaw = getVal(['支付时间', '付款时间', '下单时间', '订单付款时间']);
@@ -1704,6 +1849,9 @@
           channel,
           projectGroup,
           tailStatus,
+          tailCategory,
+          isNonDeposit: tailCategory === 'nonDeposit',
+          isUnpaid,
           isPaid,
           presaleTimeRaw,
           payTimeRaw,
@@ -1797,9 +1945,11 @@
     }
 
     function renderAll() {
+      syncGlobalTailSlicerUI();
       const computedList = rawData.map(r => computeRecordStatus(r, benchmarkTime));
-      renderKPIs(computedList);
-      renderSummaryTable(computedList);
+      const activeList = filterByGlobalTailStates(computedList);
+      renderKPIs(activeList);
+      renderSummaryTable(activeList);
       renderDatePivotTable();
       renderDetailTable();
       renderMod4Table();
@@ -1807,37 +1957,34 @@
     }
 
     function renderKPIs(list) {
-      const totalOrders = list.length;
-      const mainStockoutQty = list.reduce((sum, r) => sum + (r.stockoutQty || 0), 0);
+      const activeList = filterByGlobalTailStates(list);
+      const totalOrders = activeList.length;
+      const mainStockoutQty = activeList.reduce((sum, r) => sum + (r.stockoutQty || 0), 0);
       const totalQty = mainStockoutQty;
+      const paidQty = activeList.filter(r => getTailStateKey(r) === 'paid').reduce((sum, r) => sum + (r.stockoutQty || 0), 0);
+      const unpaidQty = activeList.filter(r => getTailStateKey(r) === 'unpaid').reduce((sum, r) => sum + (r.stockoutQty || 0), 0);
+      const nonDepositQty = activeList.filter(r => getTailStateKey(r) === 'nonDeposit').reduce((sum, r) => sum + (r.stockoutQty || 0), 0);
 
-      const paidList = list.filter(r => r.isPaid);
-      const paidQty = paidList.reduce((sum, r) => sum + (r.stockoutQty || 0), 0);
-      const unpaidQty = totalQty - paidQty;
-
-      const tailFilter = document.getElementById('tailStatusFilterSelect').value;
-      let activeScope = list;
-      if (tailFilter === 'paid') activeScope = paidList;
-      else if (tailFilter === 'unpaid') activeScope = list.filter(r => !r.isPaid);
-
-      const presaleOverdueQty = activeScope.filter(r => r.isPresale && r.isOverdue).reduce((s, r) => s + (r.stockoutQty || 0), 0);
-      const spotOverdueQty = activeScope.filter(r => !r.isPresale && r.isOverdue).reduce((s, r) => s + (r.stockoutQty || 0), 0);
-      const totalOverdueQty = activeScope.filter(r => r.isOverdue).reduce((s, r) => s + (r.stockoutQty || 0), 0);
+      const presaleOverdueQty = activeList.filter(r => r.isPresale && r.isOverdue).reduce((s, r) => s + (r.stockoutQty || 0), 0);
+      const spotOverdueQty = activeList.filter(r => !r.isPresale && r.isOverdue).reduce((s, r) => s + (r.stockoutQty || 0), 0);
+      const totalOverdueQty = activeList.filter(r => r.isOverdue).reduce((s, r) => s + (r.stockoutQty || 0), 0);
 
       const spuSet = new Set();
       const skuSet = new Set();
-      list.forEach(r => {
+      activeList.forEach(r => {
         if (r.spu && r.spu !== '-' && r.spu !== '未知货号') spuSet.add(r.spu);
         if (r.sku && r.sku !== '-' && r.sku !== '未知货号') skuSet.add(r.sku);
       });
-      if (spuSet.size === 0) list.forEach(r => { if (r.spu) spuSet.add(r.spu); });
-      if (skuSet.size === 0) list.forEach(r => { if (r.sku) skuSet.add(r.sku); });
+      if (spuSet.size === 0) activeList.forEach(r => { if (r.spu) spuSet.add(r.spu); });
+      if (skuSet.size === 0) activeList.forEach(r => { if (r.sku) skuSet.add(r.sku); });
 
       document.getElementById('kpiMainStockoutQty').textContent = mainStockoutQty.toLocaleString();
       document.getElementById('kpiTotalQty').textContent = totalQty.toLocaleString();
       document.getElementById('kpiTotalOrders').textContent = totalOrders.toLocaleString();
       document.getElementById('kpiPaidQty').textContent = paidQty.toLocaleString();
       document.getElementById('kpiUnpaidQty').textContent = unpaidQty.toLocaleString();
+      const nonDepositEl = document.getElementById('kpiNonDepositQty');
+      if (nonDepositEl) nonDepositEl.textContent = nonDepositQty.toLocaleString();
       document.getElementById('kpiPresaleOverdue').textContent = presaleOverdueQty.toLocaleString();
       document.getElementById('kpiSpotOverdue').textContent = spotOverdueQty.toLocaleString();
       document.getElementById('kpiTotalOverdue').textContent = totalOverdueQty.toLocaleString();
@@ -1846,8 +1993,7 @@
       const skuCountEl = document.getElementById('kpiSkuCount');
       if (spuCountEl) spuCountEl.textContent = spuSet.size.toLocaleString();
       if (skuCountEl) skuCountEl.textContent = skuSet.size.toLocaleString();
-
-      document.getElementById('kpiOverdueScopeText').textContent = `当前筛选: ${tailFilter === 'paid' ? '已付尾款' : (tailFilter === 'unpaid' ? '未付尾款' : '全部状态')}`;
+      document.getElementById('kpiOverdueScopeText').textContent = `全局状态：${getSelectedTailStateLabel()}`;
     }
 
     function renderSummaryTable(computedList) {
@@ -1856,97 +2002,59 @@
       tbody.innerHTML = '';
       tfoot.innerHTML = '';
 
-      const tailFilter = document.getElementById('tailStatusFilterSelect').value;
+      const activeList = filterByGlobalTailStates(computedList);
       const channels = Array.from(new Set(rawData.map(r => r.channel))).filter(Boolean);
-
       const channelMap = {};
       channels.forEach(ch => {
         channelMap[ch] = {
-          paidQty: 0,
-          unpaidQty: 0,
-          stockoutSumQty: 0,
-          noPresaleQty: 0,
-          hasPresaleQty: 0,
-          noPresaleOverdue: 0,
-          noPresaleNormal: 0,
-          hasPresaleNormal: 0,
-          hasPresaleOverdue: 0,
-          totalOverdue: 0
+          paidQty: 0, unpaidQty: 0, nonDepositQty: 0, stockoutSumQty: 0,
+          noPresaleQty: 0, hasPresaleQty: 0, noPresaleOverdue: 0, noPresaleNormal: 0,
+          hasPresaleNormal: 0, hasPresaleOverdue: 0, totalOverdue: 0
         };
       });
 
-      computedList.forEach(r => {
+      activeList.forEach(r => {
         const c = channelMap[r.channel];
         if (!c) return;
+        const qty = Number(r.stockoutQty) || 0;
+        const stateKey = getTailStateKey(r);
+        if (stateKey === 'paid') c.paidQty += qty;
+        else if (stateKey === 'unpaid') c.unpaidQty += qty;
+        else if (stateKey === 'nonDeposit') c.nonDepositQty += qty;
 
-        const rowStockout = r.stockoutQty || 0;
-
-        if (r.isPaid) c.paidQty += rowStockout;
-        else c.unpaidQty += rowStockout;
-
-        const matchScope = (tailFilter === 'all') || (tailFilter === 'paid' && r.isPaid) || (tailFilter === 'unpaid' && !r.isPaid);
-        if (matchScope) {
-          if (!r.isPresale) {
-            c.noPresaleQty += rowStockout;
-            if (r.isOverdue) {
-              c.noPresaleOverdue += rowStockout;
-              c.totalOverdue += rowStockout;
-            } else {
-              c.noPresaleNormal += rowStockout;
-            }
-          } else {
-            c.hasPresaleQty += rowStockout;
-            if (r.isOverdue) {
-              c.hasPresaleOverdue += rowStockout;
-              c.totalOverdue += rowStockout;
-            } else {
-              c.hasPresaleNormal += rowStockout;
-            }
-          }
+        if (!r.isPresale) {
+          c.noPresaleQty += qty;
+          if (r.isOverdue) { c.noPresaleOverdue += qty; c.totalOverdue += qty; }
+          else c.noPresaleNormal += qty;
+        } else {
+          c.hasPresaleQty += qty;
+          if (r.isOverdue) { c.hasPresaleOverdue += qty; c.totalOverdue += qty; }
+          else c.hasPresaleNormal += qty;
         }
       });
 
       channels.forEach(ch => {
         const c = channelMap[ch];
-        c.stockoutSumQty = c.paidQty + c.unpaidQty;
+        // 当前全局切片范围内的三态之和；未被选中的状态自然为 0。
+        c.stockoutSumQty = c.paidQty + c.unpaidQty + c.nonDepositQty;
       });
-
-      channels.sort((a, b) => {
-        const qtyA = channelMap[a] ? channelMap[a].stockoutSumQty : 0;
-        const qtyB = channelMap[b] ? channelMap[b].stockoutSumQty : 0;
-        return qtyB - qtyA;
-      });
+      channels.sort((a, b) => channelMap[b].stockoutSumQty - channelMap[a].stockoutSumQty);
 
       const grandTotal = {
-        paidQty: 0,
-        unpaidQty: 0,
-        stockoutSumQty: 0,
-        noPresaleQty: 0,
-        hasPresaleQty: 0,
-        noPresaleOverdue: 0,
-        noPresaleNormal: 0,
-        hasPresaleNormal: 0,
-        hasPresaleOverdue: 0,
-        totalOverdue: 0
+        paidQty: 0, unpaidQty: 0, nonDepositQty: 0, stockoutSumQty: 0,
+        noPresaleQty: 0, hasPresaleQty: 0, noPresaleOverdue: 0, noPresaleNormal: 0,
+        hasPresaleNormal: 0, hasPresaleOverdue: 0, totalOverdue: 0
       };
 
       channels.forEach(ch => {
         const item = channelMap[ch];
-        grandTotal.paidQty += item.paidQty;
-        grandTotal.unpaidQty += item.unpaidQty;
-        grandTotal.noPresaleQty += item.noPresaleQty;
-        grandTotal.hasPresaleQty += item.hasPresaleQty;
-        grandTotal.noPresaleOverdue += item.noPresaleOverdue;
-        grandTotal.noPresaleNormal += item.noPresaleNormal;
-        grandTotal.hasPresaleNormal += item.hasPresaleNormal;
-        grandTotal.hasPresaleOverdue += item.hasPresaleOverdue;
-        grandTotal.totalOverdue += item.totalOverdue;
-
+        Object.keys(grandTotal).forEach(key => { grandTotal[key] += item[key] || 0; });
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td class="font-medium text-left px-3 text-slate-800">${escapeHtml(ch)}</td>
           <td class="text-slate-700">${item.paidQty}</td>
           <td class="text-slate-600">${item.unpaidQty}</td>
+          <td class="text-violet-700 font-semibold">${item.nonDepositQty}</td>
           <td class="highlight-col-stockout">${item.stockoutSumQty}</td>
           <td class="text-slate-700">${item.noPresaleQty}</td>
           <td class="text-slate-700">${item.hasPresaleQty}</td>
@@ -1959,13 +2067,13 @@
         tbody.appendChild(tr);
       });
 
-      grandTotal.stockoutSumQty = grandTotal.paidQty + grandTotal.unpaidQty;
-
+      grandTotal.stockoutSumQty = grandTotal.paidQty + grandTotal.unpaidQty + grandTotal.nonDepositQty;
       tfoot.innerHTML = `
         <tr class="border-t-2 border-slate-300">
           <td class="text-left font-bold text-slate-900 px-3 bg-slate-100">合计</td>
           <td class="font-bold text-slate-800 bg-slate-50">${grandTotal.paidQty}</td>
           <td class="font-bold text-slate-700 bg-slate-50">${grandTotal.unpaidQty}</td>
+          <td class="font-bold text-violet-700 bg-violet-50">${grandTotal.nonDepositQty}</td>
           <td class="highlight-col-stockout bg-rose-200">${grandTotal.stockoutSumQty}</td>
           <td class="font-bold text-slate-800 bg-slate-50">${grandTotal.noPresaleQty}</td>
           <td class="font-bold text-slate-800 bg-slate-50">${grandTotal.hasPresaleQty}</td>
@@ -1980,15 +2088,9 @@
 
     function renderDatePivotTable() {
       const computedList = rawData.map(r => computeRecordStatus(r, benchmarkTime));
-      const tailFilter = document.getElementById('mod2TailFilterSelect') ? document.getElementById('mod2TailFilterSelect').value : 'all';
       const overdueFilter = document.getElementById('mod2OverdueFilterSelect') ? document.getElementById('mod2OverdueFilterSelect').value : 'all';
 
-      let filtered = computedList;
-      if (tailFilter === 'paid') {
-        filtered = filtered.filter(r => r.isPaid);
-      } else if (tailFilter === 'unpaid') {
-        filtered = filtered.filter(r => !r.isPaid);
-      }
+      let filtered = filterByGlobalTailStates(computedList);
 
       if (overdueFilter === 'overdue') {
         filtered = filtered.filter(r => r.isOverdue);
@@ -2003,7 +2105,7 @@
         }
       });
       const dateList = Array.from(dateSet).sort();
-      const channels = Array.from(new Set(rawData.map(r => r.channel))).filter(Boolean);
+      const channels = Array.from(new Set(filtered.map(r => r.channel))).filter(Boolean);
 
       const thead = document.getElementById('datePivotHead');
       const tbody = document.getElementById('datePivotBody');
@@ -2245,10 +2347,9 @@
       const dateFilter = document.getElementById('detailDateFilter').value;
       const groupFilter = document.getElementById('detailGroupFilter').value;
       const statusFilter = document.getElementById('detailStatusFilter').value;
-      const tailFilter = document.getElementById('detailTailFilter') ? document.getElementById('detailTailFilter').value : 'all';
       const searchKeyword = document.getElementById('detailSearchInput').value.trim().toLowerCase();
 
-      let items = computedList.map(r => {
+      let items = filterByGlobalTailStates(computedList).map(r => {
         const presaleDateStr = r.presaleTime ? formatDate(r.presaleTime) : '无预售(现货)';
         const payDateStr = r.payTime ? formatDate(r.payTime) : '-';
         let statusText = '履约正常';
@@ -2268,6 +2369,7 @@
           isOverdue: r.isOverdue,
           isPresale: r.isPresale,
           isPaid: r.isPaid,
+          tailCategory: getTailStateKey(r),
           tailStatus: r.tailStatus,
           stockoutQty: r.stockoutQty || 0,
           stockoutOverdueQty: r.stockoutOverdueQty || 0,
@@ -2277,8 +2379,6 @@
       });
 
       if (statusFilter === 'overdue') items = items.filter(x => x.isOverdue);
-      if (tailFilter === 'paid') items = items.filter(x => x.isPaid);
-      else if (tailFilter === 'unpaid') items = items.filter(x => !x.isPaid);
       if (dateFilter !== 'all') items = items.filter(x => x.statDate === dateFilter);
       if (groupFilter !== 'all') items = items.filter(x => x.projectGroup === groupFilter || x.channel === groupFilter);
       if (searchKeyword) {
@@ -2460,14 +2560,11 @@
       const dateFilter = document.getElementById('mod4DateFilter').value;
       const groupFilter = document.getElementById('mod4GroupFilter').value;
       const statusFilter = document.getElementById('mod4StatusFilter').value;
-      const tailFilter = document.getElementById('mod4TailFilter') ? document.getElementById('mod4TailFilter').value : 'all';
       const searchKeyword = document.getElementById('mod4SearchInput').value.trim().toLowerCase();
 
-      let items = computedList;
+      let items = filterByGlobalTailStates(computedList);
       if (dateFilter !== 'all') items = items.filter(x => x.statDateStr === dateFilter);
       if (groupFilter !== 'all') items = items.filter(x => x.projectGroup === groupFilter || x.channel === groupFilter);
-      if (tailFilter === 'paid') items = items.filter(x => x.isPaid);
-      else if (tailFilter === 'unpaid') items = items.filter(x => !x.isPaid);
 
       const spuMap = new Map();
       items.forEach(r => {
@@ -2683,18 +2780,12 @@
     // ==========================================
     function getMod5FilteredData() {
       const computedList = rawData.map(r => computeRecordStatus(r, benchmarkTime));
-      const tailFilter = document.getElementById('mod5TailFilterSelect') ? document.getElementById('mod5TailFilterSelect').value : 'all';
       const overdueFilter = document.getElementById('mod5OverdueFilterSelect') ? document.getElementById('mod5OverdueFilterSelect').value : 'all';
       const searchKeyword = document.getElementById('mod5SearchInput') ? document.getElementById('mod5SearchInput').value.trim().toLowerCase() : '';
 
-      let filtered = computedList;
+      let filtered = filterByGlobalTailStates(computedList);
 
-      // 尾款状态筛选 (与模块二一致)
-      if (tailFilter === 'paid') {
-        filtered = filtered.filter(r => r.isPaid);
-      } else if (tailFilter === 'unpaid') {
-        filtered = filtered.filter(r => !r.isPaid);
-      }
+      // 全局已统一按尾款/非定金三态完成筛选，以下继续应用模块五自身的时效和关键词条件。
 
       // 时效状态筛选 (与模块二一致)
       if (overdueFilter === 'overdue') {
@@ -3522,14 +3613,7 @@
     function renderDateStatsBadges(computedList) {
       const container = document.getElementById('dateStatsBadgeContainer');
       const dateMap = {};
-      const tailFilter = document.getElementById('detailTailFilter') ? document.getElementById('detailTailFilter').value : 'all';
-
-      let scope = computedList.filter(r => r.isOverdue);
-      if (tailFilter === 'paid') {
-        scope = scope.filter(r => r.isPaid);
-      } else if (tailFilter === 'unpaid') {
-        scope = scope.filter(r => !r.isPaid);
-      }
+      let scope = filterByGlobalTailStates(computedList).filter(r => r.isOverdue);
 
       scope.forEach(r => {
         const d = r.statDateStr || '未定日期';
