@@ -403,13 +403,29 @@
           <span class="text-xs text-slate-500 bg-slate-200 px-2 py-0.5 rounded">缺货总数 = 已付尾款 + 未付尾款 + 非定金缺货（按当前筛选总数降序）</span>
         </div>
 
-        <div class="tail-slicer-control">
-            <button type="button" data-tail-slicer-trigger="mod1" aria-haspopup="true" aria-expanded="false" title="选择已付尾款、未付尾款、非定金缺货；各模块联动" class="inline-flex items-center gap-1.5 bg-white hover:bg-indigo-50 border border-slate-300 hover:border-indigo-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs text-slate-700 whitespace-nowrap transition">
+        <div class="tail-slicer-control inline-flex flex-wrap items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs text-slate-700" data-tail-box="mod1">
+            <button type="button" data-tail-slicer-trigger="mod1" aria-haspopup="true" aria-expanded="false" title="点击打开尾款状态多选面板或直接勾选右侧复选框" class="inline-flex items-center gap-1 text-slate-700 hover:text-indigo-700 font-medium transition">
               <i class="fa-solid fa-filter text-indigo-500"></i>
-              <span class="font-medium">尾款状态</span>
-              <span data-tail-slicer-summary class="font-semibold text-indigo-700">全部 (3/3)</span>
-              <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+              <span>尾款状态</span>
+              <span data-tail-slicer-summary class="font-semibold text-indigo-700 text-[11px]">全部 (3/3)</span>
             </button>
+            <span class="text-slate-200">|</span>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-slate-700 hover:text-slate-900 font-medium">
+              <input type="checkbox" data-tail-all="mod1" checked class="w-3.5 h-3.5 rounded border-slate-300 text-slate-800 focus:ring-slate-500 cursor-pointer">
+              <span>全选</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-blue-700 hover:text-blue-800 font-medium">
+              <input type="checkbox" data-tail-item="mod1" value="paid" checked class="w-3.5 h-3.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer">
+              <span>已付尾款</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-amber-700 hover:text-amber-800 font-medium">
+              <input type="checkbox" data-tail-item="mod1" value="unpaid" checked class="w-3.5 h-3.5 rounded border-slate-300 text-amber-600 focus:ring-amber-500 cursor-pointer">
+              <span>未付尾款</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-violet-700 hover:text-violet-800 font-medium">
+              <input type="checkbox" data-tail-item="mod1" value="nonDeposit" checked class="w-3.5 h-3.5 rounded border-slate-300 text-violet-600 focus:ring-violet-500 cursor-pointer">
+              <span>非定金缺货</span>
+            </label>
           </div>
       </div>
 
@@ -459,22 +475,45 @@
         <div class="flex flex-wrap items-center gap-2.5 text-xs">
           <span class="text-slate-500 hidden xl:inline">时效规则：预售取【发货时间】，现货取【支付+2天】</span>
           
-          <div class="tail-slicer-control">
-            <button type="button" data-tail-slicer-trigger="mod2" aria-haspopup="true" aria-expanded="false" title="选择已付尾款、未付尾款、非定金缺货；各模块联动" class="inline-flex items-center gap-1.5 bg-white hover:bg-blue-50 border border-slate-300 hover:border-blue-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs text-slate-700 whitespace-nowrap transition">
+          <div class="tail-slicer-control inline-flex flex-wrap items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs text-slate-700" data-tail-box="mod2">
+            <button type="button" data-tail-slicer-trigger="mod2" aria-haspopup="true" aria-expanded="false" title="点击打开尾款状态多选面板或直接勾选右侧复选框" class="inline-flex items-center gap-1 text-slate-700 hover:text-blue-700 font-medium transition">
               <i class="fa-solid fa-filter text-blue-500"></i>
-              <span class="font-medium">尾款状态</span>
-              <span data-tail-slicer-summary class="font-semibold text-blue-700">全部 (3/3)</span>
-              <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+              <span>尾款状态</span>
+              <span data-tail-slicer-summary class="font-semibold text-blue-700 text-[11px]">全部 (3/3)</span>
             </button>
+            <span class="text-slate-200">|</span>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-slate-700 hover:text-slate-900 font-medium">
+              <input type="checkbox" data-tail-all="mod2" checked class="w-3.5 h-3.5 rounded border-slate-300 text-slate-800 focus:ring-slate-500 cursor-pointer">
+              <span>全选</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-blue-700 hover:text-blue-800 font-medium">
+              <input type="checkbox" data-tail-item="mod2" value="paid" checked class="w-3.5 h-3.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer">
+              <span>已付尾款</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-amber-700 hover:text-amber-800 font-medium">
+              <input type="checkbox" data-tail-item="mod2" value="unpaid" checked class="w-3.5 h-3.5 rounded border-slate-300 text-amber-600 focus:ring-amber-500 cursor-pointer">
+              <span>未付尾款</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-violet-700 hover:text-violet-800 font-medium">
+              <input type="checkbox" data-tail-item="mod2" value="nonDeposit" checked class="w-3.5 h-3.5 rounded border-slate-300 text-violet-600 focus:ring-violet-500 cursor-pointer">
+              <span>非定金缺货</span>
+            </label>
           </div>
 
-          <div class="flex items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm">
+          <div id="mod2OverdueFilterSelect" class="inline-flex flex-wrap items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs" data-overdue-box="mod2">
             <span class="text-slate-600 font-medium"><i class="fa-solid fa-clock-rotate-left text-slate-400 mr-1"></i>时效状态筛选：</span>
-            <select id="mod2OverdueFilterSelect" class="bg-transparent font-medium text-slate-800 focus:outline-none cursor-pointer">
-              <option value="all" selected>全部 (超时 + 未超时)</option>
-              <option value="overdue">仅缺货超时</option>
-              <option value="normal">仅缺货未超时</option>
-            </select>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-slate-700 hover:text-slate-900 font-medium">
+              <input type="checkbox" data-overdue-all="mod2" checked class="w-3.5 h-3.5 rounded border-slate-300 text-slate-800 focus:ring-slate-500 cursor-pointer">
+              <span>全选</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-amber-700 hover:text-amber-800 font-medium">
+              <input type="checkbox" data-overdue-item="mod2" value="overdue" checked class="w-3.5 h-3.5 rounded border-slate-300 text-amber-600 focus:ring-amber-500 cursor-pointer">
+              <span>缺货超时</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-emerald-700 hover:text-emerald-800 font-medium">
+              <input type="checkbox" data-overdue-item="mod2" value="normal" checked class="w-3.5 h-3.5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer">
+              <span>缺货未超时</span>
+            </label>
           </div>
         </div>
       </div>
@@ -519,34 +558,81 @@
         </div>
 
         <div class="flex flex-wrap items-center gap-2.5">
-          <div class="flex items-center gap-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs">
-            <i class="fa-regular fa-calendar text-slate-400"></i>
-            <select id="mod4DateFilter" class="bg-transparent text-slate-700 focus:outline-none">
-              <option value="all">所有履约/超时日期</option>
-            </select>
-          </div>
-
-          <div class="flex items-center gap-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs">
-            <i class="fa-solid fa-filter text-slate-400"></i>
-            <select id="mod4GroupFilter" class="bg-transparent text-slate-700 focus:outline-none">
-              <option value="all">所有项目组 / 渠道</option>
-            </select>
-          </div>
-
-          <div class="flex items-center gap-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs">
-            <select id="mod4StatusFilter" class="bg-transparent text-slate-700 focus:outline-none font-medium">
-              <option value="all" selected>查看全部货号款 (默认)</option>
-              <option value="overdue">仅看缺货超时货号</option>
-            </select>
-          </div>
-
-          <div class="tail-slicer-control">
-            <button type="button" data-tail-slicer-trigger="mod3" aria-haspopup="true" aria-expanded="false" title="选择已付尾款、未付尾款、非定金缺货；各模块联动" class="inline-flex items-center gap-1.5 bg-white hover:bg-indigo-50 border border-slate-300 hover:border-indigo-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs text-slate-700 whitespace-nowrap transition">
-              <i class="fa-solid fa-filter text-indigo-500"></i>
-              <span class="font-medium">尾款状态</span>
-              <span data-tail-slicer-summary class="font-semibold text-indigo-700">全部 (3/3)</span>
+          <div id="mod4DateFilter" class="relative inline-block text-xs" data-multi-filter-wrap="mod4Date">
+            <button type="button" data-multi-dropdown-trigger="mod4Date" aria-haspopup="true" aria-expanded="false" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs text-slate-700 whitespace-nowrap transition">
+              <i class="fa-regular fa-calendar text-slate-400"></i>
+              <span data-multi-dropdown-summary="mod4Date" class="font-medium text-slate-700">所有履约/超时日期</span>
               <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
             </button>
+            <div data-multi-dropdown-menu="mod4Date" class="hidden fixed z-50 bg-white rounded-xl border border-slate-200 shadow-2xl p-3 text-xs w-64 max-w-[92vw]">
+              <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-100">
+                <span class="font-bold text-slate-800">所有履约/超时日期（多选）</span>
+                <div class="flex items-center gap-1">
+                  <button type="button" data-multi-action="all" data-multi-target="mod4Date" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-white font-semibold text-[11px]">全选</button>
+                  <button type="button" data-multi-action="invert" data-multi-target="mod4Date" class="px-2 py-0.5 rounded border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold text-[11px]">反选</button>
+                </div>
+              </div>
+              <div data-multi-options-list="mod4Date" class="py-1.5 max-h-56 overflow-y-auto custom-scrollbar space-y-1"></div>
+            </div>
+          </div>
+
+          <div id="mod4GroupFilter" class="relative inline-block text-xs" data-multi-filter-wrap="mod4Group">
+            <button type="button" data-multi-dropdown-trigger="mod4Group" aria-haspopup="true" aria-expanded="false" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs text-slate-700 whitespace-nowrap transition">
+              <i class="fa-solid fa-layer-group text-slate-400"></i>
+              <span data-multi-dropdown-summary="mod4Group" class="font-medium text-slate-700">所有项目组 / 渠道</span>
+              <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+            </button>
+            <div data-multi-dropdown-menu="mod4Group" class="hidden fixed z-50 bg-white rounded-xl border border-slate-200 shadow-2xl p-3 text-xs w-64 max-w-[92vw]">
+              <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-100">
+                <span class="font-bold text-slate-800">所有项目组 / 渠道（多选）</span>
+                <div class="flex items-center gap-1">
+                  <button type="button" data-multi-action="all" data-multi-target="mod4Group" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-white font-semibold text-[11px]">全选</button>
+                  <button type="button" data-multi-action="invert" data-multi-target="mod4Group" class="px-2 py-0.5 rounded border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold text-[11px]">反选</button>
+                </div>
+              </div>
+              <div data-multi-options-list="mod4Group" class="py-1.5 max-h-56 overflow-y-auto custom-scrollbar space-y-1"></div>
+            </div>
+          </div>
+
+          <div id="mod4StatusFilter" class="inline-flex flex-wrap items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs" data-overdue-box="mod3">
+            <span class="text-slate-600 font-medium"><i class="fa-solid fa-clock-rotate-left text-slate-400 mr-1"></i>货号状态：</span>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-slate-700 hover:text-slate-900 font-medium">
+              <input type="checkbox" data-overdue-all="mod3" checked class="w-3.5 h-3.5 rounded border-slate-300 text-slate-800 focus:ring-slate-500 cursor-pointer">
+              <span>全选</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-amber-700 hover:text-amber-800 font-medium">
+              <input type="checkbox" data-overdue-item="mod3" value="overdue" checked class="w-3.5 h-3.5 rounded border-slate-300 text-amber-600 focus:ring-amber-500 cursor-pointer">
+              <span>缺货超时</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-emerald-700 hover:text-emerald-800 font-medium">
+              <input type="checkbox" data-overdue-item="mod3" value="normal" checked class="w-3.5 h-3.5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer">
+              <span>未超时</span>
+            </label>
+          </div>
+
+          <div class="tail-slicer-control inline-flex flex-wrap items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs text-slate-700" data-tail-box="mod3">
+            <button type="button" data-tail-slicer-trigger="mod3" aria-haspopup="true" aria-expanded="false" title="点击打开尾款状态多选面板或直接勾选右侧复选框" class="inline-flex items-center gap-1 text-slate-700 hover:text-indigo-700 font-medium transition">
+              <i class="fa-solid fa-filter text-indigo-500"></i>
+              <span>尾款状态</span>
+              <span data-tail-slicer-summary class="font-semibold text-indigo-700 text-[11px]">全部 (3/3)</span>
+            </button>
+            <span class="text-slate-200">|</span>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-slate-700 hover:text-slate-900 font-medium">
+              <input type="checkbox" data-tail-all="mod3" checked class="w-3.5 h-3.5 rounded border-slate-300 text-slate-800 focus:ring-slate-500 cursor-pointer">
+              <span>全选</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-blue-700 hover:text-blue-800 font-medium">
+              <input type="checkbox" data-tail-item="mod3" value="paid" checked class="w-3.5 h-3.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer">
+              <span>已付尾款</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-amber-700 hover:text-amber-800 font-medium">
+              <input type="checkbox" data-tail-item="mod3" value="unpaid" checked class="w-3.5 h-3.5 rounded border-slate-300 text-amber-600 focus:ring-amber-500 cursor-pointer">
+              <span>未付尾款</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-violet-700 hover:text-violet-800 font-medium">
+              <input type="checkbox" data-tail-item="mod3" value="nonDeposit" checked class="w-3.5 h-3.5 rounded border-slate-300 text-violet-600 focus:ring-violet-500 cursor-pointer">
+              <span>非定金缺货</span>
+            </label>
           </div>
 
           <div class="relative">
@@ -641,34 +727,81 @@
         </div>
 
         <div class="flex flex-wrap items-center gap-2.5">
-          <div class="flex items-center gap-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs">
-            <i class="fa-regular fa-calendar text-slate-400"></i>
-            <select id="detailDateFilter" class="bg-transparent text-slate-700 focus:outline-none">
-              <option value="all">所有履约/超时日期</option>
-            </select>
-          </div>
-
-          <div class="flex items-center gap-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs">
-            <i class="fa-solid fa-filter text-slate-400"></i>
-            <select id="detailGroupFilter" class="bg-transparent text-slate-700 focus:outline-none">
-              <option value="all">所有项目组 / 渠道</option>
-            </select>
-          </div>
-
-          <div class="flex items-center gap-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs">
-            <select id="detailStatusFilter" class="bg-transparent text-slate-700 focus:outline-none font-medium">
-              <option value="all" selected>查看全部订单商品 (默认)</option>
-              <option value="overdue">仅看缺货超时</option>
-            </select>
-          </div>
-
-          <div class="tail-slicer-control">
-            <button type="button" data-tail-slicer-trigger="mod4" aria-haspopup="true" aria-expanded="false" title="选择已付尾款、未付尾款、非定金缺货；各模块联动" class="inline-flex items-center gap-1.5 bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs text-slate-700 whitespace-nowrap transition">
-              <i class="fa-solid fa-filter text-emerald-500"></i>
-              <span class="font-medium">尾款状态</span>
-              <span data-tail-slicer-summary class="font-semibold text-emerald-700">全部 (3/3)</span>
+          <div id="detailDateFilter" class="relative inline-block text-xs" data-multi-filter-wrap="detailDate">
+            <button type="button" data-multi-dropdown-trigger="detailDate" aria-haspopup="true" aria-expanded="false" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs text-slate-700 whitespace-nowrap transition">
+              <i class="fa-regular fa-calendar text-slate-400"></i>
+              <span data-multi-dropdown-summary="detailDate" class="font-medium text-slate-700">所有履约/超时日期</span>
               <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
             </button>
+            <div data-multi-dropdown-menu="detailDate" class="hidden fixed z-50 bg-white rounded-xl border border-slate-200 shadow-2xl p-3 text-xs w-64 max-w-[92vw]">
+              <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-100">
+                <span class="font-bold text-slate-800">所有履约/超时日期（多选）</span>
+                <div class="flex items-center gap-1">
+                  <button type="button" data-multi-action="all" data-multi-target="detailDate" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-white font-semibold text-[11px]">全选</button>
+                  <button type="button" data-multi-action="invert" data-multi-target="detailDate" class="px-2 py-0.5 rounded border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold text-[11px]">反选</button>
+                </div>
+              </div>
+              <div data-multi-options-list="detailDate" class="py-1.5 max-h-56 overflow-y-auto custom-scrollbar space-y-1"></div>
+            </div>
+          </div>
+
+          <div id="detailGroupFilter" class="relative inline-block text-xs" data-multi-filter-wrap="detailGroup">
+            <button type="button" data-multi-dropdown-trigger="detailGroup" aria-haspopup="true" aria-expanded="false" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs text-slate-700 whitespace-nowrap transition">
+              <i class="fa-solid fa-layer-group text-slate-400"></i>
+              <span data-multi-dropdown-summary="detailGroup" class="font-medium text-slate-700">所有项目组 / 渠道</span>
+              <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+            </button>
+            <div data-multi-dropdown-menu="detailGroup" class="hidden fixed z-50 bg-white rounded-xl border border-slate-200 shadow-2xl p-3 text-xs w-64 max-w-[92vw]">
+              <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-100">
+                <span class="font-bold text-slate-800">所有项目组 / 渠道（多选）</span>
+                <div class="flex items-center gap-1">
+                  <button type="button" data-multi-action="all" data-multi-target="detailGroup" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-white font-semibold text-[11px]">全选</button>
+                  <button type="button" data-multi-action="invert" data-multi-target="detailGroup" class="px-2 py-0.5 rounded border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold text-[11px]">反选</button>
+                </div>
+              </div>
+              <div data-multi-options-list="detailGroup" class="py-1.5 max-h-56 overflow-y-auto custom-scrollbar space-y-1"></div>
+            </div>
+          </div>
+
+          <div id="detailStatusFilter" class="inline-flex flex-wrap items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs" data-overdue-box="mod4">
+            <span class="text-slate-600 font-medium"><i class="fa-solid fa-clock-rotate-left text-slate-400 mr-1"></i>订单状态：</span>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-slate-700 hover:text-slate-900 font-medium">
+              <input type="checkbox" data-overdue-all="mod4" checked class="w-3.5 h-3.5 rounded border-slate-300 text-slate-800 focus:ring-slate-500 cursor-pointer">
+              <span>全选</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-amber-700 hover:text-amber-800 font-medium">
+              <input type="checkbox" data-overdue-item="mod4" value="overdue" checked class="w-3.5 h-3.5 rounded border-slate-300 text-amber-600 focus:ring-amber-500 cursor-pointer">
+              <span>缺货超时</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-emerald-700 hover:text-emerald-800 font-medium">
+              <input type="checkbox" data-overdue-item="mod4" value="normal" checked class="w-3.5 h-3.5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer">
+              <span>履约正常</span>
+            </label>
+          </div>
+
+          <div class="tail-slicer-control inline-flex flex-wrap items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs text-slate-700" data-tail-box="mod4">
+            <button type="button" data-tail-slicer-trigger="mod4" aria-haspopup="true" aria-expanded="false" title="点击打开尾款状态多选面板或直接勾选右侧复选框" class="inline-flex items-center gap-1 text-slate-700 hover:text-emerald-700 font-medium transition">
+              <i class="fa-solid fa-filter text-emerald-500"></i>
+              <span>尾款状态</span>
+              <span data-tail-slicer-summary class="font-semibold text-emerald-700 text-[11px]">全部 (3/3)</span>
+            </button>
+            <span class="text-slate-200">|</span>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-slate-700 hover:text-slate-900 font-medium">
+              <input type="checkbox" data-tail-all="mod4" checked class="w-3.5 h-3.5 rounded border-slate-300 text-slate-800 focus:ring-slate-500 cursor-pointer">
+              <span>全选</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-blue-700 hover:text-blue-800 font-medium">
+              <input type="checkbox" data-tail-item="mod4" value="paid" checked class="w-3.5 h-3.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer">
+              <span>已付尾款</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-amber-700 hover:text-amber-800 font-medium">
+              <input type="checkbox" data-tail-item="mod4" value="unpaid" checked class="w-3.5 h-3.5 rounded border-slate-300 text-amber-600 focus:ring-amber-500 cursor-pointer">
+              <span>未付尾款</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-violet-700 hover:text-violet-800 font-medium">
+              <input type="checkbox" data-tail-item="mod4" value="nonDeposit" checked class="w-3.5 h-3.5 rounded border-slate-300 text-violet-600 focus:ring-violet-500 cursor-pointer">
+              <span>非定金缺货</span>
+            </label>
           </div>
 
           <div class="relative">
@@ -805,24 +938,47 @@
             </button>
           </div>
 
-          <!-- 尾款状态筛选 (与模块二一致) -->
-          <div class="tail-slicer-control">
-            <button type="button" data-tail-slicer-trigger="mod5" aria-haspopup="true" aria-expanded="false" title="选择已付尾款、未付尾款、非定金缺货；各模块联动" class="inline-flex items-center gap-1.5 bg-white hover:bg-violet-50 border border-slate-300 hover:border-violet-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs text-slate-700 whitespace-nowrap transition">
+          <!-- 尾款状态筛选 (复选框多选) -->
+          <div class="tail-slicer-control inline-flex flex-wrap items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs text-slate-700" data-tail-box="mod5">
+            <button type="button" data-tail-slicer-trigger="mod5" aria-haspopup="true" aria-expanded="false" title="点击打开尾款状态多选面板或直接勾选右侧复选框" class="inline-flex items-center gap-1 text-slate-700 hover:text-violet-700 font-medium transition">
               <i class="fa-solid fa-filter text-violet-500"></i>
-              <span class="font-medium">尾款状态</span>
-              <span data-tail-slicer-summary class="font-semibold text-violet-700">全部 (3/3)</span>
-              <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+              <span>尾款状态</span>
+              <span data-tail-slicer-summary class="font-semibold text-violet-700 text-[11px]">全部 (3/3)</span>
             </button>
+            <span class="text-slate-200">|</span>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-slate-700 hover:text-slate-900 font-medium">
+              <input type="checkbox" data-tail-all="mod5" checked class="w-3.5 h-3.5 rounded border-slate-300 text-slate-800 focus:ring-slate-500 cursor-pointer">
+              <span>全选</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-blue-700 hover:text-blue-800 font-medium">
+              <input type="checkbox" data-tail-item="mod5" value="paid" checked class="w-3.5 h-3.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer">
+              <span>已付尾款</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-amber-700 hover:text-amber-800 font-medium">
+              <input type="checkbox" data-tail-item="mod5" value="unpaid" checked class="w-3.5 h-3.5 rounded border-slate-300 text-amber-600 focus:ring-amber-500 cursor-pointer">
+              <span>未付尾款</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-violet-700 hover:text-violet-800 font-medium">
+              <input type="checkbox" data-tail-item="mod5" value="nonDeposit" checked class="w-3.5 h-3.5 rounded border-slate-300 text-violet-600 focus:ring-violet-500 cursor-pointer">
+              <span>非定金缺货</span>
+            </label>
           </div>
 
-          <!-- 缺货超时 / 缺货未超时 筛选 (与模块二一致) -->
-          <div class="flex items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm">
+          <!-- 缺货超时 / 缺货未超时 筛选 (复选框多选) -->
+          <div id="mod5OverdueFilterSelect" class="inline-flex flex-wrap items-center gap-1.5 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 shadow-sm text-xs" data-overdue-box="mod5">
             <span class="text-slate-600 font-medium"><i class="fa-solid fa-clock-rotate-left text-slate-400 mr-1"></i>时效状态：</span>
-            <select id="mod5OverdueFilterSelect" class="bg-transparent font-medium text-slate-800 focus:outline-none cursor-pointer">
-              <option value="all" selected>全部 (超时 + 未超时)</option>
-              <option value="overdue">仅缺货超时</option>
-              <option value="normal">仅缺货未超时</option>
-            </select>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-slate-700 hover:text-slate-900 font-medium">
+              <input type="checkbox" data-overdue-all="mod5" checked class="w-3.5 h-3.5 rounded border-slate-300 text-slate-800 focus:ring-slate-500 cursor-pointer">
+              <span>全选</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-amber-700 hover:text-amber-800 font-medium">
+              <input type="checkbox" data-overdue-item="mod5" value="overdue" checked class="w-3.5 h-3.5 rounded border-slate-300 text-amber-600 focus:ring-amber-500 cursor-pointer">
+              <span>缺货超时</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer select-none text-emerald-700 hover:text-emerald-800 font-medium">
+              <input type="checkbox" data-overdue-item="mod5" value="normal" checked class="w-3.5 h-3.5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer">
+              <span>缺货未超时</span>
+            </label>
           </div>
 
           <!-- 搜索货号/渠道 -->
@@ -1103,15 +1259,43 @@
     let mod4SortField = 'totalStockoutQty';
     let mod4SortDir = 'desc';
 
-    // 全局尾款/非定金缺货三态切片器；默认三态全选
+    // 各模块尾款状态、时效状态、日期及项目组/渠道复选框多选管理器（默认全选）
     const TAIL_STATE_META = {
       paid: { label: '已付尾款', color: 'blue' },
       unpaid: { label: '未付尾款', color: 'amber' },
       nonDeposit: { label: '非定金缺货', color: 'violet' }
     };
     const ALL_TAIL_STATE_KEYS = ['paid', 'unpaid', 'nonDeposit'];
-    let selectedTailStates = new Set(ALL_TAIL_STATE_KEYS);
+    const ALL_OVERDUE_KEYS = ['overdue', 'normal'];
+
+    // 每个模块独立的尾款状态复选框集合
+    const modTailStates = {
+      mod1: new Set(ALL_TAIL_STATE_KEYS),
+      mod2: new Set(ALL_TAIL_STATE_KEYS),
+      mod3: new Set(ALL_TAIL_STATE_KEYS),
+      mod4: new Set(ALL_TAIL_STATE_KEYS),
+      mod5: new Set(ALL_TAIL_STATE_KEYS)
+    };
+
+    // 每个模块独立的时效/超时状态复选框集合
+    const modOverdueStates = {
+      mod2: new Set(ALL_OVERDUE_KEYS),
+      mod3: new Set(ALL_OVERDUE_KEYS),
+      mod4: new Set(ALL_OVERDUE_KEYS),
+      mod5: new Set(ALL_OVERDUE_KEYS)
+    };
+
+    // 模块三与模块四的日期、项目组/渠道多选下拉复选框状态
+    const multiDropdownState = {
+      mod4Date: { allOptions: [], selected: new Set(), defaultLabel: '所有履约/超时日期' },
+      mod4Group: { allOptions: [], selected: new Set(), defaultLabel: '所有项目组 / 渠道' },
+      detailDate: { allOptions: [], selected: new Set(), defaultLabel: '所有履约/超时日期' },
+      detailGroup: { allOptions: [], selected: new Set(), defaultLabel: '所有项目组 / 渠道' }
+    };
+
     let activeTailSlicerTrigger = null;
+    let activeTailModKey = 'mod1';
+    let activeMultiDropdownKey = null;
 
     function getTailStateKey(record) {
       if (record && record.tailCategory && TAIL_STATE_META[record.tailCategory]) return record.tailCategory;
@@ -1119,44 +1303,98 @@
       return record && record.isPaid ? 'paid' : 'unpaid';
     }
 
-    function filterByGlobalTailStates(records) {
+    function filterByModTailStates(records, modKey = 'mod1') {
       if (!Array.isArray(records)) return [];
-      if (selectedTailStates.size === ALL_TAIL_STATE_KEYS.length) return records.slice();
-      if (selectedTailStates.size === 0) return [];
-      return records.filter(r => selectedTailStates.has(getTailStateKey(r)));
+      const set = modTailStates[modKey] || modTailStates.mod1;
+      if (set.size === ALL_TAIL_STATE_KEYS.length) return records.slice();
+      if (set.size === 0) return [];
+      return records.filter(r => set.has(getTailStateKey(r)));
     }
 
-    function getSelectedTailStateLabel() {
-      const labels = ALL_TAIL_STATE_KEYS.filter(key => selectedTailStates.has(key)).map(key => TAIL_STATE_META[key].label);
+    function filterByGlobalTailStates(records) {
+      return filterByModTailStates(records, 'mod1');
+    }
+
+    function getSelectedTailStateLabel(modKey = 'mod1') {
+      const set = modTailStates[modKey] || modTailStates.mod1;
+      const labels = ALL_TAIL_STATE_KEYS.filter(key => set.has(key)).map(key => TAIL_STATE_META[key].label);
       return labels.length ? labels.join(' + ') : '未选择状态';
     }
 
-    function syncGlobalTailSlicerUI() {
-      const labels = ALL_TAIL_STATE_KEYS
-        .filter(key => selectedTailStates.has(key))
-        .map(key => TAIL_STATE_META[key].label);
-      const summaryText = selectedTailStates.size === ALL_TAIL_STATE_KEYS.length
+    function syncModTailUI(modKey) {
+      const set = modTailStates[modKey];
+      if (!set) return;
+      const labels = ALL_TAIL_STATE_KEYS.filter(key => set.has(key)).map(key => TAIL_STATE_META[key].label);
+      const summaryText = set.size === ALL_TAIL_STATE_KEYS.length
         ? '全部 (3/3)'
-        : selectedTailStates.size === 0
+        : set.size === 0
           ? '未选择 (0/3)'
-          : selectedTailStates.size === 1
+          : set.size === 1
             ? labels[0]
-            : `已选 ${selectedTailStates.size}/3 类`;
+            : `已选 ${set.size}/3`;
 
-      document.querySelectorAll('[data-tail-slicer-trigger]').forEach(btn => {
+      document.querySelectorAll(`[data-tail-slicer-trigger="${modKey}"]`).forEach(btn => {
         const summary = btn.querySelector('[data-tail-slicer-summary]');
         if (summary) summary.textContent = summaryText;
-        btn.title = labels.length ? `当前：${labels.join('、')}；点击修改，所有模块联动` : '当前未选择任何状态；点击修改，所有模块联动';
+        btn.title = labels.length ? `当前：${labels.join('、')}` : '当前未选择任何尾款状态';
         btn.setAttribute('aria-expanded', activeTailSlicerTrigger === btn && !document.getElementById('tailStateDropdownMenu')?.classList.contains('hidden') ? 'true' : 'false');
       });
 
+      document.querySelectorAll(`input[data-tail-item="${modKey}"]`).forEach(chk => {
+        chk.checked = set.has(chk.value);
+      });
+
+      document.querySelectorAll(`input[data-tail-all="${modKey}"]`).forEach(allChk => {
+        allChk.checked = set.size === ALL_TAIL_STATE_KEYS.length;
+        allChk.indeterminate = set.size > 0 && set.size < ALL_TAIL_STATE_KEYS.length;
+      });
+
       const menu = document.getElementById('tailStateDropdownMenu');
-      if (menu) {
+      if (menu && activeTailModKey === modKey) {
         menu.querySelectorAll('[data-tail-state-option]').forEach(input => {
-          input.checked = selectedTailStates.has(input.getAttribute('data-tail-state-option'));
+          input.checked = set.has(input.getAttribute('data-tail-state-option'));
         });
         const menuSummary = menu.querySelector('[data-tail-selected-summary]');
-        if (menuSummary) menuSummary.textContent = `已选择 ${selectedTailStates.size}/3 类`;
+        if (menuSummary) menuSummary.textContent = `已选择 ${set.size}/3 类`;
+      }
+    }
+
+    function syncModOverdueUI(modKey) {
+      const set = modOverdueStates[modKey];
+      if (!set) return;
+      document.querySelectorAll(`input[data-overdue-item="${modKey}"]`).forEach(chk => {
+        chk.checked = set.has(chk.value);
+      });
+      document.querySelectorAll(`input[data-overdue-all="${modKey}"]`).forEach(allChk => {
+        allChk.checked = set.size === ALL_OVERDUE_KEYS.length;
+        allChk.indeterminate = set.size > 0 && set.size < ALL_OVERDUE_KEYS.length;
+      });
+    }
+
+    function syncGlobalTailSlicerUI() {
+      ['mod1', 'mod2', 'mod3', 'mod4', 'mod5'].forEach(syncModTailUI);
+      ['mod2', 'mod3', 'mod4', 'mod5'].forEach(syncModOverdueUI);
+      Object.keys(multiDropdownState).forEach(syncMultiDropdownUI);
+    }
+
+    function triggerModuleRender(modKey) {
+      const computedList = rawData.map(r => computeRecordStatus(r, benchmarkTime));
+      if (modKey === 'mod1') {
+        const activeList = filterByModTailStates(computedList, 'mod1');
+        renderKPIs(activeList);
+        renderSummaryTable(activeList);
+      } else if (modKey === 'mod2') {
+        renderDatePivotTable();
+      } else if (modKey === 'mod3') {
+        currentMod4Page = 1;
+        renderMod4Table();
+      } else if (modKey === 'mod4') {
+        currentDetailPage = 1;
+        renderDetailTable();
+      } else if (modKey === 'mod5') {
+        renderMod5PivotMatrix();
+      } else {
+        renderAll();
       }
     }
 
@@ -1167,11 +1405,10 @@
       activeTailSlicerTrigger = null;
     }
 
-    function positionTailStateDropdown(trigger) {
-      const menu = document.getElementById('tailStateDropdownMenu');
+    function positionFloatingMenu(menu, trigger, defaultWidth = 288) {
       if (!menu || !trigger) return;
       const rect = trigger.getBoundingClientRect();
-      const menuWidth = Math.min(288, window.innerWidth - 16);
+      const menuWidth = Math.min(defaultWidth, window.innerWidth - 16);
       const menuHeight = menu.offsetHeight || 280;
       const left = Math.max(8, Math.min(rect.left, window.innerWidth - menuWidth - 8));
       const belowSpace = window.innerHeight - rect.bottom;
@@ -1182,26 +1419,121 @@
       menu.style.top = `${Math.max(8, top)}px`;
     }
 
-    function refreshTailStateFilteredViews() {
-      currentDetailPage = 1;
-      currentMod4Page = 1;
-      renderAll();
+    function closeAllMultiDropdowns() {
+      document.querySelectorAll('[data-multi-dropdown-menu]').forEach(m => m.classList.add('hidden'));
+      document.querySelectorAll('[data-multi-dropdown-trigger]').forEach(b => b.setAttribute('aria-expanded', 'false'));
+      activeMultiDropdownKey = null;
+    }
+
+    function syncMultiDropdownUI(filterKey) {
+      const state = multiDropdownState[filterKey];
+      if (!state) return;
+      const total = state.allOptions.length;
+      const selCount = state.selected.size;
+      const summaryEl = document.querySelector(`[data-multi-dropdown-summary="${filterKey}"]`);
+      if (summaryEl) {
+        if (total === 0 || selCount === total) {
+          summaryEl.textContent = `${state.defaultLabel} (全部)`;
+        } else if (selCount === 0) {
+          summaryEl.textContent = `${state.defaultLabel} (未选 0/${total})`;
+        } else if (selCount === 1) {
+          summaryEl.textContent = `${ Array.from(state.selected)[0] }`;
+        } else {
+          summaryEl.textContent = `${state.defaultLabel} (已选 ${selCount}/${total})`;
+        }
+      }
+      const listEl = document.querySelector(`[data-multi-options-list="${filterKey}"]`);
+      if (listEl) {
+        listEl.querySelectorAll('input[type="checkbox"][data-multi-opt]').forEach(chk => {
+          chk.checked = state.selected.has(chk.getAttribute('data-multi-opt'));
+        });
+      }
+    }
+
+    function renderMultiDropdownOptions(filterKey, optionsArray) {
+      const state = multiDropdownState[filterKey];
+      if (!state) return;
+      state.allOptions = optionsArray.slice();
+      state.selected = new Set(optionsArray);
+      const listEl = document.querySelector(`[data-multi-options-list="${filterKey}"]`);
+      if (listEl) {
+        if (optionsArray.length === 0) {
+          listEl.innerHTML = `<div class="py-3 text-center text-slate-400">暂无可选项</div>`;
+        } else {
+          listEl.innerHTML = optionsArray.map(opt => `
+            <label class="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-slate-100 cursor-pointer select-none">
+              <input type="checkbox" data-multi-opt="${escapeHtml(opt)}" data-multi-parent="${filterKey}" checked class="w-3.5 h-3.5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer">
+              <span class="text-slate-700 font-medium truncate" title="${escapeHtml(opt)}">${escapeHtml(opt)}</span>
+            </label>
+          `).join('');
+        }
+      }
+      syncMultiDropdownUI(filterKey);
     }
 
     function setupGlobalTailSlicer() {
       const menu = document.getElementById('tailStateDropdownMenu');
+
+      // 1. 模块内直接复选框：尾款状态 全选 & 单项
+      document.querySelectorAll('input[data-tail-all]').forEach(allChk => {
+        allChk.addEventListener('change', () => {
+          const modKey = allChk.getAttribute('data-tail-all');
+          modTailStates[modKey] = allChk.checked ? new Set(ALL_TAIL_STATE_KEYS) : new Set();
+          syncModTailUI(modKey);
+          triggerModuleRender(modKey);
+        });
+      });
+
+      document.querySelectorAll('input[data-tail-item]').forEach(itemChk => {
+        itemChk.addEventListener('change', () => {
+          const modKey = itemChk.getAttribute('data-tail-item');
+          const set = modTailStates[modKey];
+          if (!set) return;
+          if (itemChk.checked) set.add(itemChk.value);
+          else set.delete(itemChk.value);
+          syncModTailUI(modKey);
+          triggerModuleRender(modKey);
+        });
+      });
+
+      // 2. 模块内直接复选框：时效/订单状态 全选 & 单项
+      document.querySelectorAll('input[data-overdue-all]').forEach(allChk => {
+        allChk.addEventListener('change', () => {
+          const modKey = allChk.getAttribute('data-overdue-all');
+          modOverdueStates[modKey] = allChk.checked ? new Set(ALL_OVERDUE_KEYS) : new Set();
+          syncModOverdueUI(modKey);
+          triggerModuleRender(modKey);
+        });
+      });
+
+      document.querySelectorAll('input[data-overdue-item]').forEach(itemChk => {
+        itemChk.addEventListener('change', () => {
+          const modKey = itemChk.getAttribute('data-overdue-item');
+          const set = modOverdueStates[modKey];
+          if (!set) return;
+          if (itemChk.checked) set.add(itemChk.value);
+          else set.delete(itemChk.value);
+          syncModOverdueUI(modKey);
+          triggerModuleRender(modKey);
+        });
+      });
+
+      // 3. 尾款状态下拉面板触发器（支持全选/反选当前模块）
       document.querySelectorAll('[data-tail-slicer-trigger]').forEach(btn => {
         btn.addEventListener('click', (event) => {
           event.stopPropagation();
+          closeAllMultiDropdowns();
+          const modKey = btn.getAttribute('data-tail-slicer-trigger') || 'mod1';
           const isSameOpen = activeTailSlicerTrigger === btn && menu && !menu.classList.contains('hidden');
           if (isSameOpen) {
             closeTailStateDropdown();
             return;
           }
           activeTailSlicerTrigger = btn;
+          activeTailModKey = modKey;
           menu.classList.remove('hidden');
-          syncGlobalTailSlicerUI();
-          positionTailStateDropdown(btn);
+          syncModTailUI(modKey);
+          positionFloatingMenu(menu, btn, 288);
         });
       });
 
@@ -1211,13 +1543,13 @@
           if (!input) return;
           const key = input.getAttribute('data-tail-state-option');
           if (!TAIL_STATE_META[key]) return;
-          if (input.checked) selectedTailStates.add(key);
-          else selectedTailStates.delete(key);
-          syncGlobalTailSlicerUI();
-          refreshTailStateFilteredViews();
-          // 刷新表格后保持下拉菜单打开，方便继续多选
+          const set = modTailStates[activeTailModKey];
+          if (input.checked) set.add(key);
+          else set.delete(key);
+          syncModTailUI(activeTailModKey);
+          triggerModuleRender(activeTailModKey);
           menu.classList.remove('hidden');
-          if (activeTailSlicerTrigger) positionTailStateDropdown(activeTailSlicerTrigger);
+          if (activeTailSlicerTrigger) positionFloatingMenu(menu, activeTailSlicerTrigger, 288);
         });
 
         menu.addEventListener('click', (event) => {
@@ -1229,34 +1561,107 @@
             closeTailStateDropdown();
             return;
           }
+          const currentSet = modTailStates[activeTailModKey] || new Set(ALL_TAIL_STATE_KEYS);
           if (action === 'all') {
-            selectedTailStates = new Set(ALL_TAIL_STATE_KEYS);
+            modTailStates[activeTailModKey] = new Set(ALL_TAIL_STATE_KEYS);
           } else if (action === 'invert') {
-            selectedTailStates = new Set(ALL_TAIL_STATE_KEYS.filter(key => !selectedTailStates.has(key)));
+            modTailStates[activeTailModKey] = new Set(ALL_TAIL_STATE_KEYS.filter(key => !currentSet.has(key)));
           } else {
             return;
           }
-          syncGlobalTailSlicerUI();
-          refreshTailStateFilteredViews();
+          syncModTailUI(activeTailModKey);
+          triggerModuleRender(activeTailModKey);
           menu.classList.remove('hidden');
-          if (activeTailSlicerTrigger) positionTailStateDropdown(activeTailSlicerTrigger);
+          if (activeTailSlicerTrigger) positionFloatingMenu(menu, activeTailSlicerTrigger, 288);
         });
       }
 
+      // 4. 模块三与模块四：日期、项目组/渠道复选框多选下拉菜单
+      document.querySelectorAll('[data-multi-dropdown-trigger]').forEach(btn => {
+        btn.addEventListener('click', (event) => {
+          event.stopPropagation();
+          closeTailStateDropdown();
+          const key = btn.getAttribute('data-multi-dropdown-trigger');
+          const targetMenu = document.querySelector(`[data-multi-dropdown-menu="${key}"]`);
+          if (!targetMenu) return;
+          const isOpen = activeMultiDropdownKey === key && !targetMenu.classList.contains('hidden');
+          closeAllMultiDropdowns();
+          if (isOpen) return;
+          activeMultiDropdownKey = key;
+          btn.setAttribute('aria-expanded', 'true');
+          targetMenu.classList.remove('hidden');
+          positionFloatingMenu(targetMenu, btn, 260);
+        });
+      });
+
+      document.querySelectorAll('[data-multi-dropdown-menu]').forEach(dropMenu => {
+        dropMenu.addEventListener('change', (event) => {
+          const chk = event.target.closest('input[data-multi-opt]');
+          if (!chk) return;
+          const filterKey = chk.getAttribute('data-multi-parent');
+          const optVal = chk.getAttribute('data-multi-opt');
+          const state = multiDropdownState[filterKey];
+          if (!state) return;
+          if (chk.checked) state.selected.add(optVal);
+          else state.selected.delete(optVal);
+          syncMultiDropdownUI(filterKey);
+          if (filterKey.startsWith('mod4')) {
+            currentMod4Page = 1;
+            renderMod4Table();
+          } else {
+            currentDetailPage = 1;
+            renderDetailTable();
+          }
+        });
+
+        dropMenu.addEventListener('click', (event) => {
+          const actBtn = event.target.closest('[data-multi-action]');
+          if (!actBtn) return;
+          event.stopPropagation();
+          const act = actBtn.getAttribute('data-multi-action');
+          const filterKey = actBtn.getAttribute('data-multi-target');
+          const state = multiDropdownState[filterKey];
+          if (!state) return;
+          if (act === 'all') {
+            state.selected = new Set(state.allOptions);
+          } else if (act === 'invert') {
+            state.selected = new Set(state.allOptions.filter(x => !state.selected.has(x)));
+          }
+          syncMultiDropdownUI(filterKey);
+          if (filterKey.startsWith('mod4')) {
+            currentMod4Page = 1;
+            renderMod4Table();
+          } else {
+            currentDetailPage = 1;
+            renderDetailTable();
+          }
+        });
+      });
+
       document.addEventListener('click', (event) => {
-        if (event.target.closest('[data-tail-slicer-trigger]')) return;
-        if (menu && menu.contains(event.target)) return;
-        closeTailStateDropdown();
+        if (!event.target.closest('[data-tail-slicer-trigger]') && !(menu && menu.contains(event.target))) {
+          closeTailStateDropdown();
+        }
+        if (!event.target.closest('[data-multi-filter-wrap]')) {
+          closeAllMultiDropdowns();
+        }
       });
       document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') closeTailStateDropdown();
+        if (event.key === 'Escape') {
+          closeTailStateDropdown();
+          closeAllMultiDropdowns();
+        }
       });
       window.addEventListener('resize', () => {
-        if (menu && !menu.classList.contains('hidden') && activeTailSlicerTrigger) positionTailStateDropdown(activeTailSlicerTrigger);
+        if (menu && !menu.classList.contains('hidden') && activeTailSlicerTrigger) {
+          positionFloatingMenu(menu, activeTailSlicerTrigger, 288);
+        }
+        if (activeMultiDropdownKey) {
+          const btn = document.querySelector(`[data-multi-dropdown-trigger="${activeMultiDropdownKey}"]`);
+          const m = document.querySelector(`[data-multi-dropdown-menu="${activeMultiDropdownKey}"]`);
+          if (btn && m && !m.classList.contains('hidden')) positionFloatingMenu(m, btn, 260);
+        }
       });
-      window.addEventListener('scroll', () => {
-        if (menu && !menu.classList.contains('hidden') && activeTailSlicerTrigger) closeTailStateDropdown();
-      }, true);
       syncGlobalTailSlicerUI();
     }
 
@@ -1523,47 +1928,15 @@
         document.getElementById('fileInfoText').textContent = '已重载全场景演示数据 (已配置缺货数量/订单号/已付/未付/预售/现货)';
         showToast('测试演示数据重载成功', 'success');
       });
-      // 模块二时效筛选联动
-document.getElementById('mod2OverdueFilterSelect').addEventListener('change', renderDatePivotTable);
-
-      // 模块三筛选
-      document.getElementById('mod4DateFilter').addEventListener('change', () => {
+      // 模块三、四、五搜索框实时联动
+      document.getElementById('mod4SearchInput').addEventListener('input', () => {
         currentMod4Page = 1;
         renderMod4Table();
       });
-      document.getElementById('mod4GroupFilter').addEventListener('change', () => {
-        currentMod4Page = 1;
-        renderMod4Table();
-      });
-      document.getElementById('mod4StatusFilter').addEventListener('change', () => {
-        currentMod4Page = 1;
-        renderMod4Table();
-      });
-document.getElementById('mod4SearchInput').addEventListener('input', () => {
-        currentMod4Page = 1;
-        renderMod4Table();
-      });
-
-      // 模块四筛选
-      document.getElementById('detailDateFilter').addEventListener('change', () => {
+      document.getElementById('detailSearchInput').addEventListener('input', () => {
         currentDetailPage = 1;
         renderDetailTable();
       });
-      document.getElementById('detailGroupFilter').addEventListener('change', () => {
-        currentDetailPage = 1;
-        renderDetailTable();
-      });
-      document.getElementById('detailStatusFilter').addEventListener('change', () => {
-        currentDetailPage = 1;
-        renderDetailTable();
-      });
-document.getElementById('detailSearchInput').addEventListener('input', () => {
-        currentDetailPage = 1;
-        renderDetailTable();
-      });
-
-      // 模块五筛选与交互监听
-document.getElementById('mod5OverdueFilterSelect').addEventListener('change', renderMod5PivotMatrix);
       document.getElementById('mod5SearchInput').addEventListener('input', renderMod5PivotMatrix);
 
       document.getElementById('btnMod5ExpandAll').addEventListener('click', () => {
@@ -2120,15 +2493,9 @@ document.getElementById('mod5OverdueFilterSelect').addEventListener('change', re
 
     function renderDatePivotTable() {
       const computedList = rawData.map(r => computeRecordStatus(r, benchmarkTime));
-      const overdueFilter = document.getElementById('mod2OverdueFilterSelect') ? document.getElementById('mod2OverdueFilterSelect').value : 'all';
-
-      let filtered = filterByGlobalTailStates(computedList);
-
-      if (overdueFilter === 'overdue') {
-        filtered = filtered.filter(r => r.isOverdue);
-      } else if (overdueFilter === 'normal') {
-        filtered = filtered.filter(r => !r.isOverdue);
-      }
+      let filtered = filterByModTailStates(computedList, 'mod2');
+      const overdueSet = modOverdueStates.mod2;
+      filtered = filtered.filter(r => overdueSet.has(r.isOverdue ? 'overdue' : 'normal'));
 
       const dateSet = new Set();
       filtered.forEach(r => {
@@ -2376,12 +2743,9 @@ document.getElementById('mod5OverdueFilterSelect').addEventListener('change', re
     }
 
     function getFilteredSortedDetailItems(computedList = rawData.map(r => computeRecordStatus(r, benchmarkTime))) {
-      const dateFilter = document.getElementById('detailDateFilter').value;
-      const groupFilter = document.getElementById('detailGroupFilter').value;
-      const statusFilter = document.getElementById('detailStatusFilter').value;
       const searchKeyword = document.getElementById('detailSearchInput').value.trim().toLowerCase();
 
-      let items = filterByGlobalTailStates(computedList).map(r => {
+      let items = filterByModTailStates(computedList, 'mod4').map(r => {
         const presaleDateStr = r.presaleTime ? formatDate(r.presaleTime) : '无预售(现货)';
         const payDateStr = r.payTime ? formatDate(r.payTime) : '-';
         let statusText = '履约正常';
@@ -2410,9 +2774,16 @@ document.getElementById('mod5OverdueFilterSelect').addEventListener('change', re
         };
       });
 
-      if (statusFilter === 'overdue') items = items.filter(x => x.isOverdue);
-      if (dateFilter !== 'all') items = items.filter(x => x.statDate === dateFilter);
-      if (groupFilter !== 'all') items = items.filter(x => x.projectGroup === groupFilter || x.channel === groupFilter);
+      const detailOverdueSet = modOverdueStates.mod4;
+      items = items.filter(x => detailOverdueSet.has(x.isOverdue ? 'overdue' : 'normal'));
+      const dDateState = multiDropdownState.detailDate;
+      if (dDateState.allOptions.length > 0 && dDateState.selected.size < dDateState.allOptions.length) {
+        items = items.filter(x => dDateState.selected.has(x.statDate));
+      }
+      const dGroupState = multiDropdownState.detailGroup;
+      if (dGroupState.allOptions.length > 0 && dGroupState.selected.size < dGroupState.allOptions.length) {
+        items = items.filter(x => dGroupState.selected.has(x.projectGroup) || dGroupState.selected.has(x.channel));
+      }
       if (searchKeyword) {
         items = items.filter(x =>
           String(x.orderNo || '').toLowerCase().includes(searchKeyword) ||
@@ -2589,14 +2960,17 @@ document.getElementById('mod5OverdueFilterSelect').addEventListener('change', re
 
     function getFilteredSortedMod4List() {
       const computedList = rawData.map(r => computeRecordStatus(r, benchmarkTime));
-      const dateFilter = document.getElementById('mod4DateFilter').value;
-      const groupFilter = document.getElementById('mod4GroupFilter').value;
-      const statusFilter = document.getElementById('mod4StatusFilter').value;
       const searchKeyword = document.getElementById('mod4SearchInput').value.trim().toLowerCase();
 
-      let items = filterByGlobalTailStates(computedList);
-      if (dateFilter !== 'all') items = items.filter(x => x.statDateStr === dateFilter);
-      if (groupFilter !== 'all') items = items.filter(x => x.projectGroup === groupFilter || x.channel === groupFilter);
+      let items = filterByModTailStates(computedList, 'mod3');
+      const mDateState = multiDropdownState.mod4Date;
+      if (mDateState.allOptions.length > 0 && mDateState.selected.size < mDateState.allOptions.length) {
+        items = items.filter(x => mDateState.selected.has(x.statDateStr));
+      }
+      const mGroupState = multiDropdownState.mod4Group;
+      if (mGroupState.allOptions.length > 0 && mGroupState.selected.size < mGroupState.allOptions.length) {
+        items = items.filter(x => mGroupState.selected.has(x.projectGroup) || mGroupState.selected.has(x.channel));
+      }
 
       const spuMap = new Map();
       items.forEach(r => {
@@ -2650,7 +3024,8 @@ document.getElementById('mod5OverdueFilterSelect').addEventListener('change', re
         };
       });
 
-      if (statusFilter === 'overdue') spuList = spuList.filter(x => x.totalOverdueQty > 0);
+      const mod3OverdueSet = modOverdueStates.mod3;
+      spuList = spuList.filter(x => mod3OverdueSet.has(x.totalOverdueQty > 0 ? 'overdue' : 'normal'));
       if (searchKeyword) {
         spuList = spuList.filter(x =>
           String(x.spu || '').toLowerCase().includes(searchKeyword) ||
@@ -2812,19 +3187,11 @@ document.getElementById('mod5OverdueFilterSelect').addEventListener('change', re
     // ==========================================
     function getMod5FilteredData() {
       const computedList = rawData.map(r => computeRecordStatus(r, benchmarkTime));
-      const overdueFilter = document.getElementById('mod5OverdueFilterSelect') ? document.getElementById('mod5OverdueFilterSelect').value : 'all';
       const searchKeyword = document.getElementById('mod5SearchInput') ? document.getElementById('mod5SearchInput').value.trim().toLowerCase() : '';
 
-      let filtered = filterByGlobalTailStates(computedList);
-
-      // 全局已统一按尾款/非定金三态完成筛选，以下继续应用模块五自身的时效和关键词条件。
-
-      // 时效状态筛选 (与模块二一致)
-      if (overdueFilter === 'overdue') {
-        filtered = filtered.filter(r => r.isOverdue);
-      } else if (overdueFilter === 'normal') {
-        filtered = filtered.filter(r => !r.isOverdue);
-      }
+      let filtered = filterByModTailStates(computedList, 'mod5');
+      const mod5OverdueSet = modOverdueStates.mod5;
+      filtered = filtered.filter(r => mod5OverdueSet.has(r.isOverdue ? 'overdue' : 'normal'));
 
       // 搜索关键词过滤 (渠道或货号)
       if (searchKeyword) {
@@ -3645,7 +4012,7 @@ document.getElementById('mod5OverdueFilterSelect').addEventListener('change', re
     function renderDateStatsBadges(computedList) {
       const container = document.getElementById('dateStatsBadgeContainer');
       const dateMap = {};
-      let scope = filterByGlobalTailStates(computedList).filter(r => r.isOverdue);
+      let scope = filterByModTailStates(computedList, 'mod4').filter(r => r.isOverdue);
 
       scope.forEach(r => {
         const d = r.statDateStr || '未定日期';
@@ -3671,30 +4038,23 @@ document.getElementById('mod5OverdueFilterSelect').addEventListener('change', re
     }
 
     function updateFilterDropdowns() {
-      const groupSelect = document.getElementById('detailGroupFilter');
-      const mod4GroupSelect = document.getElementById('mod4GroupFilter');
       const groups = new Set();
       rawData.forEach(r => {
         if (r.projectGroup) groups.add(r.projectGroup);
         if (r.channel) groups.add(r.channel);
       });
-      let gHtml = `<option value="all">所有项目组 / 渠道</option>`;
-      groups.forEach(g => gHtml += `<option value="${escapeHtml(g)}">${escapeHtml(g)}</option>`);
-      groupSelect.innerHTML = gHtml;
-      mod4GroupSelect.innerHTML = gHtml;
+      const groupArr = Array.from(groups);
+      renderMultiDropdownOptions('mod4Group', groupArr);
+      renderMultiDropdownOptions('detailGroup', groupArr);
 
-      const dateSelect = document.getElementById('detailDateFilter');
-      const mod4DateSelect = document.getElementById('mod4DateFilter');
       const computedList = rawData.map(r => computeRecordStatus(r, benchmarkTime));
       const dateSet = new Set();
       computedList.forEach(r => {
         if (r.statDateStr && r.statDateStr !== '-') dateSet.add(r.statDateStr);
       });
       const dateArr = Array.from(dateSet).sort();
-      let dHtml = `<option value="all">所有履约/超时日期</option>`;
-      dateArr.forEach(d => dHtml += `<option value="${escapeHtml(d)}">${escapeHtml(d)}</option>`);
-      dateSelect.innerHTML = dHtml;
-      mod4DateSelect.innerHTML = dHtml;
+      renderMultiDropdownOptions('mod4Date', dateArr);
+      renderMultiDropdownOptions('detailDate', dateArr);
     }
 
     async function fetchImageAsBase64(url, timeoutMs = 4000) {
