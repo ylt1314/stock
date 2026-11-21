@@ -127,24 +127,131 @@
       border-bottom: 2px solid #eab308;
       box-shadow: 0 2px 4px rgba(0,0,0,0.06);
     }
-    /* 浅色高质感电商履约商务封面背景与网格 */
+    /* 浅色未来感科技风登录封面背景、3D透视网格与立体悬浮卡片 */
     .biz-login-canvas {
-      background: 
-        radial-gradient(1200px circle at 15% 15%, rgba(59, 130, 246, 0.08) 0%, transparent 60%),
-        radial-gradient(900px circle at 85% 85%, rgba(99, 102, 241, 0.09) 0%, transparent 50%),
-        linear-gradient(135deg, #f8fafc 0%, #f1f5f9 45%, #e2e8f0 100%);
+      background:
+        radial-gradient(1100px circle at 18% 18%, rgba(14, 165, 233, 0.13) 0%, transparent 55%),
+        radial-gradient(950px circle at 82% 80%, rgba(99, 102, 241, 0.12) 0%, transparent 55%),
+        radial-gradient(700px circle at 50% 45%, rgba(255, 255, 255, 0.85) 0%, transparent 65%),
+        linear-gradient(145deg, #f8fbff 0%, #eef5ff 48%, #e4edfb 100%);
       position: fixed;
       inset: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
+      perspective: 1200px;
+    }
+    .biz-login-canvas.hidden {
+      display: none !important;
     }
     .biz-grid-mesh {
-      background-size: 32px 32px;
-      background-image: 
-        linear-gradient(to right, rgba(148, 163, 184, 0.12) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+      background-size: 36px 36px;
+      background-image:
+        linear-gradient(to right, rgba(59, 130, 246, 0.07) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(59, 130, 246, 0.07) 1px, transparent 1px);
     }
-    .login-card-elevated {
-      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(226, 232, 240, 0.9);
+    /* 3D 透视地面网格动效 */
+    .tech-3d-floor {
+      position: absolute;
+      left: -25%;
+      right: -25%;
+      bottom: -18%;
+      height: 58%;
+      background-size: 48px 48px;
+      background-image:
+        linear-gradient(to right, rgba(56, 189, 248, 0.18) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(99, 102, 241, 0.16) 1px, transparent 1px);
+      transform: perspective(650px) rotateX(66deg);
+      transform-origin: center bottom;
+      mask-image: linear-gradient(to top, rgba(0,0,0,0.85) 10%, rgba(0,0,0,0) 95%);
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.85) 10%, rgba(0,0,0,0) 95%);
+      animation: techGridScroll 14s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes techGridScroll {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 48px; }
+    }
+    /* 跳动数据脉冲线条 */
+    .tech-pulse-line {
+      stroke-dasharray: 12 8;
+      animation: techLineFlow 2.6s linear infinite;
+    }
+    .tech-pulse-line-slow {
+      stroke-dasharray: 8 10;
+      animation: techLineFlowReverse 4.2s linear infinite;
+    }
+    @keyframes techLineFlow {
+      0% { stroke-dashoffset: 40; }
+      100% { stroke-dashoffset: 0; }
+    }
+    @keyframes techLineFlowReverse {
+      0% { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: 36; }
+    }
+    /* 3D 漂浮几何体 */
+    .tech-float-cube {
+      animation: techFloat3D 6.5s ease-in-out infinite;
+    }
+    .tech-float-cube-delay {
+      animation: techFloat3D 8s ease-in-out infinite reverse;
+    }
+    @keyframes techFloat3D {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-16px) rotate(6deg); }
+    }
+    /* 3D 立体科技登录卡片 */
+    .login-3d-stage {
+      perspective: 1200px;
+    }
+    .login-card-3d {
+      transform-style: preserve-3d;
+      transition: transform 0.18s ease-out, box-shadow 0.25s ease;
+      background: linear-gradient(155deg, rgba(255, 255, 255, 0.92) 0%, rgba(248, 251, 255, 0.86) 100%);
+      box-shadow:
+        0 30px 60px -15px rgba(37, 99, 235, 0.16),
+        0 14px 28px -10px rgba(15, 23, 42, 0.08),
+        0 0 0 1px rgba(191, 219, 254, 0.85),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+    .login-card-3d::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: 1.5rem;
+      padding: 1.5px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.55), rgba(255, 255, 255, 0.2) 45%, rgba(99, 102, 241, 0.5));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+    .login-3d-layer {
+      transform: translateZ(22px);
+    }
+    .login-3d-badge {
+      transform: translateZ(34px);
+    }
+    .login-scan-bar {
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      top: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #38bdf8, #6366f1, transparent);
+      animation: techScanSweep 3.8s ease-in-out infinite;
+      pointer-events: none;
+      opacity: 0.75;
+    }
+    @keyframes techScanSweep {
+      0%, 100% { transform: translateX(-12%); opacity: 0.35; }
+      50% { transform: translateX(12%); opacity: 0.95; }
+    }
+    /* 科技感输入控件光效 */
+    .tech-input-box:focus {
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.22), 0 4px 12px rgba(59, 130, 246, 0.08);
     }
     /* 模块五树形展开折叠过渡与层级样式 */
     .tree-row-channel {
@@ -216,102 +323,145 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-  <!-- 登录遮罩层（默认根据 sessionStorage 状态判断展示） -->
+  <!-- 登录遮罩层（浅色科技感：3D透视网格 + 动态粒子连线 + 跳动数据脉冲 + 3D立体登录框） -->
   <div id="loginOverlay" class="fixed inset-0 z-50 biz-login-canvas flex items-center justify-center p-4">
-    <!-- 复合背景：履约链路网格与供应链拓扑图 -->
-    <div class="absolute inset-0 biz-grid-mesh pointer-events-none opacity-80"></div>
-    
-    <!-- 供应链拓扑链路装饰背景矢量图 -->
-    <div class="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center opacity-45">
-      <svg class="w-full h-full max-w-7xl" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M120 400 C 300 220, 480 580, 680 400 C 860 220, 960 480, 1100 360" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="6 6"/>
-        <path d="M150 520 C 350 380, 520 620, 720 480 C 880 360, 1020 520, 1120 420" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4 4"/>
+    <!-- 浅色科技感基础点阵网格 -->
+    <div class="absolute inset-0 biz-grid-mesh pointer-events-none opacity-85"></div>
+    <!-- 3D 透视地面延伸网格 -->
+    <div class="tech-3d-floor"></div>
+
+    <!-- 实时跳动线条与粒子连线 Canvas 画布 -->
+    <canvas id="loginTechCanvas" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
+
+    <!-- 3D 等距立方体与跳动脉冲拓扑矢量层 -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
+      <svg class="w-full h-full max-w-7xl opacity-75" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="techLineGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.1"/>
+            <stop offset="50%" stop-color="#0ea5e9" stop-opacity="0.75"/>
+            <stop offset="100%" stop-color="#6366f1" stop-opacity="0.15"/>
+          </linearGradient>
+          <linearGradient id="techLineGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#818cf8" stop-opacity="0.1"/>
+            <stop offset="50%" stop-color="#6366f1" stop-opacity="0.65"/>
+            <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.15"/>
+          </linearGradient>
+        </defs>
+
+        <!-- 跳动流光数据轨迹 -->
+        <path d="M60 440 C 240 240, 420 560, 600 380 C 780 200, 960 490, 1140 310" stroke="url(#techLineGrad1)" stroke-width="2" class="tech-pulse-line"/>
+        <path d="M80 560 C 280 410, 470 640, 670 460 C 860 300, 1020 530, 1160 390" stroke="url(#techLineGrad2)" stroke-width="1.6" class="tech-pulse-line-slow"/>
+
+        <!-- 左侧 3D 线框立方体 -->
+        <g class="tech-float-cube" opacity="0.75">
+          <polygon points="150,210 198,184 246,210 198,236" fill="rgba(224,242,254,0.6)" stroke="#38bdf8" stroke-width="1.5"/>
+          <polygon points="150,210 198,236 198,290 150,264" fill="rgba(186,230,253,0.45)" stroke="#0ea5e9" stroke-width="1.5"/>
+          <polygon points="246,210 198,236 198,290 246,264" fill="rgba(224,231,255,0.55)" stroke="#6366f1" stroke-width="1.5"/>
+        </g>
+
+        <!-- 右侧 3D 线框立方体 -->
+        <g class="tech-float-cube-delay" opacity="0.75">
+          <polygon points="970,190 1012,168 1054,190 1012,212" fill="rgba(224,231,255,0.65)" stroke="#818cf8" stroke-width="1.5"/>
+          <polygon points="970,190 1012,212 1012,260 970,238" fill="rgba(199,210,254,0.45)" stroke="#6366f1" stroke-width="1.5"/>
+          <polygon points="1054,190 1012,212 1012,260 1054,238" fill="rgba(224,242,254,0.55)" stroke="#38bdf8" stroke-width="1.5"/>
+        </g>
+
+        <!-- 节点脉冲环 -->
         <g opacity="0.85">
-          <circle cx="210" cy="330" r="28" fill="#ffffff" stroke="#93c5fd" stroke-width="2"/>
-          <circle cx="210" cy="330" r="8" fill="#3b82f6"/>
-          <text x="210" y="375" text-anchor="middle" font-size="11" fill="#64748b" font-weight="600">中心仓入库 · 质检</text>
+          <circle cx="210" cy="340" r="24" fill="rgba(255,255,255,0.75)" stroke="#7dd3fc" stroke-width="1.8"/>
+          <circle cx="210" cy="340" r="6" fill="#0284c7"/>
+          <text x="210" y="382" text-anchor="middle" font-size="11" fill="#475569" font-weight="600">智能入库感知</text>
 
-          <circle cx="430" cy="480" r="24" fill="#ffffff" stroke="#a5b4fc" stroke-width="2"/>
-          <circle cx="430" cy="480" r="7" fill="#6366f1"/>
-          <text x="430" y="520" text-anchor="middle" font-size="11" fill="#64748b" font-weight="600">全渠道订单分流中心</text>
-
-          <circle cx="680" cy="400" r="34" fill="#ffffff" stroke="#38bdf8" stroke-width="2.5"/>
-          <circle cx="680" cy="400" r="10" fill="#0284c7"/>
-          <text x="680" y="450" text-anchor="middle" font-size="12" fill="#0369a1" font-weight="700">时效预警中枢 · SLA监控</text>
-
-          <circle cx="890" cy="310" r="26" fill="#ffffff" stroke="#fcd34d" stroke-width="2"/>
-          <circle cx="890" cy="310" r="8" fill="#f59e0b"/>
-          <text x="890" y="352" text-anchor="middle" font-size="11" fill="#78350f" font-weight="600">干线分拨中心</text>
-
-          <circle cx="1060" cy="400" r="28" fill="#ffffff" stroke="#86efac" stroke-width="2"/>
-          <circle cx="1060" cy="400" r="8" fill="#22c55e"/>
-          <text x="1060" y="445" text-anchor="middle" font-size="11" fill="#15803d" font-weight="600">终端精准履约交付</text>
+          <circle cx="990" cy="430" r="26" fill="rgba(255,255,255,0.75)" stroke="#a5b4fc" stroke-width="1.8"/>
+          <circle cx="990" cy="430" r="7" fill="#4f46e5"/>
+          <text x="990" y="474" text-anchor="middle" font-size="11" fill="#475569" font-weight="600">全渠道SLA调度</text>
         </g>
       </svg>
     </div>
 
-    <!-- 登录主卡片 -->
-    <div class="bg-white/95 backdrop-blur-xl rounded-2xl max-w-md w-full p-8 login-card-elevated border border-slate-200/90 relative z-10">
-      <div class="text-center mb-6">
-        <div class="inline-flex items-center justify-center gap-2 px-3 py-1 bg-slate-100 rounded-full border border-slate-200 text-[11px] text-slate-600 font-semibold mb-3">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>企业级供应链时效监控中心</span>
-        </div>
-        <div class="w-14 h-14 bg-slate-900 rounded-2xl mx-auto flex items-center justify-center text-yellow-400 shadow-lg shadow-slate-900/10 mb-3.5 p-3">
-          <i class="fa-solid fa-boxes-packing text-2xl"></i>
-        </div>
-        <h2 class="text-xl font-bold text-slate-900 tracking-tight">电商全渠道履约时效分析系统</h2>
-        <p class="text-xs text-slate-500 mt-1">请选择企业授权工号并输入密码进入系统</p>
-      </div>
+    <!-- 3D 立体科技登录主卡片容器 -->
+    <div id="login3DStage" class="login-3d-stage max-w-md w-full relative z-10">
+      <div id="login3DCard" class="login-card-3d backdrop-blur-2xl rounded-3xl w-full p-8 relative overflow-hidden">
+        <!-- 顶部科技流光扫描线 -->
+        <div class="login-scan-bar"></div>
 
-      <form id="loginForm" class="space-y-4" onsubmit="event.preventDefault(); handleLogin();">
-        <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center justify-between">
-            <span>授权登录账号</span>
-            <span class="text-[11px] font-normal text-slate-400">下拉选择授权账号</span>
-          </label>
-          <div class="relative">
-            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-              <i class="fa-regular fa-id-badge text-sm"></i>
+        <!-- 四角科技 HUD 装饰线 -->
+        <span class="absolute top-3.5 left-3.5 w-3.5 h-3.5 border-t-2 border-l-2 border-sky-400/70 rounded-tl-md pointer-events-none"></span>
+        <span class="absolute top-3.5 right-3.5 w-3.5 h-3.5 border-t-2 border-r-2 border-indigo-400/70 rounded-tr-md pointer-events-none"></span>
+        <span class="absolute bottom-3.5 left-3.5 w-3.5 h-3.5 border-b-2 border-l-2 border-indigo-400/70 rounded-bl-md pointer-events-none"></span>
+        <span class="absolute bottom-3.5 right-3.5 w-3.5 h-3.5 border-b-2 border-r-2 border-sky-400/70 rounded-br-md pointer-events-none"></span>
+
+        <div class="text-center mb-6 login-3d-layer">
+          <div class="inline-flex items-center justify-center gap-2 px-3.5 py-1 bg-sky-50/90 rounded-full border border-sky-200/80 text-[11px] text-sky-700 font-semibold mb-3.5 shadow-xs login-3d-badge">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
             </span>
-            <select id="loginUsername" required class="w-full pl-10 pr-9 py-2.5 text-sm bg-white border border-slate-300 rounded-xl text-slate-800 font-medium focus:ring-2 focus:ring-slate-900 focus:border-slate-900 focus:outline-none transition appearance-none cursor-pointer hover:border-slate-400">
-              <option value="" disabled selected>请选择授权登录账号...</option>
-              <option value="集团店缺货">集团店缺货</option>
-              <option value="10211">工号 10211（供应链与履约监控组）</option>
-              <option value="14599">工号 14599（全渠道运营与配发管理部）</option>
-            </select>
-            <span class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
-              <i class="fa-solid fa-chevron-down text-xs"></i>
-            </span>
+            <span>INTELLIGENT SLA MATRIX · 监控中枢</span>
           </div>
-        </div>
 
-        <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center justify-between">
-            <span>访问密码</span>
-            <span class="text-[11px] font-normal text-slate-400">全程密文隐藏不显示</span>
-          </label>
-          <div class="relative">
-            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-              <i class="fa-solid fa-lock text-sm"></i>
-            </span>
-            <input type="password" id="loginPassword" required autocomplete="new-password" placeholder="请输入授权访问密码" class="w-full pl-10 pr-4 py-2.5 text-sm bg-white border border-slate-300 rounded-xl text-slate-800 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 focus:outline-none transition hover:border-slate-400">
+          <!-- 3D 立体悬浮图标底座 -->
+          <div class="relative w-16 h-16 mx-auto mb-3.5">
+            <div class="absolute inset-0 bg-gradient-to-tr from-sky-400 to-indigo-500 rounded-2xl blur-md opacity-30"></div>
+            <div class="relative w-16 h-16 bg-gradient-to-br from-white via-sky-50 to-indigo-50 rounded-2xl border border-sky-200/90 shadow-lg flex items-center justify-center text-sky-600">
+              <i class="fa-solid fa-cubes text-2xl bg-gradient-to-br from-sky-600 to-indigo-600 bg-clip-text text-transparent"></i>
+            </div>
           </div>
+
+          <h2 class="text-xl font-extrabold text-slate-900 tracking-tight">电商全渠道履约时效分析系统</h2>
+          <p class="text-xs text-slate-500 mt-1">请选择企业授权账号并输入密钥进入工作台</p>
         </div>
 
-        <div id="loginErrorMsg" class="hidden text-xs text-red-600 bg-red-50 p-2.5 rounded-xl border border-red-200">
-          <i class="fa-solid fa-circle-exclamation mr-1"></i> 工号或访问密码不正确，请核对后重试！
+        <form id="loginForm" class="space-y-4 login-3d-layer" onsubmit="event.preventDefault(); handleLogin();">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center justify-between">
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-microchip text-sky-500 text-[11px]"></i> 授权登录账号</span>
+              <span class="text-[11px] font-normal text-slate-400">下拉选择授权账号</span>
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-sky-500">
+                <i class="fa-regular fa-id-badge text-sm"></i>
+              </span>
+              <select id="loginUsername" required class="tech-input-box w-full pl-10 pr-9 py-2.5 text-sm bg-white/90 border border-slate-200 rounded-xl text-slate-800 font-semibold focus:border-sky-400 focus:outline-none transition appearance-none cursor-pointer hover:border-sky-300 shadow-2xs">
+                <option value="" disabled selected>请选择授权登录账号...</option>
+                <option value="集团店缺货">集团店缺货</option>
+                <option value="10211">工号 10211（供应链与履约监控组）</option>
+                <option value="14599">工号 14599（全渠道运营与配发管理部）</option>
+              </select>
+              <span class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+              </span>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center justify-between">
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-indigo-500 text-[11px]"></i> 访问密码</span>
+              <span class="text-[11px] font-normal text-slate-400">全程密文隐藏不显示</span>
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-indigo-500">
+                <i class="fa-solid fa-lock text-sm"></i>
+              </span>
+              <input type="password" id="loginPassword" required autocomplete="new-password" placeholder="请输入授权访问密码" class="tech-input-box w-full pl-10 pr-4 py-2.5 text-sm bg-white/90 border border-slate-200 rounded-xl text-slate-800 focus:border-sky-400 focus:outline-none transition hover:border-sky-300 shadow-2xs">
+            </div>
+          </div>
+
+          <div id="loginErrorMsg" class="hidden text-xs text-red-600 bg-red-50/90 p-2.5 rounded-xl border border-red-200">
+            <i class="fa-solid fa-circle-exclamation mr-1"></i> 账号或访问密码不正确，请核对后重试！
+          </div>
+
+          <button type="submit" class="w-full bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 hover:from-sky-500 hover:via-blue-500 hover:to-indigo-500 text-white font-bold py-2.5 px-4 rounded-xl text-sm shadow-lg shadow-sky-500/25 transition duration-200 flex items-center justify-center gap-2 cursor-pointer mt-2 transform hover:-translate-y-0.5 active:translate-y-0">
+            <span>进入履约分析工作台</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </button>
+        </form>
+
+        <div class="mt-6 pt-4 border-t border-slate-200/70 flex items-center justify-between text-[11px] text-slate-400 login-3d-layer">
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-lock text-emerald-500"></i> 端到端加密校验</span>
+          <span class="font-mono text-sky-600/80 font-semibold">SLA v4.0 · 3D MATRIX</span>
         </div>
-
-        <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-yellow-400 font-bold py-2.5 px-4 rounded-xl text-sm shadow-md transition duration-150 flex items-center justify-center gap-2 cursor-pointer mt-2">
-          <span>进入履约分析工作台</span>
-          <i class="fa-solid fa-arrow-right text-xs"></i>
-        </button>
-      </form>
-
-      <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
-        <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-emerald-500"></i> 数据传输脱敏加密</span>
-        <span class="font-mono">SLA v4.0 Enterprise</span>
       </div>
     </div>
   </div>
@@ -1415,6 +1565,173 @@
       document.getElementById('loginOverlay').classList.remove('hidden');
       showToast('已安全退出登录', 'info');
     });
+
+    /*
+     * 浅色科技感登录背景：动态粒子、跳动波形折线与 3D 卡片交互
+     */
+    (function initLoginTechVisuals() {
+      const overlay = document.getElementById('loginOverlay');
+      const canvas = document.getElementById('loginTechCanvas');
+      const card = document.getElementById('login3DCard');
+      if (!overlay || !canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      let width = 0, height = 0, dpr = 1;
+      let mouseX = -9999, mouseY = -9999;
+      let animFrameId = null;
+
+      const PARTICLE_COUNT = 52;
+      const particles = [];
+
+      function resizeCanvas() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function createParticles() {
+        particles.length = 0;
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+          const z = Math.random() * 0.85 + 0.15;
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.55 * z,
+            vy: (Math.random() - 0.5) * 0.55 * z,
+            z,
+            r: (Math.random() * 2.2 + 1.2) * z,
+            hue: i % 3 === 0 ? '56, 189, 248' : (i % 3 === 1 ? '99, 102, 241' : '14, 165, 233')
+          });
+        }
+      }
+
+      let tick = 0;
+      function drawFrame() {
+        if (overlay.classList.contains('hidden')) {
+          animFrameId = requestAnimationFrame(drawFrame);
+          return;
+        }
+        tick += 0.024;
+        ctx.clearRect(0, 0, width, height);
+
+        // 1. 绘制两条轻盈跳动的科技感频谱波形线
+        for (let w = 0; w < 2; w++) {
+          ctx.beginPath();
+          const baseY = height * (w === 0 ? 0.24 : 0.78);
+          const amp = w === 0 ? 18 : 24;
+          const freq = w === 0 ? 0.008 : 0.006;
+          const speed = w === 0 ? tick * 1.4 : -tick * 1.1;
+          for (let x = 0; x <= width; x += 18) {
+            const bounce = Math.sin(x * freq + speed) * amp + Math.cos(x * 0.015 - speed * 0.8) * (amp * 0.45);
+            const y = baseY + bounce;
+            if (x === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.strokeStyle = w === 0 ? 'rgba(14, 165, 233, 0.16)' : 'rgba(99, 102, 241, 0.14)';
+          ctx.lineWidth = 1.6;
+          ctx.stroke();
+
+          // 波形线上跳动的高亮光点
+          const pulseX = ((tick * 130 + w * 420) % (width + 100)) - 50;
+          const pulseY = baseY + Math.sin(pulseX * freq + speed) * amp + Math.cos(pulseX * 0.015 - speed * 0.8) * (amp * 0.45);
+          ctx.beginPath();
+          ctx.arc(pulseX, pulseY, 3.6, 0, Math.PI * 2);
+          ctx.fillStyle = w === 0 ? 'rgba(2, 132, 199, 0.65)' : 'rgba(79, 70, 229, 0.6)';
+          ctx.fill();
+        }
+
+        // 2. 更新并绘制 3D 深度粒子与连线
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy + Math.sin(tick + i) * 0.14;
+
+          if (p.x < -10) p.x = width + 10;
+          if (p.x > width + 10) p.x = -10;
+          if (p.y < -10) p.y = height + 10;
+          if (p.y > height + 10) p.y = -10;
+
+          // 连线
+          for (let j = i + 1; j < particles.length; j++) {
+            const q = particles[j];
+            const dx = p.x - q.x;
+            const dy = p.y - q.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 135) {
+              const alpha = (1 - dist / 135) * 0.22 * Math.min(p.z, q.z);
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(q.x, q.y);
+              ctx.strokeStyle = `rgba(59, 130, 246, ${alpha.toFixed(3)})`;
+              ctx.lineWidth = 1;
+              ctx.stroke();
+            }
+          }
+
+          // 鼠标附近交互连线
+          const mdx = p.x - mouseX;
+          const mdy = p.y - mouseY;
+          const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (mDist < 170) {
+            const mAlpha = (1 - mDist / 170) * 0.35;
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(mouseX, mouseY);
+            ctx.strokeStyle = `rgba(14, 165, 233, ${mAlpha.toFixed(3)})`;
+            ctx.lineWidth = 1.2;
+            ctx.stroke();
+          }
+
+          // 粒子光晕与核心
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 2.2, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${p.hue}, ${(0.14 * p.z).toFixed(3)})`;
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${p.hue}, ${(0.65 * p.z).toFixed(3)})`;
+          ctx.fill();
+        }
+
+        animFrameId = requestAnimationFrame(drawFrame);
+      }
+
+      overlay.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (card) {
+          const rect = card.getBoundingClientRect();
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          const rotY = Math.max(-7, Math.min(7, ((e.clientX - cx) / (window.innerWidth / 2)) * 7));
+          const rotX = Math.max(-6, Math.min(6, -((e.clientY - cy) / (window.innerHeight / 2)) * 6));
+          card.style.transform = `rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg)`;
+        }
+      });
+
+      overlay.addEventListener('mouseleave', () => {
+        mouseX = -9999;
+        mouseY = -9999;
+        if (card) {
+          card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        }
+      });
+
+      window.addEventListener('resize', () => {
+        resizeCanvas();
+        createParticles();
+      });
+
+      resizeCanvas();
+      createParticles();
+      if (!animFrameId) drawFrame();
+    })();
 
     // 全局数据状态
     let rawData = [];
